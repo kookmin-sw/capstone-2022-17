@@ -16,6 +16,7 @@ public class User {
     private Long id;
 
     private String email;
+    private String nickname;
     private String password;
     private String phoneNumber;
     private String avatar;
