@@ -1,6 +1,6 @@
 package kookmin.capstone.backend.domain.member;
 
-import kookmin.capstone.backend.domain.Project;
+import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.User;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ public class Member {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "project_id")
     private Project project;
 }

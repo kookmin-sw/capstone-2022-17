@@ -1,14 +1,16 @@
 package kookmin.capstone.backend.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@Getter
+@Getter @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id @GeneratedValue
@@ -24,4 +26,11 @@ public class User {
     private Float rating;
     private String instaId;
     private String blog;
+
+    private String techStack;
+    private String position;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 }
