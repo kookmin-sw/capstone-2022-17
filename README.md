@@ -73,12 +73,12 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 <br/>
 
-### 4. 사용법
+### 5. 사용법
 
 소스코드제출시 설치법이나 사용법을 작성하세요.
 
 <br/>
 
-### 5. 기타
+### 6. 기타
 
 추가적인 내용은 자유롭게 작성하세요.
