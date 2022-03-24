@@ -1,11 +1,13 @@
 package kookmin.capstone.backend.domain;
 
+import kookmin.capstone.backend.domain.project.Project;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Getter @Builder
@@ -13,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class User {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
