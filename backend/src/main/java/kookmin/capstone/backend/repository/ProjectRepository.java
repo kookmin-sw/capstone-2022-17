@@ -14,7 +14,7 @@ public class ProjectRepository {
     
     private final EntityManager em;
     
-    private void save(Project project) {
+    public void save(Project project) {
         em.persist(project);
     }
 
