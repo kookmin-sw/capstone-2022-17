@@ -37,7 +37,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 > 팀장 송경석
 
-![KakaoTalk_20220321_112558540_02](https://user-images.githubusercontent.com/74754782/159710144-84e93d9e-60b1-470e-82f0-93335dbbf1aa.jpg)
+<img src="https://user-images.githubusercontent.com/74754782/159710144-84e93d9e-60b1-470e-82f0-93335dbbf1aa.jpg"  width="230"/>
 
 - 학번: \*\*\*\*0028
 - E-mail: skj0922@kookmin.ac.kr
@@ -47,7 +47,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 > 구예진
 
-![구예진 증명사진](https://user-images.githubusercontent.com/74754782/159710628-9f98ceb2-7feb-4c58-ad5e-f6bb2b95bd2c.jpg)
+<img src="https://user-images.githubusercontent.com/74754782/159710628-9f98ceb2-7feb-4c58-ad5e-f6bb2b95bd2c.jpg"  width="230"/>
 
 - 학번: \*\*\*\*2004
 - E-mail: kyejin0412@kookmin.ac.kr
@@ -57,7 +57,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 > 김민정
 
-![KakaoTalk_20220321_161410400_01](https://user-images.githubusercontent.com/74754782/159710445-c1cec3cb-810b-429f-b549-05b48fc120b1.jpg)
+<img src="https://user-images.githubusercontent.com/74754782/159710445-c1cec3cb-810b-429f-b549-05b48fc120b1.jpg"  width="230"/>
 
 - 학번: \*\*\*\*1556
 - E-mail: minjj0905@kookmin.ac.kr
