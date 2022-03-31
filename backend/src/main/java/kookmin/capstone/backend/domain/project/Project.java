@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.time.LocalDateTime;
-
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -19,7 +17,7 @@ import static javax.persistence.FetchType.LAZY;
 @NoArgsConstructor
 public class Project extends DateEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_id")
     private Long id;
 
@@ -30,8 +28,10 @@ public class Project extends DateEntity {
     private String description;
     private String thumbnail;
 
-    @Column(name = "project_status", columnDefinition = "tinyint(1)")
-    private boolean status;
+    //TODO: Enum 타입으로 변경 해야 함
+    @Enumerated(EnumType.STRING)
+    @Column(name = "project_status")
+    private ProjectStatus status;
 
     @Column(name = "project_title")
     private String title;
