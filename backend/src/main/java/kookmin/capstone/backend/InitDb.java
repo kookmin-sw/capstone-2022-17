@@ -1,7 +1,7 @@
 package kookmin.capstone.backend;
 
 
-import kookmin.capstone.backend.domain.User;
+import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.domain.project.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

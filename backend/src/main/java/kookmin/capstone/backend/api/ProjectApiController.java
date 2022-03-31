@@ -1,6 +1,6 @@
 package kookmin.capstone.backend.api;
 
-import kookmin.capstone.backend.domain.User;
+import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.UserService;
