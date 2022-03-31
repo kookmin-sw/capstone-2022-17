@@ -22,7 +22,6 @@ public class User {
     private String email;
     private String nickname;
     private String password;
-    private String phoneNumber;
     private String avatar;
     private String address;
     private Float rating;
