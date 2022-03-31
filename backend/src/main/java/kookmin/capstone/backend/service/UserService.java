@@ -1,6 +1,6 @@
 package kookmin.capstone.backend.service;
 
-import kookmin.capstone.backend.domain.User;
+import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
