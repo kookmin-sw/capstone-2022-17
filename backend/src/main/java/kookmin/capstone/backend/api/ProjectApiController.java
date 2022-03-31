@@ -20,14 +20,15 @@ public class ProjectApiController {
     private final ProjectService projectService;
     private final UserService userService;
 
+    // 보낸 객체를 그대로
     @PostMapping("/v1/project")
-    public CreatePojectResponse registProject(@RequestBody Project project) {
+    public Project registProject(@RequestBody Project project) {
         Long id = projectService.registProject(project);
-        return new CreatePojectResponse(id);
+        return project;
     }
 
     @PostMapping("/v1/user")
-    public CreateUserResponse registProject(@RequestBody User user) {
+    public CreateUserResponse registUser(@RequestBody User user) {
         Long id = userService.join(user);
         return new CreateUserResponse(id);
     }
