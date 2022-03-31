@@ -28,8 +28,10 @@ public class Project extends DateEntity {
     private String description;
     private String thumbnail;
 
-    @Column(name = "project_status", columnDefinition = "tinyint(1)")
-    private boolean status;
+    //TODO: Enum 타입으로 변경 해야 함
+    @Enumerated(EnumType.STRING)
+    @Column(name = "project_status")
+    private ProjectStatus status;
 
     @Column(name = "project_title")
     private String title;
