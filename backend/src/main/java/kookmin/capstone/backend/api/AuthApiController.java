@@ -17,7 +17,7 @@ public class AuthApiController {
 
     private final AuthService authService;
 
-    @PostMapping(value = "login", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public String login(@RequestBody JwtRequestDto request) {
         try {
             return authService.login(request);
@@ -26,7 +26,7 @@ public class AuthApiController {
         }
     }
 
-    @PostMapping(value = "signup", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/signup", produces = MediaType.APPLICATION_JSON_VALUE)
     public String signup(@RequestBody MemberSignupRequestDto request) {
         return authService.signup(request);
     }
