@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-    const ProjectPeriod = styled.div`
+const ProjectPeriod = styled.div`
     font-size: ${({ theme }) => theme.fontSize.text};
     color: #A0A0A0;
 `;
