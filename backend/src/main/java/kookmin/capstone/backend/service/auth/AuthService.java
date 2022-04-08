@@ -5,6 +5,8 @@ import kookmin.capstone.backend.dto.JwtRequestDto;
 import kookmin.capstone.backend.dto.MemberSignupRequestDto;
 import kookmin.capstone.backend.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,11 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @AllArgsConstructor
+@Slf4j
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
     public String signup(MemberSignupRequestDto request) {
         boolean existMember = userRepository.existsByEmail(request.getEmail());
@@ -39,10 +43,11 @@ public class AuthService {
     public String login(JwtRequestDto request) throws Exception {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-
+//
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        UserDetailsImpl principal = (UserDetailsImpl) authentication.getPrincipal();
-        return principal.getUsername();
+//
+        UserDetailsServiceImpl principal = (UserDetailsServiceImpl) authentication.getPrincipal();
+        log.info("principal" + principal);
+        return userDetailsServiceImpl.loadUserByUsername(request.getEmail()).getUsername();
     }
 }
