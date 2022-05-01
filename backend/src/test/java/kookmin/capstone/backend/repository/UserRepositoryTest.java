@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -29,18 +30,19 @@ class UserRepositoryTest {
                     .name("사용자" + i)
                     .fromSocial(false)
                     .password(passwordEncoder.encode("1111"))
+                    .roles(Collections.singletonList("ROLE_USER"))
                     .build();
-            user.addUserRole(UserRole.USER);
+//            user.addUserRole(UserRole.USER);
             userRepository.save(user);
         });
     }
 
-    @Test
-    public void testRead() {
-        Optional<User> result = userRepository.findByEmail("user2@test.com", false);
-        User user = result.get();
-
-        System.out.println("user = " + user);
-    }
+//    @Test
+//    public void testRead() {
+//        Optional<User> result = userRepository.findByEmail("user2@test.com", false);
+//        User user = result.get();
+//
+//        System.out.println("user = " + user);
+//    }
 
 }
