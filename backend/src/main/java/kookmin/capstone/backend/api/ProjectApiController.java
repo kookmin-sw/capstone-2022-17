@@ -2,6 +2,7 @@ package kookmin.capstone.backend.api;
 
 import kookmin.capstone.backend.domain.User;
 import kookmin.capstone.backend.domain.project.Project;
+import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.UserService;
 import lombok.AllArgsConstructor;
@@ -22,9 +23,9 @@ public class ProjectApiController {
 
     // 보낸 객체를 그대로
     @PostMapping("/v1/project")
-    public Project registProject(@RequestBody Project project) {
-        Long id = projectService.registProject(project);
-        return project;
+    public ProjectDTO registProject(@RequestBody ProjectDTO dto) {
+        Long id = projectService.registProject(dto);
+        return dto;
     }
 
     @PostMapping("/v1/user")
@@ -38,6 +39,7 @@ public class ProjectApiController {
     static class CreatePojectResponse {
         private Long id;
     }
+
     @Data @AllArgsConstructor
     static class CreateUserResponse {
         private Long id;
