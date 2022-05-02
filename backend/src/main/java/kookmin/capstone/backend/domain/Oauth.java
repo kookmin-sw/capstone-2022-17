@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain;
 
+import kookmin.capstone.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

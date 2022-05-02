@@ -7,11 +7,11 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-//@Entity
-//@Getter @Builder
-//@AllArgsConstructor
-//@NoArgsConstructor
-public class ExternalProject {
+@Entity
+@Getter @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ExternalProjects {
     
     @Id @GeneratedValue
     @Column(name = "external_id")
@@ -20,7 +20,7 @@ public class ExternalProject {
     private String projectName;
     private String githubLink;
     private String description;
-    private String release;
+    private String releaseLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio_id")

@@ -1,7 +1,7 @@
 package kookmin.capstone.backend.domain.member;
 
 import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.domain.User;
+import kookmin.capstone.backend.domain.user.User;
 import lombok.Getter;
 
 import javax.persistence.*;

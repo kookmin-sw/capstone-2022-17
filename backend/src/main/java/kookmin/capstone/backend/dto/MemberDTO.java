@@ -1,7 +1,7 @@
 package kookmin.capstone.backend.dto;
 
 import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.domain.User;
+import kookmin.capstone.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
