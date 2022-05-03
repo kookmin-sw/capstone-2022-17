@@ -24,7 +24,7 @@ class UserRepositoryTest {
     @Test
     public void insertDumies() {
 
-        IntStream.rangeClosed(1, 100).forEach(i -> {
+        IntStream.rangeClosed(1, 10).forEach(i -> {
             User user = User.builder()
                     .email("user" + i + "@test.com")
                     .name("사용자" + i)

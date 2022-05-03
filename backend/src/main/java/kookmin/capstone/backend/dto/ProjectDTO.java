@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import lombok.AllArgsConstructor;
@@ -7,8 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -21,9 +21,14 @@ public class ProjectDTO {
     private String title;
     private String purpose;
     private String region;
-    private String filed;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String description;
+    private String field;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate endDate;
+    private String thumbnail;
+    private String techStack;
 
-    private List<TechStack> techStack;
+    private Long userId;
 }
