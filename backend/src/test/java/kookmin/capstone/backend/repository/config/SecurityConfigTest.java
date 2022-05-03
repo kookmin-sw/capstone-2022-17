@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.config;
+package kookmin.capstone.backend.repository.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
