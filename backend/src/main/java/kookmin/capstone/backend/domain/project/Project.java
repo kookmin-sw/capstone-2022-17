@@ -42,4 +42,21 @@ public class Project extends DateEntity {
     private String region;
 
     private String techStack;
+
+    public void chageProject(String description, String thumbnail, ProjectStatus status,
+                             String title, String purpose, String field, String region,
+                             String techStack) {
+
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.status = status;
+        this.title = title;
+        this.purpose = purpose;
+        this.field = field;
+        this.region = region;
+        this.techStack = techStack;
+
+    }
+
+
 }

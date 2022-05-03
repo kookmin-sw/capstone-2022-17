@@ -26,9 +26,21 @@ public class ProjectApiController {
     private final UserService userService;
 
     // 보낸 객체를 그대로
-    @PostMapping("/v1/project")
+    @PostMapping("/v1/project/regist")
     public ProjectDTO registProject(@RequestBody ProjectDTO dto) {
-        Long id = projectService.registProject(dto);
+        projectService.registProject(dto);
+        return dto;
+    }
+
+    @PostMapping("/v1/project/modify")
+    public ProjectDTO modifyProject(@RequestBody ProjectDTO dto) {
+        projectService.modifyProject(dto);
+        return dto;
+    }
+
+    @PostMapping("/v1/project/remove")
+    public ProjectDTO removeProject(@RequestBody ProjectDTO dto) {
+        projectService.removeProject(dto.getId());
         return dto;
     }
 

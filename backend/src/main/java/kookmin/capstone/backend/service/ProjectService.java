@@ -20,10 +20,28 @@ public class ProjectService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long registProject(ProjectDTO dto) {
+    public void registProject(ProjectDTO dto) {
         Project project = dtoToToEntity(dto);
         projectRepository.save(project);
-        return project.getId();
+    }
+
+    @Transactional
+    public void modifyProject(ProjectDTO dto) {
+        Optional<Project> findProject = projectRepository.findById(dto.getId());
+        Project project = findProject.get();
+
+        project.chageProject(dto.getDescription(), dto.getThumbnail(), dto.getStatus(),
+                dto.getTitle(), dto.getPurpose(), dto.getField(), dto.getRegion(), dto.getTechStack());
+        project.changeStartDate(dto.getStartDate());
+        project.changeEndDate(dto.getEndDate());
+
+        projectRepository.save(project);
+
+    }
+
+    @Transactional
+    public void removeProject(Long id) {
+        projectRepository.deleteById(id);
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {

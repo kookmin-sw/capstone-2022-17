@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class ProjectDTO {
 
+    private Long id;
     private ProjectStatus status;
 
     private String title;

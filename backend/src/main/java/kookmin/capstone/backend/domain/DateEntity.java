@@ -19,4 +19,12 @@ public abstract class DateEntity {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate endDate;
+
+    public void changeStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void changeEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
 }
