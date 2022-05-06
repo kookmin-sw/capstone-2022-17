@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
-    Optional<User> findByName(String username);
+    @Query("select u from User u where u.nickname =:nickname")
+    Optional<User> findUser(@Param("nickname") String nickName);
 
 //    @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
 //    @Query("select u from  User u where u.fromSocial = :social and u.email =:email")
