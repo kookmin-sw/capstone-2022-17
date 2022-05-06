@@ -20,7 +20,6 @@ public class BackendApplication {
             + "classpath:application-aws.yml";
 
     public static void main(String[] args) {
-
         new SpringApplicationBuilder(BackendApplication.class)
                 .properties(APPLICATION_LOCATIONS)
                 .run(args);
