@@ -19,7 +19,7 @@ const UserMenu = () => {
   };
 
   return (
-    <Dropdown direction="left" trigger={trigger} icon={null} style={{ marginLeft: '10rem' }}>
+    <Dropdown direction="left" trigger={trigger} icon={null} style={{ margin: '0 2rem' }}>
       <Dropdown.Menu style={{ marginTop: '1.3rem' }}>
         <Dropdown.Item onClick={() => navigate('/profile')}>프로필</Dropdown.Item>
         <Dropdown.Item onClick={() => navigate('/account')}>계정관리</Dropdown.Item>

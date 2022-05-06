@@ -6,16 +6,10 @@ const TestContainer = styled.div`
   ${({ theme }) => theme.common.flexCenterColumn};
 `;
 
-const TestButton = styled.button`
-  font-size: ${({ theme }) => theme.fontSize.paragraph};
-  color: ${({ theme }) => theme.color.primary};
-  border: 3px solid ${({ theme }) => theme.color.primary};
-`;
-
 const Home = () => {
   return (
     <TestContainer>
-      <TestButton>Home</TestButton>
+      <div />
     </TestContainer>
   );
 };

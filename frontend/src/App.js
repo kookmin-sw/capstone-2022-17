@@ -6,15 +6,18 @@ import GlobalStyles from 'styles/GlobalStyles';
 import theme from 'styles/theme';
 
 import { Home } from 'pages';
+import ResponsiveLayout from 'layouts/responsive.layout';
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
+        <ResponsiveLayout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </ResponsiveLayout>
       </BrowserRouter>
     </ThemeProvider>
   );
