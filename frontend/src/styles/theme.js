@@ -1,5 +1,5 @@
 const fontSize = {
-  title: '5rem',
+  title: '3rem',
   paragraph: '1rem',
 };
 
