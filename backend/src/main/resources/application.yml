@@ -1,5 +1,6 @@
 spring:
   datasource:
+
 #    url: jdbc:mysql://localhost:3306/test?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
 #    username: root
 #    password: vkqzhs7355!
@@ -23,6 +24,7 @@ spring:
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
+  
 cloud:
   aws:
     s3:

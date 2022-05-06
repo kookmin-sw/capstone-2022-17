@@ -16,6 +16,7 @@ import java.awt.print.Book;
 public class BackendApplication {
 
     public static final String APPLICATION_LOCATIONS = "spring.config.location="
+
             + "classpath:application.yml";
 //            + "classpath:application-aws.yml";
 
