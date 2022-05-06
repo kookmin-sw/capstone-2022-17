@@ -1,6 +1,7 @@
 const fontSize = {
   title: '3rem',
   paragraph: '1rem',
+  text: '0.6rem',
 };
 
 const color = {
