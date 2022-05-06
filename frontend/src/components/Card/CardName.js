@@ -6,11 +6,8 @@ const ProjectName = styled.div`
   color: ${({ theme }) => theme.color.black};
 `;
 
-function CardName(props) {
-    //카드명 props로 받아서 나타냄.
-    return (
-        <ProjectName> {props.projectName} </ProjectName>
-    );
-}
+const CardName = ({ children }) => {
+  return <ProjectName> {children} </ProjectName>;
+};
 
 export default CardName;
