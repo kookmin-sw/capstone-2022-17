@@ -27,5 +27,6 @@ module.exports = {
     'import/named': 'off',
     'import/no-named-as-default': 'off',
     'import/no-named-as-default-member': 'off',
+    'react/prop-types': 'off',
   },
 };
