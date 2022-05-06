@@ -9,7 +9,7 @@ const TestContainer = styled.div`
 const Home = () => {
   return (
     <TestContainer>
-      <div />
+      <p>ㅇㅇㅇㅇㅇ</p>
     </TestContainer>
   );
 };

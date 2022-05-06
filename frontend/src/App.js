@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'styles/GlobalStyles';
 import theme from 'styles/theme';
 
-import { Home } from 'pages';
+import { Home, SignIn } from 'pages';
 import ResponsiveLayout from 'layouts/responsive.layout';
 
 const App = () => {
@@ -16,6 +16,8 @@ const App = () => {
         <ResponsiveLayout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignIn />} />
+            {/* <Route path="/signup" element={<SignIn />} /> */}
           </Routes>
         </ResponsiveLayout>
       </BrowserRouter>
