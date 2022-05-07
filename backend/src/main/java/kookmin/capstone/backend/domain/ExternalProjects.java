@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class ExternalProjects {
     
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "external_id")
     private Long id;
 

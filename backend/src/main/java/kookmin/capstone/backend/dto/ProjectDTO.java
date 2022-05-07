@@ -2,19 +2,19 @@ package kookmin.capstone.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.querydsl.core.annotations.QueryProjection;
+import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ProjectDTO {
 
     private Long id;
@@ -30,7 +30,23 @@ public class ProjectDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private String thumbnail;
-    private String techStack;
+    private List<ProjectTech> techStack;
 
     private Long userId;
+
+    @QueryProjection
+    public ProjectDTO(Long id, ProjectStatus status, String title, String purpose, String region, String description, String field, LocalDate startDate, LocalDate endDate, String thumbnail, List<ProjectTech> techStack, Long userId) {
+        this.id = id;
+        this.status = status;
+        this.title = title;
+        this.purpose = purpose;
+        this.region = region;
+        this.description = description;
+        this.field = field;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.thumbnail = thumbnail;
+        this.techStack = techStack;
+        this.userId = userId;
+    }
 }

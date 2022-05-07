@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.domain.project;
 
 import kookmin.capstone.backend.domain.DateEntity;
+import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -41,11 +44,13 @@ public class Project extends DateEntity {
     private String field;
     private String region;
 
-    private String techStack;
+    @OneToMany
+    private List<ProjectTech> techStack;
+
 
     public void chageProject(String description, String thumbnail, ProjectStatus status,
-                             String title, String purpose, String field, String region,
-                             String techStack) {
+                             String title, String purpose, String field, String region, List<ProjectTech> techStack
+                             ) {
 
         this.description = description;
         this.thumbnail = thumbnail;
@@ -55,7 +60,6 @@ public class Project extends DateEntity {
         this.field = field;
         this.region = region;
         this.techStack = techStack;
-
     }
 
 

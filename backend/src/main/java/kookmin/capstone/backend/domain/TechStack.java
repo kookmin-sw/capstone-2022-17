@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class TechStack {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String stack;
