@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class User implements UserDetails {
     @Override
     public String toString() {
-        return "email: " + getEmail() + ", name: " + getName() + ", social: " + isFromSocial();
+        return "email: " + getEmail() + ", social: " + isFromSocial();
     }
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,6 @@ public class User implements UserDetails {
 
     private String email;
     private String nickname;
-    private String name;
     private String password;
     private String avatar;
     private String address;
@@ -65,7 +64,7 @@ public class User implements UserDetails {
     public User(MemberSignupRequestDto request) {
         email = request.getEmail();
         password = request.getPassword();
-        name = request.getName();
+//        name = request.getName();
     }
 
 //    @Override

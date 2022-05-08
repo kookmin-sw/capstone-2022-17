@@ -44,8 +44,7 @@ public class Project extends DateEntity {
     private String field;
     private String region;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "project_tech_id")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectTech> techStack = new ArrayList<>();
 
     public void chageProject(String description, String thumbnail, ProjectStatus status,

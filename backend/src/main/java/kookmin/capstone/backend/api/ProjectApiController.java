@@ -29,25 +29,24 @@ public class ProjectApiController {
     private final UserService userService;
 
     // 보낸 객체를 그대로
-    @PostMapping("/v1/project/regist")
+    @PostMapping("/v1/project")
     @ApiOperation(value = "프로젝트 등록")
     public ProjectDTO registProject(@RequestBody ProjectDTO projectDTO) {
         projectService.registProject(projectDTO);
         return projectDTO;
     }
 
-    @PostMapping("/v1/project/modify")
+    @PatchMapping("/v1/project")
     @ApiOperation(value = "프로젝트 수정")
     public ProjectDTO modifyProject(@RequestBody ProjectDTO projectDTO) {
         projectService.modifyProject(projectDTO);
         return projectDTO;
     }
 
-    @PostMapping("/v1/project/remove")
+    @DeleteMapping("/v1/project")
     @ApiOperation(value = "프로젝트 삭제")
-    public ProjectDTO removeProject(@RequestBody ProjectDTO projectDTO) {
-        projectService.removeProject(projectDTO.getId());
-        return projectDTO;
+    public void removeProject(@RequestParam(name = "id") Long id) {
+        projectService.removeProject(id);
     }
 
     @PostMapping("/v1/user")
