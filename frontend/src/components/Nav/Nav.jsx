@@ -7,11 +7,22 @@ import NotiIcon from 'components/Nav/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
 
 const NavContainer = styled.div`
+  background-color: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  padding: 0.5rem;
+  box-shadow: 1px 1px 10px -5px black;
   display: flex;
-  align-items: center;
+  justify-content: center;
+`;
+
+const NavContent = styled.div`
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
   justify-content: space-between;
-  padding: 0.5rem 10vh;
-  box-shadow: 0 4px 4px -4px black;
 `;
 
 const LeftContainer = styled.div`
@@ -29,16 +40,18 @@ const RightContainer = styled.div`
 const Nav = () => {
   return (
     <NavContainer>
-      <LeftContainer>
-        <Logo />
-        <NavMenu>프로젝트 둘러보기</NavMenu>
-        <NavMenu>내 프로젝트</NavMenu>
-      </LeftContainer>
-      <RightContainer>
-        <PrimaryBtn>프로젝트 생성</PrimaryBtn>
-        <NotiIcon />
-        <UserMenu />
-      </RightContainer>
+      <NavContent>
+        <LeftContainer>
+          <Logo />
+          <NavMenu>프로젝트 둘러보기</NavMenu>
+          <NavMenu>내 프로젝트</NavMenu>
+        </LeftContainer>
+        <RightContainer>
+          <PrimaryBtn>프로젝트 생성</PrimaryBtn>
+          <NotiIcon />
+          <UserMenu />
+        </RightContainer>
+      </NavContent>
     </NavContainer>
   );
 };
