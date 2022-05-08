@@ -1,17 +1,18 @@
 package kookmin.capstone.backend.domain;
 
 import kookmin.capstone.backend.domain.project.Project;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Builder
 @AllArgsConstructor @NoArgsConstructor
+@ToString(exclude = {"project"})
 public class ProjectTech {
 
     @Id
@@ -21,7 +22,27 @@ public class ProjectTech {
 
     private String stack;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_id")
     private Project project;
+
+    public void registToProject(Project project) {
+        this.project = project;
+    }
+
+//    public static ProjectTech registTech(String stack, Project project) {
+//        ProjectTech projectTech = new ProjectTech();
+//
+//        return ProjectTech;
+//    }
+
+
+    public ProjectTech(String stack, Project project) {
+        this.stack = stack;
+        this.project = project;
+    }
+
+    public ProjectTech(String stack) {
+        this.stack = stack;
+    }
 }

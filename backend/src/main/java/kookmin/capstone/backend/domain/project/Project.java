@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -33,7 +34,6 @@ public class Project extends DateEntity {
     private String description;
     private String thumbnail;
 
-    //TODO: Enum 타입으로 변경 해야 함
     @Enumerated(EnumType.STRING)
     @Column(name = "project_status")
     private ProjectStatus status;
@@ -44,12 +44,12 @@ public class Project extends DateEntity {
     private String field;
     private String region;
 
-    @OneToMany
-    private List<ProjectTech> techStack;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_tech_id")
+    private List<ProjectTech> techStack = new ArrayList<>();
 
     public void chageProject(String description, String thumbnail, ProjectStatus status,
-                             String title, String purpose, String field, String region, List<ProjectTech> techStack
+                             String title, String purpose, String field, String region
                              ) {
 
         this.description = description;
@@ -59,8 +59,21 @@ public class Project extends DateEntity {
         this.purpose = purpose;
         this.field = field;
         this.region = region;
+    }
+
+    //연관 관계 메서드
+    public void addTechStack(ProjectTech stack) {
+        techStack.add(stack);
+        stack.registToProject(this);
+    }
+
+    public void initTechStack(List<ProjectTech> techStack) {
         this.techStack = techStack;
     }
 
+    //생성 메서드
+//    public static Project createProject() {
+//        return null;
+//    }
 
 }

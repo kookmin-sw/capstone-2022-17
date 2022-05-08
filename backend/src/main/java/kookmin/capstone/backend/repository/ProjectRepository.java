@@ -10,9 +10,9 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 
-public interface ProjectRepository extends JpaRepository<Project, Long>, QuerydslPredicateExecutor<Project> {
+public interface ProjectRepository extends JpaRepository<Project, Long>, ProjectRepositoryCustom{
 
-    List<Project> findByTitle(String title);
+    Project findByTitle(String title);
 
     Page<Project> findByTitleContaining(String searchTitle, Pageable pageable);
 }

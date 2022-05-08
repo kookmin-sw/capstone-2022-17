@@ -30,12 +30,12 @@ public class ProjectDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private String thumbnail;
-    private List<ProjectTech> techStack;
+    private List<String> techStack;
 
     private Long userId;
 
     @QueryProjection
-    public ProjectDTO(Long id, ProjectStatus status, String title, String purpose, String region, String description, String field, LocalDate startDate, LocalDate endDate, String thumbnail, List<ProjectTech> techStack, Long userId) {
+    public ProjectDTO(Long id, ProjectStatus status, String title, String purpose, String region, String description, String field, LocalDate startDate, LocalDate endDate, String thumbnail, Long userId) {
         this.id = id;
         this.status = status;
         this.title = title;
@@ -46,7 +46,6 @@ public class ProjectDTO {
         this.startDate = startDate;
         this.endDate = endDate;
         this.thumbnail = thumbnail;
-        this.techStack = techStack;
         this.userId = userId;
     }
 }
