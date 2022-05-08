@@ -51,7 +51,7 @@ public class AuthApiController {
     }
 
     @Data
-    public class UserDTO {
+    static class UserDTO {
 
         private String email;
         private String password;
