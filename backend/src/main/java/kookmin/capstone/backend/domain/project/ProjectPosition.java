@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor @NoArgsConstructor
 public class ProjectPosition {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "project_position_id")
     private Long id;
 

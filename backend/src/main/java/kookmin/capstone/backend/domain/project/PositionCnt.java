@@ -11,7 +11,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PositionCnt {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "position_cnt_id")
     private Long id;
     

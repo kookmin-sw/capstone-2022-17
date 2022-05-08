@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Career extends DateEntity{
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "career_id")
     private Long id;
 

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Oauth {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "oauth_id")
     private Long id;
 
