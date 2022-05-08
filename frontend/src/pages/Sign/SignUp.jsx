@@ -9,6 +9,8 @@ import { Form, Grid, Divider } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
 import * as Btn from 'components/common/Button';
 import SignTitle from 'components/Sign/SignTitle';
+import PrivacyModal from 'components/Terms/PrivacyModal';
+import TermModal from 'components/Terms/TermModal';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
   margin-top: 6rem;
@@ -65,7 +67,6 @@ const SignUp = () => {
     dispatch({
       type: SIGN_UP_REQUEST,
       data: {
-        username: `${email.split('@')[0]}`,
         email,
         password1: password,
         password2: passwordCheck,
@@ -149,9 +150,8 @@ const SignUp = () => {
         {/* 약관확인 */}
         <P>
           <Span>
-            원래 주의문구
-            {/* 회원가입 시 TTL의 <TermModal /> 및 <br />
-            <PrivacyModal /> 을 확인하였으며, 동의합니다. */}
+            회원가입 시 TEAMING의 <TermModal /> 및 <br />
+            <PrivacyModal /> 을 확인하였으며, 동의합니다.
           </Span>
         </P>
       </Grid.Column>

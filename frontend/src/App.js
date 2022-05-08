@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import wrapper from 'store/configureStore';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'styles/GlobalStyles';
 import theme from 'styles/theme';
@@ -25,4 +26,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default wrapper.withRedux(App);

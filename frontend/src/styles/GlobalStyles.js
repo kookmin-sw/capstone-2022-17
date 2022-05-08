@@ -26,6 +26,9 @@ const GlobalStyles = createGlobalStyle`
   button {
     cursor: pointer;
   }
+  body {
+    background-color: #F8F9FA;
+  }
 `;
 
 export default GlobalStyles;

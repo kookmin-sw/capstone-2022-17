@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.17.7",
+    "@toast-ui/react-editor": "^3.1.5",
     "axios": "^0.26.1",
     "camelize": "^1.0.0",
     "immer": "^9.0.12",
@@ -27,7 +28,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
