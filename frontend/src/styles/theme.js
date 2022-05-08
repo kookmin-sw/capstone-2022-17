@@ -7,6 +7,8 @@ const fontSize = {
 const color = {
   black: '#000000',
   primary: '#797FD4',
+  gray: '#404040',
+  lightgray: '#9d9d9d',
 };
 
 const common = {
