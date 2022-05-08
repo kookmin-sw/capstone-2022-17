@@ -1,5 +1,7 @@
 package kookmin.capstone.backend.api;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.jwt.JwtTokenProvider;
 import kookmin.capstone.backend.repository.UserRepository;
@@ -14,7 +16,8 @@ import java.util.Collections;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
+@Api(tags = {"유저 API"})
 @AllArgsConstructor
 public class AuthApiController {
 
@@ -25,6 +28,7 @@ public class AuthApiController {
 
     // 회원가입
     @PostMapping("/join")
+    @ApiOperation(value = "회원가입")
     public Long join(@RequestBody Map<String, String> user) {
         return userRepository.save(User.builder()
                 .email(user.get("email"))
@@ -35,6 +39,7 @@ public class AuthApiController {
 
     // 로그인
     @PostMapping("/login")
+    @ApiOperation(value = "로그인")
     public String login(@RequestBody Map<String, String> user) {
         User member = userRepository.findByEmail(user.get("email"))
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
