@@ -10,7 +10,6 @@ import java.util.Optional;
 
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    boolean existsByEmail(String email);
 
     @Query("select u from User u where u.nickname =:nickname")
     Optional<User> findUser(@Param("nickname") String nickName);
@@ -18,6 +17,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
 //    @Query("select u from  User u where u.fromSocial = :social and u.email =:email")
 //    Optional<User> findByEmail(@Param("email") String email, @Param("social") boolean social);
-    Optional<User> findById(Long id);
+
     Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+    boolean existsByNickname(String nickName);
 }

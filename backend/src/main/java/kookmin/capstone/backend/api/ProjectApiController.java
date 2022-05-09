@@ -49,12 +49,12 @@ public class ProjectApiController {
         projectService.removeProject(id);
     }
 
-    @PostMapping("/v1/user")
-    @ApiOperation(value = "수정해야 됨 테스트용")
-    public CreateUserResponse registUser(@RequestBody User user) {
-        Long id = userService.join(user);
-        return new CreateUserResponse(id);
-    }
+//    @PostMapping("/v1/user")
+//    @ApiOperation(value = "수정해야 됨 테스트용")
+//    public CreateUserResponse registUser(@RequestBody User user) {
+//        Long id = userService.join(user);
+//        return new CreateUserResponse(id);
+//    }
 
     @GetMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 조회")

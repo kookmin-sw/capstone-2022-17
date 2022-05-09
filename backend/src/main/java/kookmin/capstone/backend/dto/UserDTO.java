@@ -9,9 +9,8 @@ import lombok.Setter;
 public class UserDTO {
 
     private String nickname;
-    private String phoneNumber;
+    private String email;
     private String avatar;
-    private String address;
     private Float rating;
     private String instaId;
     private String blog;
