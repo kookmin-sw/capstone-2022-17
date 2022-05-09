@@ -1,60 +1,100 @@
 package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
-import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.UserDTO;
-import kookmin.capstone.backend.dto.authDTO.AuthApiResponse;
+import kookmin.capstone.backend.dto.authDTO.response.*;
 import kookmin.capstone.backend.dto.authDTO.LoginDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
 import kookmin.capstone.backend.jwt.JwtTokenProvider;
 import kookmin.capstone.backend.repository.UserRepository;
+import kookmin.capstone.backend.service.UserService;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
 @Api(tags = {"유저 API"})
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthApiController {
 
 
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     // 회원가입
     @PostMapping("/join")
     @ApiOperation(value = "회원가입, eamil과 password 보내주면 됨")
-    public String join(@RequestBody SignupDTO signupDTO) {
-        User member = userRepository.save(User.builder()
-                .email(signupDTO.getEmail())
-                .password(passwordEncoder.encode(signupDTO.getPassword()))
-                .nickname(signupDTO.getNickname())
-                .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
+    public ResponseEntity<?> join(@Validated @RequestBody SignupDTO signupDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
+            // 200 response with 404 status code
+            //return ResponseEntity.ok(new ErrorResponse("404", "Validation failure", errors));
+            // or 404 request
+              return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", errors));
+        }
+        try {
+            if (userService.existUserByEmail(signupDTO.getEmail())) {
+                ExistUserException e = new ExistUserException("이미 존재 하는 회원입니다.");
+                throw e;
+            } else if (!signupDTO.getPassword().equals(signupDTO.getRepassword())) {
+                PasswordException e = new PasswordException("비밀번호 확인이 틀렸습니다.");
+                throw e;
+            } else if (userService.existUserByNickname(signupDTO.getNickname())) {
+                ExistNicknameException e = new ExistNicknameException("이미 있는 닉네임 입니다.");
+                throw e;
+            }
+
+        }catch (ExistUserException e){
+            return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
+        } catch (PasswordException e){
+            return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
+        } catch (ExistNicknameException e){
+            return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
+        }
+        User user = userService.join(signupDTO);
+        return ResponseEntity.ok(ResponseDTO.builder().
+                email(user.getEmail()).
+                nickname(user.getNickname()).
+                accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
                 .build());
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
     }
 
     // 로그인
     @PostMapping("/login")
     @ApiOperation(value = "로그인")
-    public String login(@RequestBody LoginDTO userDTO) {
-        User member = userRepository.findByEmail(userDTO.getEmail())
+    public ResponseEntity<?> login(@RequestBody LoginDTO userDTO) {
+        User user = null;
+        try {
+            user = userService.findUser(userDTO.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
-        if (!passwordEncoder.matches(userDTO.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+
+            if (!passwordEncoder.matches(userDTO.getPassword(), user.getPassword())) {
+                throw new IllegalArgumentException("잘못된 비밀번호입니다.");
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
         }
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRoles());
+
+        return ResponseEntity.ok(ResponseDTO.builder().
+                email(user.getEmail()).
+                nickname(user.getNickname()).
+                accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
+                .build());
     }
 
 

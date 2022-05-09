@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.Portfolio;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.dto.MemberSignupRequestDto;
@@ -103,7 +104,4 @@ public class User implements UserDetails {
 //        roleSet.add(role);
 //    }
 
-    public void encryptPassword(PasswordEncoder passwordEncoder) {
-        password = passwordEncoder.encode(password);
-    }
 }
