@@ -37,3 +37,4 @@ out/
 .vscode/
 EnvConfig.java
 src/main/resources/application-aws.yml
+/src/test/*
