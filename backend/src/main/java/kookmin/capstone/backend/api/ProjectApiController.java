@@ -58,10 +58,10 @@ public class ProjectApiController {
 
     @GetMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 조회")
-    public Long list(@RequestParam("page") Long page, @RequestBody ProjectSearchCond condition) {
-        for (int i = 0; i < condition.getTeckStacks().size(); i++) {
-            log.info(condition.getTeckStacks().get(i));
-        }
+    public Long list(@RequestParam("page") Long page) {
+//        for (int i = 0; i < condition.getTeckStacks().size(); i++) {
+//            log.info(condition.getTeckStacks().get(i));
+//        }
         return page;
     }
 
