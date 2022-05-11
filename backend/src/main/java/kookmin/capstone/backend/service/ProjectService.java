@@ -1,9 +1,10 @@
 package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.ProjectTech;
-import kookmin.capstone.backend.domain.TechStack;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.SimpleMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
@@ -60,11 +61,21 @@ public class ProjectService {
     }
 
     @Transactional
-    public void addProjectStack(List<String> techStack) {}
-
-    @Transactional
     public void removeProject(Long id) {
         projectRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Member addMember(SimpleMemberDTO simpleMemberDTO) {
+        User findUser = userRepository.findById(simpleMemberDTO.getUserId()).get();
+        Project findProject = projectRepository.findById(simpleMemberDTO.getProjectId()).get();
+        Member member = Member.builder().
+                user(findUser).
+                project(findProject).
+                build();
+        member.changeMember(findUser, findProject);
+        return member;
+
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {

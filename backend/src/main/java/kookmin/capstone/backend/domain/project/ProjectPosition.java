@@ -21,6 +21,16 @@ public class ProjectPosition {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    private int count;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="projectPosition")
+    private Position position;
 
+    private int cnt;
+
+    public void registPosition(Position position) {
+        this.position = position;
+    }
+
+    public void registProject(Project project) {
+        this.project = project;
+    }
 }

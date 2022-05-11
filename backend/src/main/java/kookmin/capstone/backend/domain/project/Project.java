@@ -3,6 +3,7 @@ package kookmin.capstone.backend.domain.project;
 import kookmin.capstone.backend.domain.DateEntity;
 import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.TechStack;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +46,13 @@ public class Project extends DateEntity {
     private String region;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<ProjectPosition> positions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectTech> techStack = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Member> members = new ArrayList<>();
 
     public void chageProject(String description, String thumbnail, ProjectStatus status,
                              String title, String purpose, String field, String region
@@ -64,6 +71,11 @@ public class Project extends DateEntity {
     public void addTechStack(ProjectTech stack) {
         techStack.add(stack);
         stack.registToProject(this);
+    }
+
+    public void addPosition(ProjectPosition position) {
+        positions.add(position);
+        position.registProject(this);
     }
 
     public void initTechStack(List<ProjectTech> techStack) {

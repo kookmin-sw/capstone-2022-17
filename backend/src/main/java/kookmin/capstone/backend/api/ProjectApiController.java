@@ -2,11 +2,16 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.TechStack;
-import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.domain.member.Member;
+import kookmin.capstone.backend.dto.MemberDTO;
+import kookmin.capstone.backend.dto.SimpleMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.dto.ProjectSearchCond;
+import kookmin.capstone.backend.response.DefalutResponse;
+import kookmin.capstone.backend.response.MemberResDTO;
+import kookmin.capstone.backend.response.ResponseMessage;
+import kookmin.capstone.backend.response.StatusCode;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.UserService;
 import lombok.AllArgsConstructor;
@@ -14,9 +19,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -59,10 +63,20 @@ public class ProjectApiController {
     @GetMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 조회")
     public Long list(@RequestParam("page") Long page, @RequestBody ProjectSearchCond condition) {
-        for (int i = 0; i < condition.getTeckStacks().size(); i++) {
-            log.info(condition.getTeckStacks().get(i));
-        }
+
         return page;
+    }
+
+    @PostMapping("/v1/member")
+    @ApiOperation(value = "멤버 추가")
+    public ResponseEntity addMember(@RequestBody SimpleMemberDTO simpleMemberDTO) {
+        Member member = projectService.addMember(simpleMemberDTO);
+
+        MemberResDTO memberResDTO = MemberResDTO.builder().
+                title(member.getProject().getTitle()).
+                email(member.getUser().getEmail()).
+                build();
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_ADD_SUCCESS, memberResDTO));
     }
 
 
