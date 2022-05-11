@@ -12,7 +12,6 @@ import java.util.Objects;
 @Getter
 @Builder
 @AllArgsConstructor @NoArgsConstructor
-@ToString(exclude = {"project"})
 public class ProjectTech {
 
     @Id
@@ -44,5 +43,14 @@ public class ProjectTech {
 
     public ProjectTech(String stack) {
         this.stack = stack;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectTech{" +
+                "id=" + id +
+                ", stack='" + stack + '\'' +
+                ", project.id=" + project.getId() +
+                '}';
     }
 }

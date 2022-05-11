@@ -1,9 +1,13 @@
 package kookmin.capstone.backend.service;
 
+import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
-import kookmin.capstone.backend.domain.TechStack;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
+import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.ProjectPositionDTO;
+import kookmin.capstone.backend.dto.SimpleMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
@@ -60,17 +64,28 @@ public class ProjectService {
     }
 
     @Transactional
-    public void addProjectStack(List<String> techStack) {}
-
-    @Transactional
     public void removeProject(Long id) {
         projectRepository.deleteById(id);
+    }
+
+    @Transactional
+    public Member addMember(SimpleMemberDTO simpleMemberDTO) {
+        User findUser = userRepository.findById(simpleMemberDTO.getUserId()).get();
+        Project findProject = projectRepository.findById(simpleMemberDTO.getProjectId()).get();
+        Member member = Member.builder().
+                user(findUser).
+                project(findProject).
+                build();
+        member.changeMember(findUser, findProject);
+        return member;
+
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {
         Optional<User> user = userRepository.findById(dto.getUserId());
 
         List<ProjectTech> techStack = new ArrayList<>();
+        List<ProjectPosition> projectPositions = new ArrayList<>();
 
         Project project = Project.builder().
                 title(dto.getTitle()).
@@ -86,6 +101,19 @@ public class ProjectService {
                 build();
         dto.getTechStack().stream().forEach(tech -> techStack.add(new ProjectTech(tech, project)));
         project.initTechStack(techStack);
+        dto.getProjectPositions().stream().forEach(projectPositionDTO -> {
+            projectPositions.add(ProjectPosition.builder().
+                    total(projectPositionDTO.getTotal()).
+                    currentCnt(projectPositionDTO.getCurrentCnt()).
+                    position(Position.builder().
+                            positionName(projectPositionDTO.getPositionName()).
+                            build()).
+                    project(project).
+                    build());
+        });
+
+        project.initPosition(projectPositions);
+
         return project;
     }
 }

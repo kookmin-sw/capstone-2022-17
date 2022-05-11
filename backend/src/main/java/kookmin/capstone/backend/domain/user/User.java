@@ -2,6 +2,7 @@ package kookmin.capstone.backend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.Portfolio;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.dto.MemberSignupRequestDto;
 import lombok.*;
@@ -61,6 +62,9 @@ public class User implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
+
+    @OneToMany(mappedBy = "user")
+    private List<Member> members = new ArrayList<>();
 
     public User(MemberSignupRequestDto request) {
         email = request.getEmail();

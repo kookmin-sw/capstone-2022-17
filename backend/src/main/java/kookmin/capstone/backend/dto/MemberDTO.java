@@ -2,16 +2,13 @@ package kookmin.capstone.backend.dto;
 
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.user.User;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class MemberDTO {
-
-    private User user;
-    private Project project;
+    private ProjectDTO project;
 }
