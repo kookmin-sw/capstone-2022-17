@@ -8,8 +8,7 @@ const UserMenu = () => {
 
   const trigger = (
     <span>
-      {/* 임시이미지 */}
-      <Avatar img="https://cdn.eyesmag.com/content/uploads/posts/2020/12/09/tesla-elon-musk-moves-to-texas-1-5b119051-2c23-449b-b554-7445558ebf62.jpg" />
+      <Avatar />
     </span>
   );
 

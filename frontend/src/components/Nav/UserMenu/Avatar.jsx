@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   overflow: hidden;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
   cursor: pointer;
 `;
@@ -18,7 +18,7 @@ const Img = styled.img`
 const Avatar = ({ img }) => {
   return (
     <Container>
-      <Img src={img} />
+      <Img src={img || `${process.env.PUBLIC_URL}/images/missing.png`} />
     </Container>
   );
 };

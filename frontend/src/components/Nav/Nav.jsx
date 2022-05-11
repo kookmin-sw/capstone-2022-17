@@ -20,7 +20,8 @@ const NavContainer = styled.div`
 
 const NavContent = styled.div`
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
+  height: 3.5rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -37,6 +38,12 @@ const RightContainer = styled.div`
   align-items: center;
 `;
 
+const NewProjectBtn = styled(Btn.PrimaryBtn)`
+  border-radius: 2.5rem !important;
+  height: 2.5rem;
+  padding: 0.5rem 1.5rem !important;
+`;
+
 const Nav = () => {
   return (
     <NavContainer>
@@ -47,7 +54,7 @@ const Nav = () => {
           <NavMenu>내 프로젝트</NavMenu>
         </LeftContainer>
         <RightContainer>
-          <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
+          <NewProjectBtn>프로젝트 생성</NewProjectBtn>
           <NotiIcon />
           <UserMenu />
         </RightContainer>
