@@ -82,9 +82,13 @@ public class Project extends DateEntity {
         this.techStack = techStack;
     }
 
-    //생성 메서드
-//    public static Project createProject() {
-//        return null;
-//    }
+    public void initPosition(List<ProjectPosition> positions) {
+        this.positions = positions;
+        for (ProjectPosition projectPosition : positions) {
+            projectPosition.registProject(this);
+            projectPosition.getPosition().registProjectPosition(projectPosition);
+        }
+    }
 
+    //생성 메서드
 }

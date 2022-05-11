@@ -24,11 +24,9 @@ public class ProjectPosition {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="projectPosition")
     private Position position;
 
-    private int cnt;
+    private int total;
 
-    public void registPosition(Position position) {
-        this.position = position;
-    }
+    private int currentCnt;
 
     public void registProject(Project project) {
         this.project = project;
