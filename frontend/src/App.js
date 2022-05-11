@@ -5,6 +5,7 @@ import wrapper from 'store/configureStore';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from 'styles/GlobalStyles';
 import theme from 'styles/theme';
+import 'styles/fonts.css';
 
 import { Home, SignIn, SignUp } from 'pages';
 import ResponsiveLayout from 'layouts/responsive.layout';

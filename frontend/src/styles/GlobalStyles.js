@@ -27,7 +27,8 @@ const GlobalStyles = createGlobalStyle`
     cursor: pointer;
   }
   body {
-    background-color: #F8F9FA;
+    background-color: #fff;
+    font-family: 'Pr-Regular';
   }
 `;
 
