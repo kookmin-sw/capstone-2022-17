@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Icon } from 'semantic-ui-react';
 
 const LikesNum = styled.div`
   font-size: ${({ theme }) => theme.fontSize.text};
-  color: ${({ theme }) => theme.color.primary};
+  color: black;
   display: flex;
-`;
-
-const LikesImg = styled.img`
-  width: 100%;
+  margin: 0 0.3rem;
+  color: #adadad;
 `;
 
 // 좋아요
 const Likes = ({ children }) => {
   return (
     <LikesNum>
-      <LikesImg /> {children}
+      <Icon name="heart outline" /> {children}
     </LikesNum>
   );
 };
