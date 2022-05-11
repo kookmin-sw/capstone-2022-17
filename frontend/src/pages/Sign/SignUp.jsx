@@ -7,7 +7,7 @@ import useInput from 'hooks/useInput';
 import styled from 'styled-components';
 import { Form, Grid, Divider } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
-import * as Btn from 'components/common/Button';
+import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
 import PrivacyModal from 'components/Terms/PrivacyModal';
 import TermModal from 'components/Terms/TermModal';

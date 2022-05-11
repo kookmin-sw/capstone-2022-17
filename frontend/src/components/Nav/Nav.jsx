@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
 import NavMenu from 'components/Nav/NavMenu';
-import PrimaryBtn from 'components/common/PrimaryBtn';
 import NotiIcon from 'components/Nav/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
+import * as Btn from 'components/common/Btn';
 
 const NavContainer = styled.div`
   background-color: white;
@@ -47,7 +47,7 @@ const Nav = () => {
           <NavMenu>내 프로젝트</NavMenu>
         </LeftContainer>
         <RightContainer>
-          <PrimaryBtn>프로젝트 생성</PrimaryBtn>
+          <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
           <NotiIcon />
           <UserMenu />
         </RightContainer>

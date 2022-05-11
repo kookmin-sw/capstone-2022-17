@@ -8,7 +8,7 @@ import useInput from 'hooks/useInput';
 import styled from 'styled-components';
 import { Form, Grid, Checkbox, Divider } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
-import * as Btn from 'components/common/Button';
+import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
