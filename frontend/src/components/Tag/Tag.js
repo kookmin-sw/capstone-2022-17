@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const TagDiv = styled.div`
   font-size: 0.8rem;
+  font-family: 'Pr-Light';
   color: #999999;
   background-color: #f5f5f5;
   border-radius: 1rem;

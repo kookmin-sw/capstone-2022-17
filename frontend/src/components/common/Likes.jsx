@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 
 const LikesNum = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.text};
-  color: black;
+  font-size: 0.6rem;
+  font-family: 'Pr-ExtraLight';
+  color: #adadad;
+
   display: flex;
   margin: 0 0.3rem;
-  color: #adadad;
 `;
 
 // 좋아요

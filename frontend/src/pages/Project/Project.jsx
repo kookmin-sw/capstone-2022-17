@@ -10,33 +10,34 @@ import Content from 'components/Projects/Content';
 import FloatingBox from 'components/FloatingBox/FloatingBox';
 
 const Container = styled.div`
-  background-color: green;
+  /* background-color: green; */
   display: flex;
+  /* max-width: 1320px; */
   width: 70%;
   margin: 0 auto 5rem auto;
 `;
 
 const ContentsBox = styled.div`
-  background-color: #9b7db7;
+  /* background-color: #9b7db7; */
   margin-right: 1rem;
   width: 70%;
 `;
 
 const TitleBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  background-color: pink;
+  /* background-color: pink; */
   justify-content: space-between;
   margin: 1rem 0;
 `;
 
 const TagBox = styled.div`
   margin: 0.5rem 0;
-  background-color: purple;
+  /* background-color: purple; */
 `;
 
 const InfoBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  background-color: gray;
+  /* background-color: gray; */
   border-bottom: 0.7px solid #adadad;
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -45,7 +46,7 @@ const InfoBox = styled.div`
 
 const IconBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  background-color: gold;
+  /* background-color: gold; */
 `;
 
 const Project = () => {

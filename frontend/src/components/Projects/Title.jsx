@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Container = styled.div`
   font-size: 1.3rem;
   font-weight: bold;
+  font-family: 'Pr-Regular';
   color: #444444;
 `;
 

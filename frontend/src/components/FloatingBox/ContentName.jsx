@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Name = styled.div`
   font-size: ${({ theme }) => theme.fontSize.text};
   font-weight: bold;
-  color: black;
+  color: #444444;
 `;
 
 // 항목 이름

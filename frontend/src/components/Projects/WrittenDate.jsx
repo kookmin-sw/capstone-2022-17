@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   font-size: 0.4rem;
-  color: #dadada;
+  font-family: 'Pr-ExtraLight';
+  color: #cacaca;
 `;
 
 const WrittenDate = ({ children }) => {

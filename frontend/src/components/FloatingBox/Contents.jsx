@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const Content = styled.div`
   font-size: ${({ theme }) => theme.fontSize.text};
-  color: #000000;
+  color: #888888;
 `;
 
 // 항목 이름

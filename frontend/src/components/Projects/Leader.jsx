@@ -5,7 +5,9 @@ import MiniAvatar from 'components/common/MiniAvatar';
 const Container = styled.div`
   display: flex;
   align-items: center;
+
   font-size: 0.7rem;
+  font-family: 'Pr-Regular';
   color: #555555;
 `;
 
