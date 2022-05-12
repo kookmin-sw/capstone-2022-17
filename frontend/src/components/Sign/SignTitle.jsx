@@ -17,7 +17,7 @@ const SignTitle = () => {
     <ColumnMiddleContainer>
       <Logo src="images/Logo.png" alt="Logo" />
       <br />
-      <P style={{ marginBottom: '5rem' }}>당신의 능력, 티밍에서 펼쳐보세요.</P>
+      <P style={{ marginBottom: '5rem' }}>당신의 능력, 티밍에서 펼쳐보세요!</P>
     </ColumnMiddleContainer>
   );
 };

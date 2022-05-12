@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import { SIGN_UP_REQUEST } from 'reducers/authentication';
 import { Link } from 'react-router-dom';
 import useInput from 'hooks/useInput';
@@ -11,6 +12,7 @@ import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
 import PrivacyModal from 'components/Terms/PrivacyModal';
 import TermModal from 'components/Terms/TermModal';
+import COLOR from 'constant/color';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
   margin-top: 6rem;
@@ -20,33 +22,34 @@ const Field = styled(Form.Field)`
   input {
     height: 3rem;
     font-size: 16px !important;
+    font-family: 'Pr-Regular' !important;
   }
   input[type='email'] {
-    font-family: 'NS-R' !important;
+    font-family: 'Pr-Regular' !important;
   }
   input[type='password'] {
     ::placeholder {
-      font-family: 'NS-R' !important;
+      font-family: 'Pr-Regular' !important;
     }
   }
 `;
 
 const Span = styled.span`
   text-align: center;
-  font-family: 'NS-R';
-  font-size: 12.5px;
-  color: ${({ theme }) => theme.color.gray};
+  font-family: 'Pr-Light';
+  font-size: 0.9rem;
+  color: ${COLOR.GRAY};
 `;
 
 const Strong = styled.strong`
   text-align: center;
-  font-family: 'NS-EB';
+  font-family: 'Pr-SemiBold';
   font-size: 15px;
   color: ${({ theme }) => theme.color.primary};
 `;
 const P = styled.p`
   text-align: center;
-  font-family: 'NS-R';
+  font-family: 'Pr-Regular';
   font-size: 15px;
 `;
 
@@ -56,9 +59,11 @@ const SignUp = () => {
   const [nonFieldError, setNonFieldError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [nickname, onChangeNickname] = useInput('');
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordCheck, onChangePasswordCheck] = useInput('');
+  const [, , removeCookie] = useCookies(['rememberEmail']);
 
   const handleSubmit = useCallback(() => {
     setEmailError('');
@@ -68,8 +73,9 @@ const SignUp = () => {
       type: SIGN_UP_REQUEST,
       data: {
         email,
-        password1: password,
-        password2: passwordCheck,
+        nickname,
+        password,
+        repassword: passwordCheck,
       },
     });
   });
@@ -82,6 +88,7 @@ const SignUp = () => {
       signupError.nonFieldErrors && setNonFieldError(nonFieldErrors[0]);
     }
     if (signupDone) {
+      removeCookie('rememberEmail');
       window.location.replace('/');
     }
     return () => {
@@ -96,6 +103,15 @@ const SignUp = () => {
       <Grid.Column centered>
         <SignTitle />
         <Form onSubmit={handleSubmit} style={{ width: '23rem', marginBottom: '1.5rem' }}>
+          <Field
+            fluid
+            required
+            placeholder="닉네임"
+            type="text"
+            control={Form.Input}
+            value={nickname}
+            onChange={onChangeNickname}
+          />
           <Field
             fluid
             required
@@ -135,7 +151,12 @@ const SignUp = () => {
           />
           <P style={{ color: 'red', fontSize: '15px' }}>{nonFieldError}</P>
           <Field>
-            <Btn.PrimaryBtn fluid type="submit" disabled={signupLoading}>
+            <Btn.PrimaryBtn
+              fluid
+              type="submit"
+              disabled={signupLoading}
+              style={{ height: '3rem ' }}
+            >
               회원가입
             </Btn.PrimaryBtn>
           </Field>

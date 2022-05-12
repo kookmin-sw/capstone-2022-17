@@ -9,8 +9,8 @@ import Term from './Term';
 
 export const Label = styled.span`
   cursor: pointer;
-  font-family: 'NS-R' !important;
-  font-size: 0.8rem;
+  font-family: 'Pr-Medium' !important;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.color.primary};
 
   &:hover {
