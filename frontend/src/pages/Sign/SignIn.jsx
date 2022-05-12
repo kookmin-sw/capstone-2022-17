@@ -21,25 +21,25 @@ const Field = styled(Form.Field)`
     font-size: 16px !important;
   }
   input[type='email'] {
-    font-family: 'NS-R' !important;
+    font-family: 'Pr-regular' !important;
   }
   input[type='password'] {
     ::placeholder {
-      font-family: 'NS-R' !important;
+      font-family: 'Pr-Regular' !important;
     }
   }
 `;
 
 const Strong = styled.strong`
   text-align: center;
-  font-family: 'NS-EB';
+  font-family: 'Pr-SemiBold';
   font-size: 15px;
   color: ${({ theme }) => theme.color.primary};
 `;
 
 const P = styled.p`
   text-align: center;
-  font-family: 'NS-R';
+  font-family: 'Pr-Regular';
   font-size: 15px;
 `;
 
