@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-expressions */
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import { SIGN_UP_REQUEST } from 'reducers/authentication';
 import { Link } from 'react-router-dom';
 import useInput from 'hooks/useInput';
@@ -62,6 +63,7 @@ const SignUp = () => {
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [passwordCheck, onChangePasswordCheck] = useInput('');
+  const [, , removeCookie] = useCookies(['rememberEmail']);
 
   const handleSubmit = useCallback(() => {
     setEmailError('');
@@ -86,6 +88,7 @@ const SignUp = () => {
       signupError.nonFieldErrors && setNonFieldError(nonFieldErrors[0]);
     }
     if (signupDone) {
+      removeCookie('rememberEmail');
       window.location.replace('/');
     }
     return () => {
@@ -148,7 +151,12 @@ const SignUp = () => {
           />
           <P style={{ color: 'red', fontSize: '15px' }}>{nonFieldError}</P>
           <Field>
-            <Btn.PrimaryBtn fluid type="submit" disabled={signupLoading}>
+            <Btn.PrimaryBtn
+              fluid
+              type="submit"
+              disabled={signupLoading}
+              style={{ height: '3rem ' }}
+            >
               회원가입
             </Btn.PrimaryBtn>
           </Field>

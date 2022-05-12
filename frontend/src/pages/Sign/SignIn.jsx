@@ -47,8 +47,7 @@ const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { signinLoading, signinDone, signinError } = useSelector((state) => state.authentication);
-  const [nonFieldError, setNonFieldError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [isRemember, setIsRemember] = useState(false);
@@ -63,14 +62,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (signinError) {
-      // eslint-disable-next-line no-shadow
-      const { email, nonFieldErrors } = signinError;
-      if (email) {
-        setEmailError(email);
-      }
-      if (nonFieldErrors) {
-        setNonFieldError('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
-      }
+      setErrorMsg('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
     }
   }, signinError);
 
@@ -102,11 +94,6 @@ const SignIn = () => {
             control={Form.Input}
             value={email}
             onChange={onChangeEmail}
-            error={
-              emailError.length > 0 && {
-                content: emailError,
-              }
-            }
           />
           <Field
             fluid
@@ -117,9 +104,9 @@ const SignIn = () => {
             value={password}
             onChange={onChangePassword}
           />
-          <P style={{ color: 'red', fontSize: '15px' }}>{nonFieldError}</P>
+          <P style={{ color: 'red', fontSize: '15px' }}>{errorMsg}</P>
           <Field>
-            <Btn.PrimaryBtn fluid type="submit" disable={signinLoading}>
+            <Btn.PrimaryBtn fluid type="submit" disable={signinLoading} style={{ height: '3rem ' }}>
               로그인
             </Btn.PrimaryBtn>
           </Field>
