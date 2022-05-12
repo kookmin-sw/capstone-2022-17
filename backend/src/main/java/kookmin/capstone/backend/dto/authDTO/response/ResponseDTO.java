@@ -11,4 +11,5 @@ public class ResponseDTO {
     private String accessToken;
     private String nickname;
     private String email;
+    private Long userId;
 }
