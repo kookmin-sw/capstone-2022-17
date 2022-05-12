@@ -118,7 +118,7 @@ const SignIn = () => {
             </Btn.PrimaryBtn>
           </Field>
         </Form>
-        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0 3rem 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0 2rem 0' }}>
           <Container.AlignMiddleContainer>
             <Checkbox
               checked={isRemember}
