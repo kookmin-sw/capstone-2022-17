@@ -12,43 +12,43 @@ import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
-  margin-top: 6rem;
+  margin-top: 2rem;
 `;
 
 const Field = styled(Form.Field)`
+  margin-bottom: 0.6rem !important;
   input {
-    height: 3rem;
-    font-size: 16px !important;
+    height: 2.3rem;
+    font-size: 0.85rem !important;
   }
   input[type='email'] {
-    font-family: 'NS-R' !important;
+    font-family: 'Pr-regular' !important;
   }
   input[type='password'] {
     ::placeholder {
-      font-family: 'NS-R' !important;
+      font-family: 'Pr-Regular' !important;
     }
   }
 `;
 
 const Strong = styled.strong`
   text-align: center;
-  font-family: 'NS-EB';
-  font-size: 15px;
+  font-family: 'Pr-SemiBold';
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.color.primary};
 `;
 
 const P = styled.p`
   text-align: center;
-  font-family: 'NS-R';
-  font-size: 15px;
+  font-family: 'Pr-Regular';
+  font-size: 0.85rem;
 `;
 
 const SignIn = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { signinLoading, signinDone, signinError } = useSelector((state) => state.authentication);
-  const [nonFieldError, setNonFieldError] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [email, onChangeEmail, setEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
   const [isRemember, setIsRemember] = useState(false);
@@ -63,14 +63,7 @@ const SignIn = () => {
 
   useEffect(() => {
     if (signinError) {
-      // eslint-disable-next-line no-shadow
-      const { email, nonFieldErrors } = signinError;
-      if (email) {
-        setEmailError(email);
-      }
-      if (nonFieldErrors) {
-        setNonFieldError('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
-      }
+      setErrorMsg('가입되지 않은 이메일이거나, 비밀번호가 올바르지 않습니다.');
     }
   }, signinError);
 
@@ -86,6 +79,7 @@ const SignIn = () => {
   }, [signinDone]);
 
   const handleSubmit = useCallback(() => {
+    setErrorMsg('');
     dispatch(signinRequestAction({ email, password }));
   }, [email, password]);
 
@@ -93,7 +87,7 @@ const SignIn = () => {
     <SignContainer>
       <Grid.Column centered>
         <SignTitle />
-        <Form onSubmit={handleSubmit} style={{ width: '23rem' }}>
+        <Form onSubmit={handleSubmit} style={{ width: '19rem' }}>
           <Field
             fluid
             placeholder="이메일"
@@ -102,11 +96,6 @@ const SignIn = () => {
             control={Form.Input}
             value={email}
             onChange={onChangeEmail}
-            error={
-              emailError.length > 0 && {
-                content: emailError,
-              }
-            }
           />
           <Field
             fluid
@@ -117,14 +106,19 @@ const SignIn = () => {
             value={password}
             onChange={onChangePassword}
           />
-          <P style={{ color: 'red', fontSize: '15px' }}>{nonFieldError}</P>
+          <P style={{ color: 'red', fontSize: '0.8rem' }}>{errorMsg}</P>
           <Field>
-            <Btn.PrimaryBtn fluid type="submit" disable={signinLoading}>
+            <Btn.PrimaryBtn
+              fluid
+              type="submit"
+              disable={signinLoading}
+              style={{ height: '2.5rem ' }}
+            >
               로그인
             </Btn.PrimaryBtn>
           </Field>
         </Form>
-        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0 3rem 0' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0 2rem 0' }}>
           <Container.AlignMiddleContainer>
             <Checkbox
               checked={isRemember}
@@ -141,8 +135,8 @@ const SignIn = () => {
           </Link> */}
         </div>
         <Divider />
-        <Container.AlignCenterContainer>
-          <div style={{ marginRight: '1.5rem' }}>아직 회원이 아니세요?</div>
+        <Container.AlignCenterContainer style={{ alignItems: 'baseline' }}>
+          <P style={{ marginRight: '1rem', fontSize: '0.85rem' }}>아직 회원이 아니세요?</P>
           <Link to="/signup">
             <Strong>회원가입</Strong>
           </Link>

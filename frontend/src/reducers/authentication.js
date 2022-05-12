@@ -41,6 +41,7 @@ const reducer = (state = initialState, action) =>
         break;
       case SIGN_IN_FAILURE:
         draft.signinLoading = false;
+        console.log(action.error);
         draft.signinError = action.error;
         break;
       case SIGN_UP_REQUEST:

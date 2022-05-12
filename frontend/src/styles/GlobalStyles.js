@@ -29,6 +29,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: #fff;
     font-family: 'Pr-Regular';
+    font-size: 0.9rem;
   }
 `;
 

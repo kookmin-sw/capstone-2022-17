@@ -1,10 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
 import NavMenu from 'components/Nav/NavMenu';
 import NotiIcon from 'components/Nav/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
 import * as Btn from 'components/common/Btn';
+import SignBtn from 'components/Nav/SignBtn';
 
 const NavContainer = styled.div`
   background-color: white;
@@ -12,7 +15,7 @@ const NavContainer = styled.div`
   top: 0;
   width: 100%;
   z-index: 999;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   box-shadow: 1px 1px 10px -5px black;
   display: flex;
   justify-content: center;
@@ -21,7 +24,8 @@ const NavContainer = styled.div`
 const NavContent = styled.div`
   width: 100%;
   max-width: 1300px;
-  height: 3.5rem;
+  height: 2.5rem;
+  margin: 0 3rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -38,25 +42,31 @@ const RightContainer = styled.div`
   align-items: center;
 `;
 
-const NewProjectBtn = styled(Btn.PrimaryBtn)`
-  border-radius: 2.5rem !important;
-  height: 2.5rem;
-  padding: 0.5rem 1.5rem !important;
-`;
-
 const Nav = () => {
+  const { user } = useSelector((state) => state.authentication);
+
   return (
     <NavContainer>
       <NavContent>
         <LeftContainer>
           <Logo />
-          <NavMenu>프로젝트 둘러보기</NavMenu>
-          <NavMenu>내 프로젝트</NavMenu>
+          <Link to="projects">
+            <NavMenu>프로젝트 둘러보기</NavMenu>
+          </Link>
+          <Link to="myproject">
+            <NavMenu>내 프로젝트</NavMenu>
+          </Link>
         </LeftContainer>
         <RightContainer>
-          <NewProjectBtn>프로젝트 생성</NewProjectBtn>
-          <NotiIcon />
-          <UserMenu />
+          {user ? (
+            <>
+              <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
+              <NotiIcon />
+              <UserMenu />
+            </>
+          ) : (
+            <SignBtn />
+          )}
         </RightContainer>
       </NavContent>
     </NavContainer>
