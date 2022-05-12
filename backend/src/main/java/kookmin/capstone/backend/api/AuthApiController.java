@@ -69,6 +69,7 @@ public class AuthApiController {
         return ResponseEntity.ok(ResponseDTO.builder().
                 email(user.getEmail()).
                 nickname(user.getNickname()).
+                userId(user.getId()).
                 accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
                 .build());
     }
@@ -93,6 +94,7 @@ public class AuthApiController {
         return ResponseEntity.ok(ResponseDTO.builder().
                 email(user.getEmail()).
                 nickname(user.getNickname()).
+                userId(user.getId()).
                 accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
                 .build());
     }
