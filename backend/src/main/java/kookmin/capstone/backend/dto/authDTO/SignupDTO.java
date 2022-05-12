@@ -18,7 +18,6 @@ public class SignupDTO {
     private String password;
 
     @NotBlank(message = "확인 비밀번호는 공백일 수 없습니다.")
-    @Size(min = 6, message = "비밀번호는 6자리 이상이어야 합니다.")
     private String repassword;
 
     @NotBlank(message = "닉네임은 공백일 수 없습니다.")
