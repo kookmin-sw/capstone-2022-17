@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const LogoImg = styled.img`
   width: auto;
-  height: 2.5rem;
-  margin-right: 3rem;
+  height: 2rem;
+  margin-right: 2rem;
 `;
 
 const Logo = () => {

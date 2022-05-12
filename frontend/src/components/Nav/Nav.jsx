@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
@@ -14,7 +15,7 @@ const NavContainer = styled.div`
   top: 0;
   width: 100%;
   z-index: 999;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
   box-shadow: 1px 1px 10px -5px black;
   display: flex;
   justify-content: center;
@@ -23,8 +24,8 @@ const NavContainer = styled.div`
 const NavContent = styled.div`
   width: 100%;
   max-width: 1300px;
-  height: 3.5rem;
-  margin: 0 2rem;
+  height: 2.5rem;
+  margin: 0 3rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -49,8 +50,12 @@ const Nav = () => {
       <NavContent>
         <LeftContainer>
           <Logo />
-          <NavMenu>프로젝트 둘러보기</NavMenu>
-          <NavMenu>내 프로젝트</NavMenu>
+          <Link to="projects">
+            <NavMenu>프로젝트 둘러보기</NavMenu>
+          </Link>
+          <Link to="myproject">
+            <NavMenu>내 프로젝트</NavMenu>
+          </Link>
         </LeftContainer>
         <RightContainer>
           {user ? (

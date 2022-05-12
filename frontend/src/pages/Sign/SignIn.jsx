@@ -12,13 +12,14 @@ import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
-  margin-top: 6rem;
+  margin-top: 2rem;
 `;
 
 const Field = styled(Form.Field)`
+  margin-bottom: 0.6rem !important;
   input {
-    height: 3rem;
-    font-size: 16px !important;
+    height: 2.3rem;
+    font-size: 0.85rem !important;
   }
   input[type='email'] {
     font-family: 'Pr-regular' !important;
@@ -33,14 +34,14 @@ const Field = styled(Form.Field)`
 const Strong = styled.strong`
   text-align: center;
   font-family: 'Pr-SemiBold';
-  font-size: 15px;
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.color.primary};
 `;
 
 const P = styled.p`
   text-align: center;
   font-family: 'Pr-Regular';
-  font-size: 15px;
+  font-size: 0.85rem;
 `;
 
 const SignIn = () => {
@@ -78,6 +79,7 @@ const SignIn = () => {
   }, [signinDone]);
 
   const handleSubmit = useCallback(() => {
+    setErrorMsg('');
     dispatch(signinRequestAction({ email, password }));
   }, [email, password]);
 
@@ -85,7 +87,7 @@ const SignIn = () => {
     <SignContainer>
       <Grid.Column centered>
         <SignTitle />
-        <Form onSubmit={handleSubmit} style={{ width: '23rem' }}>
+        <Form onSubmit={handleSubmit} style={{ width: '19rem' }}>
           <Field
             fluid
             placeholder="이메일"
@@ -104,9 +106,14 @@ const SignIn = () => {
             value={password}
             onChange={onChangePassword}
           />
-          <P style={{ color: 'red', fontSize: '15px' }}>{errorMsg}</P>
+          <P style={{ color: 'red', fontSize: '0.8rem' }}>{errorMsg}</P>
           <Field>
-            <Btn.PrimaryBtn fluid type="submit" disable={signinLoading} style={{ height: '3rem ' }}>
+            <Btn.PrimaryBtn
+              fluid
+              type="submit"
+              disable={signinLoading}
+              style={{ height: '2.5rem ' }}
+            >
               로그인
             </Btn.PrimaryBtn>
           </Field>
@@ -128,8 +135,8 @@ const SignIn = () => {
           </Link> */}
         </div>
         <Divider />
-        <Container.AlignCenterContainer>
-          <div style={{ marginRight: '1.5rem' }}>아직 회원이 아니세요?</div>
+        <Container.AlignCenterContainer style={{ alignItems: 'baseline' }}>
+          <P style={{ marginRight: '1rem', fontSize: '0.85rem' }}>아직 회원이 아니세요?</P>
           <Link to="/signup">
             <Strong>회원가입</Strong>
           </Link>

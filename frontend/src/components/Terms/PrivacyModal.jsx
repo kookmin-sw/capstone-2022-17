@@ -10,7 +10,7 @@ import Privacy from './Privacy';
 export const Label = styled.span`
   cursor: pointer;
   font-family: 'Pr-Medium' !important;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: ${({ theme }) => theme.color.primary};
 
   &:hover {

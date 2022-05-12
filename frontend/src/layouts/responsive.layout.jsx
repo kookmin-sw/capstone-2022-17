@@ -11,7 +11,7 @@ const MainContainer = styled.div`
 `;
 
 const ContentContainer = styled.div`
-  margin-top: 7rem;
+  margin-top: 6rem;
 `;
 
 const ResponsiveLayout = ({ children }) => {

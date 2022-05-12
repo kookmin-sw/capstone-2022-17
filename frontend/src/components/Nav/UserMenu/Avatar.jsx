@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   overflow: hidden;
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 2.2rem;
+  width: 2.2rem;
   border-radius: 50%;
   cursor: pointer;
 `;

@@ -4,13 +4,13 @@ import { darken } from 'polished';
 import COLOR from 'constant/color';
 
 export const PrimaryBtn = styled(Button)`
-  height: 2.5rem;
+  height: 2rem;
   color: white !important;
   background: linear-gradient(to right, ${COLOR.PRIMARY}, ${COLOR.SUB}) !important;
   font-family: 'PR-Light' !important;
-  font-size: 18px !important;
+  font-size: 0.9rem !important;
   border-radius: 2.5rem !important;
-  padding: 0.5rem 1.5rem !important;
+  padding: 0.5rem 1.2rem !important;
 
   &:hover {
     background: linear-gradient(

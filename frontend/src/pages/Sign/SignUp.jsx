@@ -15,13 +15,14 @@ import TermModal from 'components/Terms/TermModal';
 import COLOR from 'constant/color';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
-  margin-top: 6rem;
+  margin-top: 2rem;
 `;
 
 const Field = styled(Form.Field)`
+  margin-bottom: 0.6rem !important;
   input {
-    height: 3rem;
-    font-size: 16px !important;
+    height: 2.3rem;
+    font-size: 0.85rem !important;
     font-family: 'Pr-Regular' !important;
   }
   input[type='email'] {
@@ -37,28 +38,26 @@ const Field = styled(Form.Field)`
 const Span = styled.span`
   text-align: center;
   font-family: 'Pr-Light';
-  font-size: 0.9rem;
+  font-size: 0.75rem;
   color: ${COLOR.GRAY};
 `;
 
 const Strong = styled.strong`
   text-align: center;
   font-family: 'Pr-SemiBold';
-  font-size: 15px;
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.color.primary};
 `;
 const P = styled.p`
   text-align: center;
   font-family: 'Pr-Regular';
-  font-size: 15px;
+  font-size: 0.85rem;
 `;
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const { signupLoading, signupError, signupDone } = useSelector((state) => state.authentication);
-  const [nonFieldError, setNonFieldError] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
   const [nickname, onChangeNickname] = useInput('');
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
@@ -66,9 +65,7 @@ const SignUp = () => {
   const [, , removeCookie] = useCookies(['rememberEmail']);
 
   const handleSubmit = useCallback(() => {
-    setEmailError('');
-    setPasswordError('');
-    setNonFieldError('');
+    setErrorMsg('');
     dispatch({
       type: SIGN_UP_REQUEST,
       data: {
@@ -82,19 +79,14 @@ const SignUp = () => {
 
   useEffect(() => {
     if (signupError) {
-      const { nonFieldErrors, password1 } = signupError;
-      signupError.email && setEmailError(signupError.email);
-      signupError.password1 && setPasswordError(password1);
-      signupError.nonFieldErrors && setNonFieldError(nonFieldErrors[0]);
+      setErrorMsg(signupError.messages);
     }
     if (signupDone) {
       removeCookie('rememberEmail');
       window.location.replace('/');
     }
     return () => {
-      setEmailError('');
-      setPasswordError('');
-      setNonFieldError('');
+      setErrorMsg('');
     };
   }, [signupError, signupDone]);
 
@@ -102,7 +94,7 @@ const SignUp = () => {
     <SignContainer>
       <Grid.Column centered>
         <SignTitle />
-        <Form onSubmit={handleSubmit} style={{ width: '23rem', marginBottom: '1.5rem' }}>
+        <Form onSubmit={handleSubmit} style={{ width: '19rem', marginBottom: '1.5rem' }}>
           <Field
             fluid
             required
@@ -120,11 +112,6 @@ const SignUp = () => {
             control={Form.Input}
             value={email}
             onChange={onChangeEmail}
-            error={
-              emailError.length > 0 && {
-                content: emailError,
-              }
-            }
           />
           <Field
             fluid
@@ -134,11 +121,6 @@ const SignUp = () => {
             control={Form.Input}
             value={password}
             onChange={onChangePassword}
-            error={
-              passwordError.length > 0 && {
-                content: passwordError,
-              }
-            }
           />
           <Field
             fluid
@@ -149,20 +131,20 @@ const SignUp = () => {
             value={passwordCheck}
             onChange={onChangePasswordCheck}
           />
-          <P style={{ color: 'red', fontSize: '15px' }}>{nonFieldError}</P>
+          <P style={{ color: 'red', fontSize: '0.8rem' }}>{errorMsg}</P>
           <Field>
             <Btn.PrimaryBtn
               fluid
               type="submit"
-              disabled={signupLoading}
-              style={{ height: '3rem ' }}
+              disable={signupLoading}
+              style={{ height: '2.5rem ' }}
             >
               회원가입
             </Btn.PrimaryBtn>
           </Field>
         </Form>
-        <Container.AlignCenterContainer style={{ marginBottom: '1.5rem' }}>
-          <div style={{ marginRight: '1rem' }}>이미 계정이 있으세요?</div>
+        <Container.AlignCenterContainer style={{ marginBottom: '1.5rem', alignItems: 'baseline' }}>
+          <div style={{ marginRight: '1rem', fontSize: '0.85rem' }}>이미 계정이 있으세요?</div>
           <Link to="/signin">
             <Strong>로그인</Strong>
           </Link>
