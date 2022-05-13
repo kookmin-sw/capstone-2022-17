@@ -9,12 +9,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProjectRepository extends JpaRepository<Project, Long>, ProjectRepositoryCustom{
 
     Project findByTitle(String title);
 
     boolean existsByTitle(String title);
+
+    Optional<Project> findById(Long id);
 
 //    Page<Project> findByTitleContaining(String searchTitle, Pageable pageable);
 }

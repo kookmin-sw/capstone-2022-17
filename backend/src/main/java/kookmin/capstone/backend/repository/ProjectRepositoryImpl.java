@@ -6,7 +6,7 @@ import kookmin.capstone.backend.domain.QProjectTech;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.QProject;
 import kookmin.capstone.backend.domain.user.QUser;
-import kookmin.capstone.backend.dto.ProjectSearchCond;
+import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 
 
 import javax.persistence.EntityManager;

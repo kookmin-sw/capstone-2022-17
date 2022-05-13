@@ -7,7 +7,8 @@ import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
-import kookmin.capstone.backend.dto.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +106,17 @@ public class ProjectService {
                 build();
 
         return memberResDTO;
+    }
+
+    public List<ProjectPositionDTO> findProjectPositions(Long id) {
+        Project findProject = projectRepository.findById(id).orElseThrow(EntityExistsException::new);
+        List<ProjectPositionDTO> positionList = new ArrayList<>();
+
+        for (ProjectPosition projectPosition : findProject.getPositions()) {
+            positionList.add(ProjectPositionDTO.entityToDto(projectPosition));
+        }
+
+        return positionList;
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {

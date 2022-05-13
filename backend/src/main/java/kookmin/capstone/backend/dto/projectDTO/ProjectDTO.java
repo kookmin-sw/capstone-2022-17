@@ -1,19 +1,12 @@
-package kookmin.capstone.backend.dto;
+package kookmin.capstone.backend.dto.projectDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.querydsl.core.annotations.QueryProjection;
-import kookmin.capstone.backend.domain.ProjectTech;
-import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
-import kookmin.capstone.backend.domain.user.User;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter @Builder

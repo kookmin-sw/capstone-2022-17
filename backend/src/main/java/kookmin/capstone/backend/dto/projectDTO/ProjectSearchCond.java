@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.dto;
+package kookmin.capstone.backend.dto.projectDTO;
 
 import kookmin.capstone.backend.domain.ProjectTech;
 import lombok.Data;

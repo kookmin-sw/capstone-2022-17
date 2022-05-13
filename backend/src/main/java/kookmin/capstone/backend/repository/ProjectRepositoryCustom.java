@@ -1,8 +1,7 @@
 package kookmin.capstone.backend.repository;
 
 import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.dto.ProjectDTO;
-import kookmin.capstone.backend.dto.ProjectSearchCond;
+import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 
 import java.util.List;
 

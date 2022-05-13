@@ -5,8 +5,9 @@ import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
-import kookmin.capstone.backend.dto.ProjectDTO;
-import kookmin.capstone.backend.dto.ProjectSearchCond;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -27,6 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,18 +69,17 @@ public class ProjectApiController {
         projectService.removeProject(id);
     }
 
-//    @PostMapping("/v1/user")
-//    @ApiOperation(value = "수정해야 됨 테스트용")
-//    public CreateUserResponse registUser(@RequestBody User user) {
-//        Long id = userService.join(user);
-//        return new CreateUserResponse(id);
-//    }
-
     @GetMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 조회")
     public Long list(@RequestParam("page") Long page, @RequestBody ProjectSearchCond condition) {
 
         return page;
+    }
+
+    @GetMapping("/v1/project")
+    @ApiOperation(value = "프로젝트 현황 조회")
+    public ResponseEntity getProjectPositionList(@RequestParam Long id) {
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.POSITION_GET_SUCCESS ,projectService.findProjectPositions(id)));
     }
 
     @PostMapping("/v1/member")

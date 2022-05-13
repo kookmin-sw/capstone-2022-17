@@ -5,6 +5,7 @@ import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -48,7 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // 요청에 대한 사용권한 체크
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/user/**").hasRole("USER")
-                .antMatchers("/api/v1/project").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE,"/api/v1/project").hasRole("USER")
+                .antMatchers(HttpMethod.POST,"/api/v1/project").hasRole("USER")
+                .antMatchers(HttpMethod.PATCH,"/api/v1/project").hasRole("USER")
+                .antMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
                 .cors()
