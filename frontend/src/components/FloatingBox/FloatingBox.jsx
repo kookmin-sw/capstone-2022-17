@@ -90,7 +90,7 @@ const FloatingBox = () => {
       </StatusBox>
       <ContentBox>
         <ContentName>프로젝트 기간</ContentName>
-        <Contents>23.5.7 ~ 23.5.9</Contents>
+        <Contents>23.12.7 ~ 23.12.9</Contents>
       </ContentBox>
       <ContentBox>
         <ContentName>분야</ContentName>

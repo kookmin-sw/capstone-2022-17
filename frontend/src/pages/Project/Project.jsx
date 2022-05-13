@@ -10,9 +10,7 @@ import Content from 'components/Projects/Content';
 import FloatingBox from 'components/FloatingBox/FloatingBox';
 
 const Container = styled.div`
-  /* background-color: green; */
   display: flex;
-  /* max-width: 1320px; */
   min-width: 600px;
   margin: 0 auto 5rem auto;
 
@@ -28,30 +26,27 @@ const Container = styled.div`
 
   /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
   @media all and (max-width: 767px) {
+    width: 630px;
   }
 `;
 
 const ContentsBox = styled.div`
-  /* background-color: #9b7db7; */
   margin-right: 1rem;
   width: 70%;
 `;
 
 const TitleBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  /* background-color: pink; */
   justify-content: space-between;
   margin: 1rem 0;
 `;
 
 const TagBox = styled.div`
   margin: 0.5rem 0;
-  /* background-color: purple; */
 `;
 
 const InfoBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  /* background-color: gray; */
   border-bottom: 0.7px solid #adadad;
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -60,7 +55,6 @@ const InfoBox = styled.div`
 
 const IconBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  /* background-color: gold; */
 `;
 
 const Project = () => {
