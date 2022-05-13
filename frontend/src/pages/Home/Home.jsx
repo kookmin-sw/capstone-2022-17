@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const TestContainer = styled.div`
   margin-top: 2rem;
   ${({ theme }) => theme.common.flexCenterColumn};
-  font-size: 1.2rem;
+  font-size: 0.9rem;
 `;
 
 const Home = () => {

@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import COLOR from 'constant/color';
 
-const LogoText = styled.div`
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: ${COLOR.PRIMARY};
-  margin-right: 3rem;
-  cursor: pointer;
+const LogoImg = styled.img`
+  width: auto;
+  height: 2rem;
+  margin-right: 2rem;
 `;
 
 const Logo = () => {
-  return <LogoText onClick={() => window.location.replace('/')}>TEAMMING</LogoText>;
+  return (
+    <LogoImg
+      onClick={() => window.location.replace('/')}
+      src={`${process.env.PUBLIC_URL}/images/Logo.png`}
+    />
+  );
 };
 
 export default Logo;
