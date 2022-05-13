@@ -48,13 +48,13 @@ public class AuthApiController {
               return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", errors));
         }
         try {
-            if (userService.existUserByEmail(signupDTO.getEmail())) {
+            if (userService.existUserByEmail(signupDTO.getEmail().strip())) {
                 ExistUserException e = new ExistUserException("이미 존재 하는 회원입니다.");
                 throw e;
             } else if (!signupDTO.getPassword().equals(signupDTO.getRepassword())) {
                 PasswordException e = new PasswordException("비밀번호 확인이 틀렸습니다.");
                 throw e;
-            } else if (userService.existUserByNickname(signupDTO.getNickname())) {
+            } else if (userService.existUserByNickname(signupDTO.getNickname().strip())) {
                 ExistNicknameException e = new ExistNicknameException("이미 있는 닉네임 입니다.");
                 throw e;
             }
@@ -70,6 +70,7 @@ public class AuthApiController {
         return ResponseEntity.ok(ResponseDTO.builder().
                 email(user.getEmail()).
                 nickname(user.getNickname()).
+                userId(user.getId()).
                 accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
                 .build());
     }
@@ -94,6 +95,7 @@ public class AuthApiController {
         return ResponseEntity.ok(ResponseDTO.builder().
                 email(user.getEmail()).
                 nickname(user.getNickname()).
+                userId(user.getId()).
                 accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
                 .build());
     }
