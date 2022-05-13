@@ -1,11 +1,10 @@
 package kookmin.capstone.backend.config;
 
-import kookmin.capstone.backend.jwt.JwtAuthenticationFilter;
-import kookmin.capstone.backend.jwt.JwtTokenProvider;
+import kookmin.capstone.backend.service.jwt.JwtAuthenticationFilter;
+import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,7 +23,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenService jwtTokenProvider;
 
     // 암호화에 필요한 PasswordEncoder 를 Bean 등록
     @Bean
