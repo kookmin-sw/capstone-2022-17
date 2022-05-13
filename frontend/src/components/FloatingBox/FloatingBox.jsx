@@ -2,7 +2,7 @@ import CardHeadCount from 'components/Card/CardHeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';
-import Position from 'components/Projects/Position';
+import Position from 'components/Projects/ProjectDetail/Position';
 import * as Btn from 'components/common/Btn';
 import ContentName from './ContentName';
 import Contents from './Contents';
