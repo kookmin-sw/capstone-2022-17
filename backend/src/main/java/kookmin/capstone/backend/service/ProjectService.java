@@ -7,7 +7,7 @@ import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
-import kookmin.capstone.backend.dto.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
