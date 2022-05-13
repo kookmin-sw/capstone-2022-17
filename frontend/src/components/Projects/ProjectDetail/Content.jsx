@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  font-size: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.3rem;
 `;
 
 const Content = ({ children }) => {

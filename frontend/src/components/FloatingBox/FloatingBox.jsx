@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   border-top: 3px solid #4596ff !important;
   border: 1px solid #cecece;
   width: 30%;
+  height: 100%;
+  position: sticky;
 `;
 
 const ContentBox = styled.div`
@@ -57,15 +59,6 @@ const SupplyBtn = styled(Btn.PrimaryBtn)`
   height: 2.5rem !important;
   margin-top: 0.5rem !important;
 `;
-
-// const SupplyBtn = styled(Button)`
-//   margin: 0.3rem 0.1rem;
-//   padding: 0.7rem;
-//   background-color: white !important;
-//   color: ${({ theme }) => theme.color.primary} !important;
-//   font-size: 0.8rem !important;
-//   width: 100%;
-// `;
 
 const FloatingBox = () => {
   return (

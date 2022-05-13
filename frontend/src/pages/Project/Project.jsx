@@ -12,7 +12,9 @@ import FloatingBox from 'components/FloatingBox/FloatingBox';
 const Container = styled.div`
   display: flex;
   min-width: 600px;
+  max-width: 1300px;
   margin: 0 auto 5rem auto;
+  position: relative;
 
   /* PC (해상도 1024px)*/
   @media all and (min-width: 1024px) {
