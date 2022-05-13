@@ -10,9 +10,8 @@ public class UserDTO {
 
     private Long id;
     private String nickname;
-    private String email;
     private String avatar;
-    private Float rating;
     private String instaId;
     private String blog;
+    private String github;
 }

@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.UserDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
 import kookmin.capstone.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,16 @@ public class UserService {
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build());
         return user;
+    }
+
+    @Transactional
+    public UserDTO updateUser(UserDTO userDTO) {
+        User findUser = userRepository.findById(userDTO.getId()).orElseThrow(EntityNotFoundException::new);
+
+        findUser.update(userDTO.getNickname(), userDTO.getAvatar(), userDTO.getInstaId(),
+                userDTO.getBlog(), userDTO.getGithub());
+
+        return userDTO;
     }
 
     public User findUserById(Long id) {
