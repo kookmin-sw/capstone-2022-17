@@ -13,8 +13,22 @@ const Container = styled.div`
   /* background-color: green; */
   display: flex;
   /* max-width: 1320px; */
-  width: 70%;
+  min-width: 600px;
   margin: 0 auto 5rem auto;
+
+  /* PC (해상도 1024px)*/
+  @media all and (min-width: 1024px) {
+    width: 850px;
+  }
+
+  /* 테블릿 가로, 테블릿 세로 (해상도 768px ~ 1023px)*/
+  @media all and (min-width: 768px) and (max-width: 1023px) {
+    width: 700px;
+  }
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+  }
 `;
 
 const ContentsBox = styled.div`
