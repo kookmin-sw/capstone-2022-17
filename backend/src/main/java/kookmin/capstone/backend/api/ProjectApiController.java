@@ -38,7 +38,6 @@ import java.util.List;
 public class ProjectApiController {
 
     private final ProjectService projectService;
-    private final UserService userService;
     private final JwtTokenService jwtTokenService;
 
     // 보낸 객체를 그대로
@@ -81,32 +80,6 @@ public class ProjectApiController {
     public ResponseEntity getProjectPositionList(@RequestParam Long id) {
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.POSITION_GET_SUCCESS ,projectService.findProjectPositions(id)));
     }
-
-    @PostMapping("/v1/member")
-    @ApiOperation(value = "멤버 추가")
-    public ResponseEntity addMember(@RequestBody RequestMemberDTO requestMemberDTO) throws MemberException {
-        Member member = null;
-        try {
-            member = projectService.addMember(requestMemberDTO);
-        } catch (MemberAddException e) {
-            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
-        }
-        MemberResDTO memberResDTO = MemberResDTO.builder().
-                title(member.getProject().getTitle()).
-                email(member.getUser().getEmail()).
-                memberType(member.getMemberType()).
-                build();
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_ADD_SUCCESS, memberResDTO));
-    }
-
-    @PatchMapping("/v1/member/join")
-    @ApiOperation(value = "멤버 승인 및 거절")
-    public ResponseEntity joinMember(@RequestBody RequestMemberDTO requestMemberDTO) {
-        MemberResDTO memberResDTO = projectService.joinMember(requestMemberDTO);
-
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));
-    }
-
 
     @Data @AllArgsConstructor
     static class CreatePojectResponse {
