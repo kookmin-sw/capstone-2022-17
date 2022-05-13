@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
-@Api(tags = {"유저 API"})
+@Api(tags = {"로그인/회원가입 API"})
 @RequiredArgsConstructor
 public class AuthApiController {
 

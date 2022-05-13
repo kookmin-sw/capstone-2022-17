@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.api;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.dto.UserDTO;
 import kookmin.capstone.backend.response.DefalutResponse;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(tags = {"유저 API"})
 public class UserApiController {
 
     private final UserService userService;
