@@ -15,11 +15,10 @@ import javax.persistence.*;
 public class Position {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_position_id")
+    @Column(name = "position_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "position")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy="position")
     private ProjectPosition projectPosition;
 
     private String positionName;

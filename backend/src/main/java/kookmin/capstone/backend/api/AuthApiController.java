@@ -2,10 +2,12 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
 import kookmin.capstone.backend.domain.user.User;
-import kookmin.capstone.backend.dto.UserDTO;
 import kookmin.capstone.backend.dto.authDTO.response.*;
 import kookmin.capstone.backend.dto.authDTO.LoginDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
+import kookmin.capstone.backend.exception.authException.ExistNicknameException;
+import kookmin.capstone.backend.exception.authException.ExistUserException;
+import kookmin.capstone.backend.exception.authException.PasswordException;
 import kookmin.capstone.backend.jwt.JwtTokenProvider;
 import kookmin.capstone.backend.repository.UserRepository;
 import kookmin.capstone.backend.service.UserService;
@@ -20,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

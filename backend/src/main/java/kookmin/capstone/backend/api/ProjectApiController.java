@@ -4,10 +4,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.member.Member;
-import kookmin.capstone.backend.dto.MemberDTO;
 import kookmin.capstone.backend.dto.SimpleMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.dto.ProjectSearchCond;
+import kookmin.capstone.backend.exception.memberException.MemberAddException;
+import kookmin.capstone.backend.exception.memberException.MemberException;
+import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
+import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.response.DefalutResponse;
 import kookmin.capstone.backend.response.MemberResDTO;
 import kookmin.capstone.backend.response.ResponseMessage;
@@ -35,9 +38,13 @@ public class ProjectApiController {
     // 보낸 객체를 그대로
     @PostMapping("/v1/project")
     @ApiOperation(value = "프로젝트 등록")
-    public ProjectDTO registProject(@RequestBody ProjectDTO projectDTO) {
-        projectService.registProject(projectDTO);
-        return projectDTO;
+    public ResponseEntity registProject(@RequestBody ProjectDTO projectDTO) throws ProjectException {
+        try {
+            projectService.registProject(projectDTO);
+        } catch (DuplicateProjectException e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
+        }
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_ADD_SUCCESS, projectDTO));
     }
 
     @PatchMapping("/v1/project")
@@ -69,9 +76,13 @@ public class ProjectApiController {
 
     @PostMapping("/v1/member")
     @ApiOperation(value = "멤버 추가")
-    public ResponseEntity addMember(@RequestBody SimpleMemberDTO simpleMemberDTO) {
-        Member member = projectService.addMember(simpleMemberDTO);
-
+    public ResponseEntity addMember(@RequestBody SimpleMemberDTO simpleMemberDTO) throws MemberException {
+        Member member = null;
+        try {
+            member = projectService.addMember(simpleMemberDTO);
+        } catch (MemberAddException e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
+        }
         MemberResDTO memberResDTO = MemberResDTO.builder().
                 title(member.getProject().getTitle()).
                 email(member.getUser().getEmail()).

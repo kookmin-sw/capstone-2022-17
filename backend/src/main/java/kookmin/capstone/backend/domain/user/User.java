@@ -33,7 +33,6 @@ public class User implements UserDetails {
     private String nickname;
     private String password;
     private String avatar;
-    private String address;
     private Float rating;
     private String instaId;
     private String blog;
@@ -42,11 +41,6 @@ public class User implements UserDetails {
 
     private String techStack;
     private String position;
-
-//    @Enumerated(EnumType.STRING)
-//    @ElementCollection(fetch = FetchType.LAZY)
-//    @Builder.Default
-//    private Set<UserRole> roleSet = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

@@ -6,13 +6,19 @@ import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
-import kookmin.capstone.backend.dto.ProjectPositionDTO;
 import kookmin.capstone.backend.dto.SimpleMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
+import kookmin.capstone.backend.exception.memberException.MemberAddException;
+import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
+import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
 import kookmin.capstone.backend.repository.UserRepository;
+import kookmin.capstone.backend.response.DefalutResponse;
+import kookmin.capstone.backend.response.ResponseMessage;
+import kookmin.capstone.backend.response.StatusCode;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +36,10 @@ public class ProjectService {
     private final ProjectTechRepository projectTechRepository;
 
     @Transactional
-    public void registProject(ProjectDTO dto) {
+    public void registProject(ProjectDTO dto) throws ProjectException {
+        if (projectRepository.existsByTitle(dto.getTitle())) {
+            throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
+        }
         Project project = dtoToToEntity(dto);
         projectRepository.save(project);
     }
@@ -69,9 +78,16 @@ public class ProjectService {
     }
 
     @Transactional
-    public Member addMember(SimpleMemberDTO simpleMemberDTO) {
+    public Member addMember(SimpleMemberDTO simpleMemberDTO) throws MemberAddException {
         User findUser = userRepository.findById(simpleMemberDTO.getUserId()).get();
         Project findProject = projectRepository.findById(simpleMemberDTO.getProjectId()).get();
+
+        for (Member eachMember : findUser.getMembers()) {
+            if (eachMember.getUser().equals(findUser)) {
+                throw new MemberAddException("이미 존재하는 멤버입니다.");
+
+            }
+        }
         Member member = Member.builder().
                 user(findUser).
                 project(findProject).
@@ -100,7 +116,6 @@ public class ProjectService {
                 thumbnail(dto.getThumbnail()).
                 build();
         dto.getTechStack().stream().forEach(tech -> techStack.add(new ProjectTech(tech, project)));
-        project.initTechStack(techStack);
         dto.getProjectPositions().stream().forEach(projectPositionDTO -> {
             projectPositions.add(ProjectPosition.builder().
                     total(projectPositionDTO.getTotal()).
@@ -112,6 +127,7 @@ public class ProjectService {
                     build());
         });
 
+        project.initTechStack(techStack);
         project.initPosition(projectPositions);
 
         return project;
