@@ -1,15 +1,12 @@
 package kookmin.capstone.backend.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.Portfolio;
 import kookmin.capstone.backend.domain.member.Member;
-import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.dto.MemberSignupRequestDto;
+import kookmin.capstone.backend.dto.memberDTO.MemberSignupRequestDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.*;
@@ -36,6 +33,7 @@ public class User implements UserDetails {
     private Float rating;
     private String instaId;
     private String blog;
+    private String github;
 
     private boolean fromSocial;
 
@@ -98,8 +96,12 @@ public class User implements UserDetails {
         return true;
     }
 
-//    public void addUserRole(UserRole role) {
-//        roleSet.add(role);
-//    }
+    public void update(String nickname, String avatar, String instaId, String blog, String github) {
+        this.nickname = nickname;
+        this.avatar = avatar;
+        this.instaId = instaId;
+        this.blog = blog;
+        this.github = github;
+    }
 
 }

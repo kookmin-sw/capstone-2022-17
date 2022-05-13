@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
+import static org.thymeleaf.util.StringUtils.isEmpty;
 
 @Entity
 @Getter @SuperBuilder
@@ -57,7 +59,6 @@ public class Project extends DateEntity {
     public void chageProject(String description, String thumbnail, ProjectStatus status,
                              String title, String purpose, String field, String region
                              ) {
-
         this.description = description;
         this.thumbnail = thumbnail;
         this.status = status;
@@ -66,6 +67,7 @@ public class Project extends DateEntity {
         this.field = field;
         this.region = region;
     }
+
 
     //연관 관계 메서드
     public void addTechStack(ProjectTech stack) {

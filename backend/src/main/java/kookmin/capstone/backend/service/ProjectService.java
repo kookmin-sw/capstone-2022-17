@@ -6,25 +6,21 @@ import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
-import kookmin.capstone.backend.dto.SimpleMemberDTO;
+import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.ProjectDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
-import kookmin.capstone.backend.repository.UserRepository;
-import kookmin.capstone.backend.response.DefalutResponse;
-import kookmin.capstone.backend.response.ResponseMessage;
-import kookmin.capstone.backend.response.StatusCode;
+import kookmin.capstone.backend.response.MemberResDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,7 +28,8 @@ import java.util.Optional;
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+    private final MemberService memberService;
     private final ProjectTechRepository projectTechRepository;
 
     @Transactional
@@ -46,8 +43,7 @@ public class ProjectService {
 
     @Transactional
     public void modifyProject(ProjectDTO dto) {
-        Optional<Project> findProject = projectRepository.findById(dto.getId());
-        Project project = findProject.get();
+        Project project = projectRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
         List<String> techStack = new ArrayList<>();
         List<ProjectTech> result = projectTechRepository.findByProject(project);
         result.stream().forEach(stack -> techStack.add(stack.getStack()));
@@ -68,7 +64,6 @@ public class ProjectService {
         project.changeStartDate(dto.getStartDate());
         project.changeEndDate(dto.getEndDate());
 
-        projectRepository.save(project);
 
     }
 
@@ -78,9 +73,9 @@ public class ProjectService {
     }
 
     @Transactional
-    public Member addMember(SimpleMemberDTO simpleMemberDTO) throws MemberAddException {
-        User findUser = userRepository.findById(simpleMemberDTO.getUserId()).get();
-        Project findProject = projectRepository.findById(simpleMemberDTO.getProjectId()).get();
+    public Member addMember(RequestMemberDTO requestMemberDTO) throws MemberAddException {
+        User findUser = userService.findUserById(requestMemberDTO.getUserId());
+        Project findProject = projectRepository.findById(requestMemberDTO.getProjectId()).orElseThrow();
 
         for (Member eachMember : findUser.getMembers()) {
             if (eachMember.getUser().equals(findUser)) {
@@ -91,14 +86,28 @@ public class ProjectService {
         Member member = Member.builder().
                 user(findUser).
                 project(findProject).
+                memberType(requestMemberDTO.getMemberType()).
                 build();
         member.changeMember(findUser, findProject);
         return member;
+    }
 
+    @Transactional
+    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) {
+        Member findMember = memberService.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId());
+        findMember.updateMember(requestMemberDTO.getMemberType());
+
+        MemberResDTO memberResDTO = MemberResDTO.builder().
+                title(findMember.getProject().getTitle()).
+                email(findMember.getUser().getEmail()).
+                memberType(findMember.getMemberType()).
+                build();
+
+        return memberResDTO;
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {
-        Optional<User> user = userRepository.findById(dto.getUserId());
+        User user = userService.findUserById(dto.getUserId());
 
         List<ProjectTech> techStack = new ArrayList<>();
         List<ProjectPosition> projectPositions = new ArrayList<>();
@@ -112,7 +121,7 @@ public class ProjectService {
                 description(dto.getDescription()).
                 status(dto.getStatus()).
                 field(dto.getField()).
-                user(user.get()).
+                user(user).
                 thumbnail(dto.getThumbnail()).
                 build();
         dto.getTechStack().stream().forEach(tech -> techStack.add(new ProjectTech(tech, project)));
