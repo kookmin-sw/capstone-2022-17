@@ -2,22 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 
-const LikesNum = styled.div`
+const Container = styled.div`
   font-size: 0.6rem;
   font-family: 'Pr-ExtraLight';
   color: #adadad;
 
   display: flex;
-  margin: 0 0.3rem;
+  margin: 0 0 0 0.3rem;
 `;
 
-// 좋아요
-const Likes = ({ children }) => {
+const Views = ({ children }) => {
   return (
-    <LikesNum>
-      <Icon name="heart outline" /> {children}
-    </LikesNum>
+    <Container>
+      <Icon name="eye" />
+      {children}
+    </Container>
   );
 };
 
-export default Likes;
+export default Views;

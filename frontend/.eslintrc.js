@@ -27,6 +27,7 @@ module.exports = {
     'import/named': 'off',
     'import/no-named-as-default': 'off',
     'import/no-named-as-default-member': 'off',
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react/prop-types': 'off',
     'default-param-last': 'off',
     'no-param-reassign': 'off',
