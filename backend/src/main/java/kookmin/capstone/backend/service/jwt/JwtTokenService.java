@@ -1,10 +1,9 @@
-package kookmin.capstone.backend.jwt;
+package kookmin.capstone.backend.service.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kookmin.capstone.backend.domain.user.UserRole;
 import kookmin.capstone.backend.dto.authDTO.response.UsernameFromTokenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,15 +15,15 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Component
-public class JwtTokenProvider {
+public class JwtTokenService {
 
     @Value("spring.jwt.secret")
     private String secretKey;
@@ -41,7 +40,7 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(String userPk, List<String> roles) {
+    public String createToken(String userPk, Long userId, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(userPk); // JWT payload 에 저장되는 정보단위
         claims.put("roles", roles); // 정보는 key / value 쌍으로 저장된다.
         Date now = new Date();
@@ -49,8 +48,8 @@ public class JwtTokenProvider {
                 .setClaims(claims) // 정보 저장
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) // set Expire Time
-                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과
-                // signature 에 들어갈 secret값 세팅
+                .claim("id", userId)
+                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과 signature 에 들어갈 secret값 세팅
                 .compact();
     }
 
@@ -63,6 +62,17 @@ public class JwtTokenProvider {
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+
+    public <T> T get(HttpServletRequest request, String key, Class<T> requiredType) {
+        String token = resolveToken(request).substring(7);
+        T value = Jwts.parser()
+                .setSigningKey((DatatypeConverter.parseBase64Binary(secretKey)))
+                .parseClaimsJws(token)
+                .getBody()
+                .get(key, requiredType);
+
+        return value;
     }
 
     public String getUsernameFromToken(String token) throws UsernameFromTokenException {
