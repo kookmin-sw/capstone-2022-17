@@ -8,7 +8,7 @@ import kookmin.capstone.backend.dto.authDTO.SignupDTO;
 import kookmin.capstone.backend.exception.authException.ExistNicknameException;
 import kookmin.capstone.backend.exception.authException.ExistUserException;
 import kookmin.capstone.backend.exception.authException.PasswordException;
-import kookmin.capstone.backend.jwt.JwtTokenProvider;
+import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import kookmin.capstone.backend.repository.UserRepository;
 import kookmin.capstone.backend.service.UserService;
 import lombok.*;
@@ -32,8 +32,7 @@ public class AuthApiController {
 
 
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
+    private final JwtTokenService jwtTokenService;
     private final UserService userService;
 
     // 회원가입
@@ -71,7 +70,7 @@ public class AuthApiController {
                 email(user.getEmail()).
                 nickname(user.getNickname()).
                 userId(user.getId()).
-                accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
+                accessToken(jwtTokenService.createToken(user.getUsername(), user.getId(), user.getRoles()))
                 .build());
     }
 
@@ -96,11 +95,8 @@ public class AuthApiController {
                 email(user.getEmail()).
                 nickname(user.getNickname()).
                 userId(user.getId()).
-                accessToken(jwtTokenProvider.createToken(user.getUsername(), user.getRoles()))
+                accessToken(jwtTokenService.createToken(user.getUsername(), user.getId(), user.getRoles()))
                 .build());
     }
-
-
-
 
 }

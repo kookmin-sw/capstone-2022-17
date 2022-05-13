@@ -29,11 +29,18 @@ public class Member {
     @JoinColumn(name = "project_id")
     private Project project;
 
+    @Enumerated(EnumType.STRING)
+    private MemberType memberType;
+
     public void changeMember(User user, Project project) {
         this.user = user;
         this.project = project;
 
         user.getMembers().add(this);
         project.getMembers().add(this);
+    }
+
+    public void updateMember(MemberType memberType) {
+        this.memberType = memberType;
     }
 }

@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.response;
 
+import kookmin.capstone.backend.domain.member.MemberType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,4 +9,5 @@ import lombok.Data;
 public class MemberResDTO {
     private String title;
     private String email;
+    private MemberType memberType;
 }

@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.jwt;
+package kookmin.capstone.backend.service.jwt;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
