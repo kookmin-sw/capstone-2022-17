@@ -14,5 +14,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long>, Project
 
     Project findByTitle(String title);
 
-    Page<Project> findByTitleContaining(String searchTitle, Pageable pageable);
+    boolean existsByTitle(String title);
+
+//    Page<Project> findByTitleContaining(String searchTitle, Pageable pageable);
 }
