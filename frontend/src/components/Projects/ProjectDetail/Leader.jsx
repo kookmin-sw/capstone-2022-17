@@ -9,6 +9,7 @@ const Container = styled.div`
   font-size: 0.7rem;
   font-family: 'Pr-Regular';
   color: #555555;
+  cursor: pointer;
 `;
 
 const Leader = ({ children }) => {
