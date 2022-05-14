@@ -103,6 +103,11 @@ public class ProjectService {
         }
     }
 
+    public boolean isLeader(Long projectid, Long userid) {
+        Long leaderId = projectRepository.findById(projectid).orElseThrow(EntityNotFoundException::new).getUser().getId();
+        return leaderId == userid ? true : false;
+    }
+
     public Project dtoToToEntity(ProjectDTO dto) {
         User user = userService.findUserById(dto.getUserId());
 

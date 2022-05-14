@@ -32,14 +32,16 @@ public class MemberAPiController {
 
     private final JwtTokenService jwtTokenService;
     private final MemberService memberService;
+    private final ProjectService projectService;
 
     @PostMapping("/v1/member")
-    @ApiImplicitParam(name = "requestMemberDTO", value = "userId랑 memberType은 필수 값 아님 userId는 프로젝트 리더일 때만 필수")
+    @ApiImplicitParam(name = "requestMemberDTO", value = "필수: positionName , 필수 아님: userId랑 memberType")
     @ApiOperation(value = "멤버 추가 및 프로젝트 지원")
     public ResponseEntity addMember(@RequestBody RequestMemberDTO requestMemberDTO, HttpServletRequest request) throws MemberException {
         Member member = null;
-        if (!requestMemberDTO.isLeader()) {
-            requestMemberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        if (!projectService.isLeader(requestMemberDTO.getProjectId(), userId)) {
+            requestMemberDTO.setUserId(userId);
             requestMemberDTO.setMemberType(MemberType.CANDIDATE);
         } else {
             requestMemberDTO.setMemberType(MemberType.INVITED);
@@ -59,10 +61,12 @@ public class MemberAPiController {
 
     @PatchMapping("/v1/member/join")
     @ApiOperation(value = "멤버 승인 및 거절")
-    @ApiImplicitParam(name = "requestMemberDTO", value = "userId은 프로젝트 리더일 때만 필수, memberType 필수(REJECT => 거절 or MEMBER => 승인)")
+    @ApiImplicitParam(name = "requestMemberDTO", value = "필수: projectId, memberType(REJECT => 거절 or MEMBER => 승인) 필수아님: userId, positionName")
     public ResponseEntity joinMember(@RequestBody RequestMemberDTO requestMemberDTO, HttpServletRequest request) throws MemberException {
-        if (!requestMemberDTO.isLeader()) {
-            requestMemberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
+
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        if (!projectService.isLeader(requestMemberDTO.getProjectId(), userId)) {
+            requestMemberDTO.setUserId(userId);
         }
         MemberResDTO memberResDTO = null;
         try {

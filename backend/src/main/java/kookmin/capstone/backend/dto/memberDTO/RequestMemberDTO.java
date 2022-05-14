@@ -15,6 +15,5 @@ public class RequestMemberDTO {
     private Long userId;
     private Long projectId;
     private MemberType memberType;
-    private boolean leader;
     private String positionName;
 }
