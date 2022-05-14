@@ -79,7 +79,7 @@ public class ProjectService {
         User findUser = userService.findUserById(requestMemberDTO.getUserId());
         Project findProject = projectRepository.findById(requestMemberDTO.getProjectId()).orElseThrow();
 
-        for (Member eachMember : findUser.getMembers()) {
+        for (Member eachMember : findProject.getMembers()) {
             if (eachMember.getUser().equals(findUser)) {
                 throw new MemberAddException("이미 존재하는 멤버입니다.");
 
