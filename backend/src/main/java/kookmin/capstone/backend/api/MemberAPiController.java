@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
+import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.repository.MemberRepository;
@@ -68,6 +69,8 @@ public class MemberAPiController {
             memberResDTO = memberService.joinMember(requestMemberDTO);
         } catch(MemberAddException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
+        } catch (DuplicateMemberException e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATED_MEMBER));
         }
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));

@@ -7,10 +7,12 @@ import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
+import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.repository.MemberRepository;
 import kookmin.capstone.backend.response.MemberResDTO;
+import kookmin.capstone.backend.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -63,7 +65,10 @@ public class MemberService {
     @Transactional
     public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) throws MemberException {
         Member findMember = memberRepository.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId()).orElseThrow(EntityNotFoundException::new);
-        if (requestMemberDTO.getMemberType().equals(MemberType.MEMBER)) {
+
+        if (findMember.getMemberType().equals(MemberType.MEMBER)) {
+            throw new DuplicateMemberException(ResponseMessage.DUPLICATED_MEMBER);
+        }else if (requestMemberDTO.getMemberType().equals(MemberType.MEMBER)) {
             projectService.addProjectPostionCnt(findMember.getPosition());
         }
         findMember.updateMember(requestMemberDTO.getMemberType());
