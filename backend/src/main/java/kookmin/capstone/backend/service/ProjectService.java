@@ -10,8 +10,10 @@ import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
+import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
+import kookmin.capstone.backend.repository.ProjectPositionRepository;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
 import kookmin.capstone.backend.response.MemberResDTO;
@@ -29,9 +31,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectService {
 
-    private final ProjectRepository projectRepository;
     private final UserService userService;
+
+    private final ProjectRepository projectRepository;
     private final ProjectTechRepository projectTechRepository;
+    private final ProjectPositionRepository projectPositionRepository;
 
     @Transactional
     public void registProject(ProjectDTO dto) throws ProjectException {
@@ -87,6 +91,16 @@ public class ProjectService {
         }
 
         return positionList;
+    }
+
+    @Transactional
+    public void addProjectPostionCnt(Position position) throws MemberException {
+        ProjectPosition findProjectPosition = projectPositionRepository.findByPosition(position);
+        if (findProjectPosition.getCurrentCnt() < findProjectPosition.getTotal()) {
+            findProjectPosition.addCnt();
+        } else {
+            throw new MemberAddException("포지션 정원이 초과 되었습니다.");
+        }
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {

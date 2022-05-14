@@ -59,11 +59,16 @@ public class MemberAPiController {
     @PatchMapping("/v1/member/join")
     @ApiOperation(value = "멤버 승인 및 거절")
     @ApiImplicitParam(name = "requestMemberDTO", value = "userId은 프로젝트 리더일 때만 필수, memberType 필수(REJECT => 거절 or MEMBER => 승인)")
-    public ResponseEntity joinMember(@RequestBody RequestMemberDTO requestMemberDTO, HttpServletRequest request) {
+    public ResponseEntity joinMember(@RequestBody RequestMemberDTO requestMemberDTO, HttpServletRequest request) throws MemberException {
         if (!requestMemberDTO.isLeader()) {
             requestMemberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
         }
-        MemberResDTO memberResDTO = memberService.joinMember(requestMemberDTO);
+        MemberResDTO memberResDTO = null;
+        try {
+            memberResDTO = memberService.joinMember(requestMemberDTO);
+        } catch(MemberAddException e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
+        }
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));
     }

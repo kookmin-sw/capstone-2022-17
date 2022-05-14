@@ -5,13 +5,15 @@ import kookmin.capstone.backend.repository.PositionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 @RequiredArgsConstructor
 public class PositionService {
 
-    PositionRepository positionRepository;
+    private final PositionRepository positionRepository;
 
-    public Position findPostion(String position) {
-        return positionRepository.findByPositionName(position).get();
+    public Position findPositionById(Long id) {
+        return positionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

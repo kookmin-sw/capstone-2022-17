@@ -2,11 +2,13 @@ package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.member.Member;
+import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
+import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.repository.MemberRepository;
 import kookmin.capstone.backend.response.MemberResDTO;
 import lombok.RequiredArgsConstructor;
@@ -59,8 +61,11 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) {
+    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) throws MemberException {
         Member findMember = memberRepository.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId()).orElseThrow(EntityNotFoundException::new);
+        if (requestMemberDTO.getMemberType().equals(MemberType.MEMBER)) {
+            projectService.addProjectPostionCnt(findMember.getPosition());
+        }
         findMember.updateMember(requestMemberDTO.getMemberType());
 
         MemberResDTO memberResDTO = MemberResDTO.builder().

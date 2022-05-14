@@ -32,4 +32,8 @@ public class ProjectPosition {
     public void registProject(Project project) {
         this.project = project;
     }
+
+    public void addCnt() {
+        this.currentCnt++;
+    }
 }
