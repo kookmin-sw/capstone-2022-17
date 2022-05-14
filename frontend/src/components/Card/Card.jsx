@@ -12,9 +12,9 @@ const Container = styled.div`
   font-family: 'Pr-Regular';
   color: #888888;
 
-  width: 200px;
+  width: 10rem;
   border-radius: 1rem;
-  margin: 1rem 1rem;
+  margin: 1rem 0.6rem;
   cursor: pointer;
 `;
 
