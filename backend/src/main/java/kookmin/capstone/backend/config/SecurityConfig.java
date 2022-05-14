@@ -52,6 +52,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.DELETE,"/api/v1/project").hasRole("USER")
                 .antMatchers(HttpMethod.POST,"/api/v1/project").hasRole("USER")
                 .antMatchers(HttpMethod.PATCH,"/api/v1/project").hasRole("USER")
+                .antMatchers(HttpMethod.DELETE,"/api/v1/member").hasRole("USER")
+                .antMatchers(HttpMethod.POST,"/api/v1/member").hasRole("USER")
+                .antMatchers(HttpMethod.PATCH,"/api/v1/member").hasRole("USER")
                 .antMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().permitAll() // 그외 나머지 요청은 누구나 접근 가능
                 .and()
