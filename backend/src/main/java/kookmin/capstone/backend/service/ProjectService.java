@@ -10,8 +10,10 @@ import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
+import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
+import kookmin.capstone.backend.repository.ProjectPositionRepository;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
 import kookmin.capstone.backend.response.MemberResDTO;
@@ -29,10 +31,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectService {
 
-    private final ProjectRepository projectRepository;
     private final UserService userService;
-    private final MemberService memberService;
+
+    private final ProjectRepository projectRepository;
     private final ProjectTechRepository projectTechRepository;
+    private final ProjectPositionRepository projectPositionRepository;
 
     @Transactional
     public void registProject(ProjectDTO dto) throws ProjectException {
@@ -74,39 +77,10 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    @Transactional
-    public Member addMember(RequestMemberDTO requestMemberDTO) throws MemberAddException {
-        User findUser = userService.findUserById(requestMemberDTO.getUserId());
-        Project findProject = projectRepository.findById(requestMemberDTO.getProjectId()).orElseThrow();
-
-        for (Member eachMember : findProject.getMembers()) {
-            if (eachMember.getUser().equals(findUser)) {
-                throw new MemberAddException("이미 존재하는 멤버입니다.");
-
-            }
-        }
-        Member member = Member.builder().
-                user(findUser).
-                project(findProject).
-                memberType(requestMemberDTO.getMemberType()).
-                build();
-        member.changeMember(findUser, findProject);
-        return member;
+    public Project findProjectById(Long id) {
+        return projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    @Transactional
-    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) {
-        Member findMember = memberService.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId());
-        findMember.updateMember(requestMemberDTO.getMemberType());
-
-        MemberResDTO memberResDTO = MemberResDTO.builder().
-                title(findMember.getProject().getTitle()).
-                email(findMember.getUser().getEmail()).
-                memberType(findMember.getMemberType()).
-                build();
-
-        return memberResDTO;
-    }
 
     public List<ProjectPositionDTO> findProjectPositions(Long id) {
         Project findProject = projectRepository.findById(id).orElseThrow(EntityExistsException::new);
@@ -117,6 +91,21 @@ public class ProjectService {
         }
 
         return positionList;
+    }
+
+    @Transactional
+    public void addProjectPostionCnt(Position position) throws MemberException {
+        ProjectPosition findProjectPosition = projectPositionRepository.findByPosition(position);
+        if (findProjectPosition.getCurrentCnt() < findProjectPosition.getTotal()) {
+            findProjectPosition.addCnt();
+        } else {
+            throw new MemberAddException("포지션 정원이 초과 되었습니다.");
+        }
+    }
+
+    public boolean isLeader(Long projectid, Long userid) {
+        Long leaderId = projectRepository.findById(projectid).orElseThrow(EntityNotFoundException::new).getUser().getId();
+        return leaderId == userid ? true : false;
     }
 
     public Project dtoToToEntity(ProjectDTO dto) {

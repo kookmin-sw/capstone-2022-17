@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain.member;
 
+import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.user.User;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,10 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberType memberType;
+
+    @OneToOne(fetch = LAZY)
+    @JoinColumn(name = "position_id")
+    private Position position;
 
     public void changeMember(User user, Project project) {
         this.user = user;
