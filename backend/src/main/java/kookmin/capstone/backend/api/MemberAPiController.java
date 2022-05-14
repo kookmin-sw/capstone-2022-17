@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.member.MemberType;
+import kookmin.capstone.backend.dto.memberDTO.DeleteMemberDTO;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
@@ -78,5 +79,13 @@ public class MemberAPiController {
         }
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));
+    }
+
+    @DeleteMapping("/v1/member")
+    @ApiOperation(value = "멤버 삭제")
+    public ResponseEntity deleteMember(@RequestBody DeleteMemberDTO memberDTO, HttpServletRequest request) {
+        memberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
+        memberService.deleteMember(memberDTO);
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_DELETE_SUCCESS));
     }
 }

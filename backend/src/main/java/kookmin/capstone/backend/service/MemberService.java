@@ -6,6 +6,7 @@ import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.memberDTO.DeleteMemberDTO;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
@@ -80,5 +81,10 @@ public class MemberService {
                 build();
 
         return memberResDTO;
+    }
+
+    @Transactional
+    public void deleteMember(DeleteMemberDTO memberDTO) {
+        memberRepository.deleteMember(memberDTO.getProjectId(), memberDTO.getUserId());
     }
 }
