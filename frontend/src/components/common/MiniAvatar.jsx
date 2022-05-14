@@ -19,7 +19,7 @@ const Img = styled.img`
 const MiniAvatar = ({ img }) => {
   return (
     <Container>
-      <Img src={img} />
+      <Img src={img || `${process.env.PUBLIC_URL}/images/missing.png`} />
     </Container>
   );
 };

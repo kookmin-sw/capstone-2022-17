@@ -15,7 +15,7 @@ const Container = styled.div`
 const Leader = ({ children }) => {
   return (
     <Container>
-      <MiniAvatar img="https://cdn.eyesmag.com/content/uploads/posts/2020/12/09/tesla-elon-musk-moves-to-texas-1-5b119051-2c23-449b-b554-7445558ebf62.jpg" />
+      <MiniAvatar />
       {children}
     </Container>
   );
