@@ -31,7 +31,6 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserService userService;
-    private final MemberService memberService;
     private final ProjectTechRepository projectTechRepository;
 
     @Transactional
@@ -74,39 +73,10 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    @Transactional
-    public Member addMember(RequestMemberDTO requestMemberDTO) throws MemberAddException {
-        User findUser = userService.findUserById(requestMemberDTO.getUserId());
-        Project findProject = projectRepository.findById(requestMemberDTO.getProjectId()).orElseThrow();
-
-        for (Member eachMember : findProject.getMembers()) {
-            if (eachMember.getUser().equals(findUser)) {
-                throw new MemberAddException("이미 존재하는 멤버입니다.");
-
-            }
-        }
-        Member member = Member.builder().
-                user(findUser).
-                project(findProject).
-                memberType(requestMemberDTO.getMemberType()).
-                build();
-        member.changeMember(findUser, findProject);
-        return member;
+    public Project findProjectById(Long id) {
+        return projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    @Transactional
-    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) {
-        Member findMember = memberService.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId());
-        findMember.updateMember(requestMemberDTO.getMemberType());
-
-        MemberResDTO memberResDTO = MemberResDTO.builder().
-                title(findMember.getProject().getTitle()).
-                email(findMember.getUser().getEmail()).
-                memberType(findMember.getMemberType()).
-                build();
-
-        return memberResDTO;
-    }
 
     public List<ProjectPositionDTO> findProjectPositions(Long id) {
         Project findProject = projectRepository.findById(id).orElseThrow(EntityExistsException::new);

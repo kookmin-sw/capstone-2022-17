@@ -14,6 +14,7 @@ import kookmin.capstone.backend.response.DefalutResponse;
 import kookmin.capstone.backend.response.MemberResDTO;
 import kookmin.capstone.backend.response.ResponseMessage;
 import kookmin.capstone.backend.response.StatusCode;
+import kookmin.capstone.backend.service.MemberService;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = {"멤버 API"})
 public class MemberAPiController {
 
-    private final ProjectService projectService;
     private final JwtTokenService jwtTokenService;
+    private final MemberService memberService;
 
     @PostMapping("/v1/member")
     @ApiImplicitParam(name = "requestMemberDTO", value = "userId랑 memberType은 필수 값 아님 userId는 프로젝트 리더일 때만 필수")
@@ -43,7 +44,7 @@ public class MemberAPiController {
             requestMemberDTO.setMemberType(MemberType.INVITED);
         }
         try {
-            member = projectService.addMember(requestMemberDTO);
+            member = memberService.addMember(requestMemberDTO);
         } catch (MemberAddException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
         }
@@ -62,7 +63,7 @@ public class MemberAPiController {
         if (!requestMemberDTO.isLeader()) {
             requestMemberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
         }
-        MemberResDTO memberResDTO = projectService.joinMember(requestMemberDTO);
+        MemberResDTO memberResDTO = memberService.joinMember(requestMemberDTO);
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));
     }
