@@ -1,4 +1,5 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Nav from 'components/Nav/Nav';
 
@@ -15,10 +16,13 @@ const ContentContainer = styled.div`
 `;
 
 const ResponsiveLayout = ({ children }) => {
+  const location = useLocation();
   return (
     <MainContainer>
-      <Nav />
-      <ContentContainer>{children}</ContentContainer>
+      {!location.pathname.includes('survey') && <Nav />}
+      <ContentContainer style={location.pathname.includes('survey') ? { marginTop: '0' } : null}>
+        {children}
+      </ContentContainer>
     </MainContainer>
   );
 };

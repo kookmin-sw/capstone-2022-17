@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const LogoImg = styled.img`
+  cursor: pointer;
   width: auto;
   height: 2rem;
   margin-right: 2rem;

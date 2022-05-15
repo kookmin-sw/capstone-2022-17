@@ -31,6 +31,7 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Pr-Regular';
     font-size: 0.9rem;
   }
+  
 `;
 
 export default GlobalStyles;
