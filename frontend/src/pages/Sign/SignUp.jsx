@@ -83,7 +83,7 @@ const SignUp = () => {
     }
     if (signupDone) {
       removeCookie('rememberEmail');
-      window.location.replace('/');
+      window.location.replace('/survey/select-position');
     }
     return () => {
       setErrorMsg('');

@@ -11,9 +11,11 @@
     "next-redux-wrapper": "^7.0.5",
     "polished": "^4.2.2",
     "prop-types": "^15.8.1",
+    "rc-slider": "^10.0.0",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2",
+    "react-fade-in": "^2.0.1",
     "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
@@ -29,6 +31,7 @@
   },
   "scripts": {
     "start": "set \"GENERATE_SOURCEMAP=false\" && react-scripts start",
+    "starts": "GENERATE_SOURCEMAP=false react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
