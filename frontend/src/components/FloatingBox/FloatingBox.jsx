@@ -3,7 +3,7 @@ import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';
 import Position from 'components/Projects/ProjectDetail/Position';
-import * as Btn from 'components/common/Btn';
+import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
 import ContentName from './ContentName';
 import Contents from './Contents';
 import Status from './Status';
@@ -52,14 +52,6 @@ const LikesBtn = styled.div`
   cursor: pointer;
 `;
 
-const SupplyBtn = styled(Btn.PrimaryBtn)`
-  font-size: 0.8rem !important;
-  cursor: pointer;
-  border-radius: 3rem !important;
-  height: 2.5rem !important;
-  margin-top: 0.5rem !important;
-`;
-
 const FloatingBox = () => {
   return (
     <Wrapper>
@@ -101,7 +93,7 @@ const FloatingBox = () => {
         <LikesBtn>
           <Likes>114</Likes>
         </LikesBtn>
-        <SupplyBtn fluid>지원하기</SupplyBtn>
+        <ApplyBtn />
       </ButtonBox>
     </Wrapper>
   );

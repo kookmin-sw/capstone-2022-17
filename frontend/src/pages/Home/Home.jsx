@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
 
 const TestContainer = styled.div`
   margin-top: 2rem;
@@ -10,7 +11,9 @@ const TestContainer = styled.div`
 const Home = () => {
   return (
     <TestContainer>
-      <p>이것은 테스트용 글씨입니다. 엘렐레렐.</p>
+      <p>지원 모달 테스트용</p>
+      <br />
+      <ApplyBtn />
     </TestContainer>
   );
 };
