@@ -1,4 +1,4 @@
-import CardHeadCount from 'components/Card/CardHeadCount';
+import CardHeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';

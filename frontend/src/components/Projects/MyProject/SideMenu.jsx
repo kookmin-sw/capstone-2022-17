@@ -1,20 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import Menu from './MenuName';
+import { Link } from 'react-router-dom';
+import Menu from './Menu';
 
 const Container = styled.div`
-  font-family: 'Pr-Regular';
   line-height: 1.5rem;
+  min-width: 150px;
+  margin-right: 1.5rem;
+  margin-top: 1rem;
 `;
 
 const SideMenu = () => {
   return (
     <Container>
-      <Menu>진행중인 프로젝트</Menu>
+      <Link to="projects">
+        <Menu>진행중인 프로젝트</Menu>
+      </Link>
       <hr />
-      <Menu>완료된 프로젝트</Menu>
+      <Link to="projects">
+        <Menu>완료된 프로젝트</Menu>
+      </Link>
       <hr />
-      <Menu>찜한 프로젝트</Menu>
+      <Link to="projects">
+        <Menu>찜한 프로젝트</Menu>
+      </Link>
     </Container>
   );
 };
