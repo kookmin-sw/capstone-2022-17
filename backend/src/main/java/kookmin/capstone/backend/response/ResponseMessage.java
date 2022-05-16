@@ -12,4 +12,5 @@ public class ResponseMessage {
     public static final String NICKNAME_CHECK = "사용 가능한 닉네임 입니다.";
     public static final String USER_UPDATE_SUCCESS = "유저 정보 업데이트 성공";
     public static final String POSITION_GET_SUCCESS = "포지션 현황 정보 가져오기 성공";
+    public static final String TECHSTACK_GET_SUCCESS = "테크 스택 가져오기 성공";
 }
