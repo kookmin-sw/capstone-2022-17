@@ -13,39 +13,39 @@ const Container = styled.div`
 `;
 
 const GridDiv = styled(Grid)`
-  margin-top: 1rem !important;
+  margin: 2rem 2rem !important;
 `;
 
 const MyProject = () => {
   return (
     <Container>
       <SideMenu />
-      <GridDiv stackable columns={3}>
-        <Grid.Column>
+      <Grid>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-        <Grid.Column>
+        </GridDiv.Column>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
           <Card />
-        </Grid.Column>
-      </GridDiv>
+        </GridDiv.Column>
+      </Grid>
     </Container>
   );
 };
