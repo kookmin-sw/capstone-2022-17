@@ -15,6 +15,11 @@ export const RowStartContainer = styled.div`
   align-items: flex-start;
 `;
 
+export const RowBetweenContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export const ColumnStartContainer = styled.div`
   display: flex;
   flex-direction: column;

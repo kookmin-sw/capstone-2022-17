@@ -1,1 +1,1 @@
-export const apiUrl = 'https://teaming.ga/api';
+export const apiUrl = 'https://teaming.ga/api/v1';

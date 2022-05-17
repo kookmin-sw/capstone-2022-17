@@ -31,5 +31,6 @@ module.exports = {
     'react/prop-types': 'off',
     'default-param-last': 'off',
     'no-param-reassign': 'off',
+    'no-alert': 'off',
   },
 };
