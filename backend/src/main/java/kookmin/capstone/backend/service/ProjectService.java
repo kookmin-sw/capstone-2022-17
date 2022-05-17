@@ -9,6 +9,7 @@ import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectResponseDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -77,8 +78,9 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public Project findProjectById(Long id) {
-        return projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public ProjectResponseDTO findProjectById(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return ProjectResponseDTO.entityToDto(project);
     }
 
 
