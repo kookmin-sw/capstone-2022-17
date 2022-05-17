@@ -2,14 +2,12 @@ package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
-import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
+import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
-import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectResponseDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -17,7 +15,6 @@ import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.repository.ProjectPositionRepository;
 import kookmin.capstone.backend.repository.ProjectRepository;
 import kookmin.capstone.backend.repository.ProjectTechRepository;
-import kookmin.capstone.backend.response.MemberResDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +36,8 @@ public class ProjectService {
     private final ProjectPositionRepository projectPositionRepository;
 
     @Transactional
-    public void registProject(ProjectDTO dto) throws ProjectException {
+    public void registProject(ProjectRequestDTO dto) throws ProjectException {
+        dto.setStatus(ProjectStatus.IN_PROGRESS);
         if (projectRepository.existsByTitle(dto.getTitle())) {
             throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
         }
@@ -48,7 +46,7 @@ public class ProjectService {
     }
 
     @Transactional
-    public void modifyProject(ProjectDTO dto) {
+    public ProjectRequestDTO modifyProject(ProjectRequestDTO dto) {
         Project project = projectRepository.findById(dto.getId()).orElseThrow(EntityNotFoundException::new);
         List<String> techStack = new ArrayList<>();
         List<ProjectTech> result = projectTechRepository.findByProject(project);
@@ -70,7 +68,7 @@ public class ProjectService {
         project.changeStartDate(dto.getStartDate());
         project.changeEndDate(dto.getEndDate());
 
-
+        return ProjectRequestDTO.entityToDto(project);
     }
 
     @Transactional
@@ -78,9 +76,14 @@ public class ProjectService {
         projectRepository.deleteById(id);
     }
 
-    public ProjectResponseDTO findProjectById(Long id) {
+    public Project findProjectById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        return ProjectResponseDTO.entityToDto(project);
+        return project;
+    }
+
+    public ProjectRequestDTO findProjectDtoById(Long id) {
+        Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return ProjectRequestDTO.entityToDto(project);
     }
 
 
@@ -110,7 +113,7 @@ public class ProjectService {
         return leaderId == userid ? true : false;
     }
 
-    public Project dtoToToEntity(ProjectDTO dto) {
+    public Project dtoToToEntity(ProjectRequestDTO dto) {
         User user = userService.findUserById(dto.getUserId());
 
         List<ProjectTech> techStack = new ArrayList<>();
