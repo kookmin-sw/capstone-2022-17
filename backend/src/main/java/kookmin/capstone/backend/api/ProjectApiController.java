@@ -75,10 +75,16 @@ public class ProjectApiController {
         return page;
     }
 
-    @GetMapping("/v1/project")
+    @GetMapping("/v1/project/position")
     @ApiOperation(value = "프로젝트 현황 조회")
     public ResponseEntity getProjectPositionList(@RequestParam Long id) {
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.POSITION_GET_SUCCESS ,projectService.findProjectPositions(id)));
+    }
+
+    @GetMapping("/v1/project")
+    @ApiOperation(value = "프로젝트 단건 조회")
+    public ResponseEntity getProjectOne(@RequestParam Long id) {
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_GET_SUCCESS, projectService.findProjectById(id)));
     }
 
     @Data @AllArgsConstructor

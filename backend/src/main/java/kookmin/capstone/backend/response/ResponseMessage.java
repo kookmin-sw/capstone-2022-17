@@ -7,6 +7,7 @@ public class ResponseMessage {
     public static final String MEMBER_DELETE_SUCCESS = "멤버 삭제 성공";
     public static final String DUPLICATED_MEMBER = "이미 추가된 멤버";
     public static final String PROJECT_ADD_SUCCESS = "프로젝트 추가 성공";
+    public static final String PROJECT_GET_SUCCESS = "프로젝트 조회 성공";
     public static final String MEMBER_CHANGE_STATUS_SUCCESS = "멤버 상태 변경 성공";
     public static final String DUPLICATED_NICKNAME = "중복 닉네임 입니다.";
     public static final String NICKNAME_CHECK = "사용 가능한 닉네임 입니다.";

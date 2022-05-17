@@ -2,6 +2,7 @@ package kookmin.capstone.backend.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -9,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 import java.time.LocalDate;
 
 @MappedSuperclass
-@SuperBuilder
+@SuperBuilder @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class DateEntity {
