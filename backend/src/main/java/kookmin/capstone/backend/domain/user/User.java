@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.domain.user;
 
 import kookmin.capstone.backend.domain.Portfolio;
+import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.dto.memberDTO.MemberSignupRequestDto;
 import lombok.*;
@@ -37,7 +38,9 @@ public class User implements UserDetails {
 
     private boolean fromSocial;
 
-    private String techStack;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserTech> techStack = new ArrayList<>();
+
     private String position;
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -102,6 +105,15 @@ public class User implements UserDetails {
         this.instaId = instaId;
         this.blog = blog;
         this.github = github;
+    }
+
+    public void updateTech(List<UserTech> userTechList) {
+        this.techStack = userTechList;
+    }
+
+    public void addTechStack(UserTech stack) {
+        techStack.add(stack);
+        stack.registToUser(this);
     }
 
 }
