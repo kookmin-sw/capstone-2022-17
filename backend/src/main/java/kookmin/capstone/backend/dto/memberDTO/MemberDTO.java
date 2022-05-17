@@ -1,6 +1,6 @@
 package kookmin.capstone.backend.dto.memberDTO;
 
-import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,5 +8,5 @@ import lombok.Setter;
 @Builder
 @Getter @Setter
 public class MemberDTO {
-    private ProjectDTO project;
+    private ProjectRequestDTO project;
 }
