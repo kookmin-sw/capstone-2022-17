@@ -84,8 +84,14 @@ public class ProjectApiController {
 
     @GetMapping("/v1/project/main")
     @ApiOperation(value = "메인화면 프로젝트 조회")
-    public ResponseEntity getMainProject() {
-        Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject();
+    public ResponseEntity getMainProject(HttpServletRequest request) {
+        Long userId = 0L;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject(userId);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_MAIN_GET_SUCCESS, mainProject));
     }
 

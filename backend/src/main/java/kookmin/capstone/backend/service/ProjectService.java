@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -148,10 +149,10 @@ public class ProjectService {
         }
     }
 
-    public Map<String, List<ProjectDTO>> getMainProject() {
+    public Map<String, List<ProjectDTO>> getMainProject(Long userId) {
         Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
-        mainProject.put("topScore", projectRepository.getTopByScore());
-        mainProject.put("topLatest", projectRepository.getTopByCreated());
+        mainProject.put("topScore", projectRepository.getTopByScore(userId));
+        mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
         return mainProject;
     }
 
