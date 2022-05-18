@@ -6,7 +6,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
 
-  font-size: 0.7rem;
+  font-size: 1.1rem;
   font-family: 'Pr-Regular';
   color: #555555;
   cursor: pointer;
