@@ -9,7 +9,6 @@ import kookmin.capstone.backend.domain.project.QProjectPosition;
 import kookmin.capstone.backend.domain.user.QUser;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
-import kookmin.capstone.backend.dto.projectDTO.QProjectDTO;
 import kookmin.capstone.backend.repository.customProjectRepository.ProjectRepositoryCustom;
 import org.springframework.stereotype.Repository;
 
