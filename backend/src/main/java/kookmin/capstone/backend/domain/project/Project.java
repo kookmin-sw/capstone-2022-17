@@ -86,6 +86,14 @@ public class Project extends DateEntity {
         this.likes--;
     }
 
+    public void initScore() {
+        this.score = 0L;
+    }
+
+    public void updateScore() {
+        this.score = Long.valueOf(this.likes * 5 + this.views);
+    }
+
     //연관 관계 메서드
     public void addTechStack(ProjectTech stack) {
         techStack.add(stack);

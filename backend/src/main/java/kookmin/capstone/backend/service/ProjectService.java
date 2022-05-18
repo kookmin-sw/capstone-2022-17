@@ -45,6 +45,7 @@ public class ProjectService {
             throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
         }
         Project project = dtoToToEntity(dto);
+        project.initScore();
         projectRepository.save(project);
     }
 
@@ -88,6 +89,7 @@ public class ProjectService {
     public ProjectRequestDTO findProjectDtoById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         project.addViews();
+        project.updateScore();
         return ProjectRequestDTO.entityToDto(project);
     }
 
@@ -126,6 +128,7 @@ public class ProjectService {
             return false;
         } else {
             findProject.like();
+            findProject.updateScore();
             projectLikeRepository.save(new ProjectLike(findUser, findProject));
             return true;
         }
@@ -137,6 +140,7 @@ public class ProjectService {
 
         if (projectLikeRepository.existsUserLike(projectId, userId)) {
             findProject.unlike();
+            findProject.updateScore();
             projectLikeRepository.deleteLike(projectId, userId);
             return true;
         } else {
