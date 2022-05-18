@@ -11,15 +11,16 @@ const Container = styled.div`
   font-family: 'Pr-Regular';
   color: #888888;
 
-  width: 11rem;
-  height: 13rem;
+  width: 12rem;
+  height: 14rem;
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
   cursor: pointer;
+  transition: transform 300ms ease-in-out;
 
   &:hover {
-    margin-top: 1rem;
-    box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.25);
+    transform: translateY(-0.5rem);
+    box-shadow: 0px 3px 7px 1px #aeadad;
   }
 `;
 
