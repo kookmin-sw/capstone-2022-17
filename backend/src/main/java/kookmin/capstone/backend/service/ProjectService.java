@@ -7,6 +7,7 @@ import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
@@ -23,8 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -146,6 +146,13 @@ public class ProjectService {
         } else {
             return false;
         }
+    }
+
+    public Map<String, List<ProjectDTO>> getMainProject() {
+        Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
+        mainProject.put("topScore", projectRepository.getTopByScore());
+        mainProject.put("topLatest", projectRepository.getTopByCreated());
+        return mainProject;
     }
 
     public Project dtoToToEntity(ProjectRequestDTO dto) {

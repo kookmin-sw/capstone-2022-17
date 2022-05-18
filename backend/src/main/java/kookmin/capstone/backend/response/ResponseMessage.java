@@ -18,4 +18,5 @@ public class ResponseMessage {
     public static final String PROJECT_LIKE_ADD_FAIL = "이미 좋아요 한 프로젝트";
     public static final String PROJECT_LIKE_REMOVE_FAIL = "좋아요 하지 않은 프로젝트";
     public static final String PROJECT_LIKE_REMOVE_SUCCESS = "프로젝트 좋아요 취소 성공";
+    public static final String PROJECT_MAIN_GET_SUCCESS = "메인 화면 프로젝트 조회 성공";
 }

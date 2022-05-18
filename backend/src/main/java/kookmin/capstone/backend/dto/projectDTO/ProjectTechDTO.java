@@ -22,7 +22,7 @@ public class ProjectTechDTO {
     }
 
     public static ProjectTechDTO entityToDto(ProjectTech projectTech) {
-        ProjectTechDTO projectTechDTO = new ProjectTechDTO(projectTech.getStack());
+        ProjectTechDTO projectTechDTO = new ProjectTechDTO(projectTech.getStack(), projectTech.getId());
         return projectTechDTO;
     }
 
