@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
 import NavMenu from 'components/Nav/NavMenu';
-import NotiIcon from 'components/Nav/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
 import * as Btn from 'components/common/Btn';
 import SignBtn from 'components/Nav/SignBtn';
@@ -60,8 +59,9 @@ const Nav = () => {
         <RightContainer>
           {user ? (
             <>
-              <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
-              <NotiIcon />
+              <Link to="write">
+                <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
+              </Link>
               <UserMenu />
             </>
           ) : (
