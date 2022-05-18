@@ -47,6 +47,10 @@ public class Project extends DateEntity {
     private String field;
     private String region;
 
+    private Long score;
+    private int likes;
+    private int views;
+
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectPosition> positions = new ArrayList<>();
 
@@ -68,8 +72,17 @@ public class Project extends DateEntity {
         this.region = region;
     }
 
+    public void addViews() {
+        this.views++;
+    }
 
+    public void like() {
+        this.likes++;
+    }
 
+    public void unlike() {
+        this.likes--;
+    }
 
     //연관 관계 메서드
     public void addTechStack(ProjectTech stack) {

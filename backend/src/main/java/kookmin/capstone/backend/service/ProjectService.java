@@ -81,8 +81,10 @@ public class ProjectService {
         return project;
     }
 
+    @Transactional
     public ProjectRequestDTO findProjectDtoById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        project.addViews();
         return ProjectRequestDTO.entityToDto(project);
     }
 
