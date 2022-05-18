@@ -60,6 +60,8 @@ public class Project extends DateEntity {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Member> members = new ArrayList<>();
 
+
+
     public void chageProject(String description, String thumbnail, ProjectStatus status,
                              String title, String purpose, String field, String region
                              ) {

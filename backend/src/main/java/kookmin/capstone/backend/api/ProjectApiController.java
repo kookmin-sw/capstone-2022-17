@@ -1,7 +1,6 @@
 package kookmin.capstone.backend.api;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
@@ -21,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,6 +80,30 @@ public class ProjectApiController {
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_GET_SUCCESS, projectRequestDTO));
     }
 
+    @PostMapping("/v1/project/like")
+    @ApiOperation(value = "프로젝트 좋아요 API")
+    public ResponseEntity addLike(@RequestBody ProjectRequestId projectRequestId, HttpServletRequest request) {
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        Long projectId = projectRequestId.getProjectId();
+        if (!projectService.addLike(projectId, userId)) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_ADD_FAIL));
+        }
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.CREATED, ResponseMessage.PROJECT_LIKE_ADD_SUCCESS));
+    }
+
+
+    @ApiImplicitParam(name = "project", value = "projectId", required = true)
+    @DeleteMapping("/v1/project/like")
+    @ApiOperation(value = "프로젝트 좋아요 취소 API")
+    public ResponseEntity unLike(@RequestBody ProjectRequestId projectRequestId, HttpServletRequest request) {
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        Long projectId = projectRequestId.getProjectId();
+        if (!projectService.removeLike(projectId, userId)) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL));
+        }
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS));
+    }
+
     @Data @AllArgsConstructor
     static class CreatePojectResponse {
         private Long id;
@@ -90,13 +114,8 @@ public class ProjectApiController {
         private Long id;
     }
 
-    @Getter
-    static class TechStackDto {
-
-        private String stack;
-
-        public TechStackDto(TechStack techStack) {
-            stack = techStack.getStack();
-        }
+    @Data
+    static class ProjectRequestId {
+        private Long projectId;
     }
 }

@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.repository;
+package kookmin.capstone.backend.repository.projectRepository;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -7,6 +7,8 @@ import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.QProject;
 import kookmin.capstone.backend.domain.user.QUser;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.repository.customProjectRepository.ProjectRepositoryCustom;
+import org.springframework.stereotype.Repository;
 
 
 import javax.persistence.EntityManager;
@@ -16,7 +18,7 @@ import static kookmin.capstone.backend.domain.QProjectTech.projectTech;
 import static kookmin.capstone.backend.domain.project.QProject.project;
 import static org.thymeleaf.util.StringUtils.isEmpty;
 
-public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
+public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
@@ -43,6 +45,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom{
                        )
                 .fetch();
     }
+
+
 
     private BooleanExpression titleContain(String title) {
         return isEmpty(title) ? null : project.title.contains(title);
