@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
 
 const Container = styled.div`
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-family: 'Pr-ExtraLight';
   color: #adadad;
 
