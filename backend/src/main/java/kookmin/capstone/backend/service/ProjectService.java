@@ -87,11 +87,12 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectRequestDTO findProjectDtoById(Long id) {
+    public ProjectRequestDTO findProjectDtoById(Long id, Long userId) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         project.addViews();
         project.updateScore();
-        return ProjectRequestDTO.entityToDto(project);
+        boolean isLike = projectLikeRepository.existsUserLike(project.getId(), userId);
+        return ProjectRequestDTO.entityToDtoAddLike(project, isLike);
     }
 
 

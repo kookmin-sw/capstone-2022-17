@@ -32,6 +32,7 @@ public class ProjectRequestDTO {
     private List<String> techStack;
     private List<ProjectPositionDTO> projectPositions;
     private Long userId;
+    private boolean isLike;
 
 //  @QueryProjection
     public ProjectRequestDTO(Long id, ProjectStatus status, String title, String purpose,
@@ -75,6 +76,12 @@ public class ProjectRequestDTO {
                 projectPositions(projectPositionDTO).
                 userId(project.getUser().getId()).
                 build();
+        return projectRequestDTO;
+    }
+
+    public static ProjectRequestDTO entityToDtoAddLike(Project project, boolean isLike) {
+        ProjectRequestDTO projectRequestDTO = ProjectRequestDTO.entityToDto(project);
+        projectRequestDTO.setLike(isLike);
         return projectRequestDTO;
     }
 }

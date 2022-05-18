@@ -77,8 +77,14 @@ public class ProjectApiController {
 
     @GetMapping("/v1/project")
     @ApiOperation(value = "프로젝트 단건 조회")
-    public ResponseEntity getProjectOne(@RequestParam Long id) {
-        ProjectRequestDTO projectRequestDTO = projectService.findProjectDtoById(id);
+    public ResponseEntity getProjectOne(@RequestParam Long id, HttpServletRequest request) {
+        Long userId = 0L;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            log.error("토큰 정보가 없습니다.");
+        }
+        ProjectRequestDTO projectRequestDTO = projectService.findProjectDtoById(id, userId);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_GET_SUCCESS, projectRequestDTO));
     }
 
@@ -89,7 +95,7 @@ public class ProjectApiController {
         try {
             userId = jwtTokenService.get(request, "id", Long.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("토큰 정보가 없습니다.");
         }
         Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject(userId);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_MAIN_GET_SUCCESS, mainProject));
