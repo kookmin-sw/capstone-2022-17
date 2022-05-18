@@ -9,21 +9,24 @@ import Contents from './Contents';
 import Status from './Status';
 
 const Wrapper = styled.div`
-  font-size: 0.8rem;
   font-family: 'Pr-Regular';
   color: #000000;
-  line-height: 1rem;
+  line-height: 1.5rem;
 
-  padding: 1rem 1.5rem;
+  padding: 1.5rem 1.5rem;
   border-top: 3px solid #4596ff !important;
   border: 1px solid #cecece;
   width: 30%;
   height: 100%;
-  position: sticky;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    line-height: 1.3rem;
+  }
 `;
 
 const ContentBox = styled.div`
-  padding: 0.5rem 0;
+  padding: 1.2rem 0;
   width: auto;
   border-bottom: 1px solid #cecece;
   display: flex;
@@ -48,16 +51,22 @@ const ButtonBox = styled.div`
 `;
 
 const LikesBtn = styled.div`
-  font-size: 0.8rem !important;
+  font-size: 1rem !important;
   cursor: pointer;
 `;
 
 const SupplyBtn = styled(Btn.PrimaryBtn)`
-  font-size: 0.8rem !important;
+  font-size: 1.2rem !important;
   cursor: pointer;
   border-radius: 3rem !important;
-  height: 2.5rem !important;
+  height: 3rem !important;
   margin-top: 0.5rem !important;
+
+  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
+  @media all and (max-width: 767px) {
+    font-size: 1rem !important;
+    height: 2.5rem !important;
+  }
 `;
 
 const FloatingBox = () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const TagDiv = styled.div`
-  font-size: 0.7rem;
+  font-size: 0.9rem;
   font-family: 'Pr-Light';
   color: #999999;
   background-color: #f5f5f5;

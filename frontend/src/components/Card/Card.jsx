@@ -13,9 +13,15 @@ const Container = styled.div`
   color: #888888;
 
   width: 10rem;
+  height: 13rem;
   border-radius: 1rem;
-  margin: 1rem 0.6rem;
+  margin: 1.4rem 0.6rem;
   cursor: pointer;
+
+  &:hover {
+    margin-top: 1rem;
+    box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const LikesViews = styled.div`
@@ -29,9 +35,7 @@ const Card = () => {
       <Thumbnail />
       <Tag>프론트엔드</Tag>
       <Tag>프론트엔드</Tag>
-      <Tag>프론트엔드</Tag>
       <CardName>프로젝트 제목</CardName>
-      <hr />
       <LikesViews>
         <Likes>100</Likes>
         <Views>50</Views>
