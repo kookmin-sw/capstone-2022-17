@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Modal } from 'semantic-ui-react';
 import { lighten } from 'polished';
@@ -19,7 +19,7 @@ export const Label = styled.span`
 `;
 
 function ServiceModal() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <Modal

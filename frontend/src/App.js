@@ -15,6 +15,7 @@ import {
   SelectPosition,
   RatePosition,
   TechStack,
+  Write,
 } from 'pages';
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         <ResponsiveLayout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/write" element={<Write />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/project" element={<Project />} />

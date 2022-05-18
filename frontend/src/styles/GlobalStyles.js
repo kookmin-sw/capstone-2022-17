@@ -31,6 +31,11 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'Pr-Regular';
     font-size: 0.9rem;
   }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
   
 `;
 
