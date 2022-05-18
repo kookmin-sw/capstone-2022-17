@@ -3,6 +3,7 @@ package kookmin.capstone.backend.service;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.project.Project;
+import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
@@ -12,9 +13,10 @@ import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
-import kookmin.capstone.backend.repository.ProjectPositionRepository;
-import kookmin.capstone.backend.repository.ProjectRepository;
-import kookmin.capstone.backend.repository.ProjectTechRepository;
+import kookmin.capstone.backend.repository.projectRepository.ProjectLikeRepository;
+import kookmin.capstone.backend.repository.projectRepository.ProjectPositionRepository;
+import kookmin.capstone.backend.repository.projectRepository.ProjectRepository;
+import kookmin.capstone.backend.repository.projectRepository.ProjectTechRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,7 @@ public class ProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectTechRepository projectTechRepository;
     private final ProjectPositionRepository projectPositionRepository;
+    private final ProjectLikeRepository projectLikeRepository;
 
     @Transactional
     public void registProject(ProjectRequestDTO dto) throws ProjectException {
@@ -81,8 +84,10 @@ public class ProjectService {
         return project;
     }
 
+    @Transactional
     public ProjectRequestDTO findProjectDtoById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        project.addViews();
         return ProjectRequestDTO.entityToDto(project);
     }
 
@@ -111,6 +116,32 @@ public class ProjectService {
     public boolean isLeader(Long projectid, Long userid) {
         Long leaderId = projectRepository.findById(projectid).orElseThrow(EntityNotFoundException::new).getUser().getId();
         return leaderId == userid ? true : false;
+    }
+
+    @Transactional
+    public boolean addLike(Long projectId, Long userId) {
+        Project findProject = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
+        User findUser = userService.findUserById(userId);
+        if (projectLikeRepository.existsUserLike(projectId, userId)) {
+            return false;
+        } else {
+            findProject.like();
+            projectLikeRepository.save(new ProjectLike(findUser, findProject));
+            return true;
+        }
+    }
+
+    @Transactional
+    public boolean removeLike(Long projectId, Long userId) {
+        Project findProject = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
+
+        if (projectLikeRepository.existsUserLike(projectId, userId)) {
+            findProject.unlike();
+            projectLikeRepository.deleteLike(projectId, userId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public Project dtoToToEntity(ProjectRequestDTO dto) {

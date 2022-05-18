@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.repository;
+package kookmin.capstone.backend.repository.customProjectRepository;
 
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;

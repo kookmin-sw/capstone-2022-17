@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.repository;
+package kookmin.capstone.backend.repository.projectRepository;
 
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
