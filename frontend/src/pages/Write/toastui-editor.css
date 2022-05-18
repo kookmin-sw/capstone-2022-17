@@ -240,6 +240,7 @@ li.ProseMirror-selectednode:after {
   font-family: 'Open Sans', 'Helvetica Neue', 'Helvetica', 'Arial', '나눔바른고딕',
     'Nanum Barun Gothic', '맑은고딕', 'Malgun Gothic', sans-serif;
   border-radius: 4px;
+  margin-top: 1rem;
 }
 
 .toastui-editor-defaultUI button {

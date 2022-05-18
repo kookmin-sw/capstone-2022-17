@@ -9,9 +9,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 
-import { Form, Icon, Grid, Search, Label } from 'semantic-ui-react';
-import * as Container from 'components/common/Containers';
-
 import './toastui-editor.css';
 import Prism from 'prismjs';
 import 'prismjs/themes/prism.css';
@@ -20,7 +17,12 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/d
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+
 import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
+import { Form, Icon, Grid, Search, Label } from 'semantic-ui-react';
+import * as Container from 'components/common/Containers';
+import SubmitWrite from 'components/Write/SubmitWrite';
+
 import numOption from './numOption';
 import positionOption from './postionOption';
 import fields from './fields';
@@ -116,7 +118,9 @@ const AutoComplete = styled(Search)`
   }
 `;
 
-const Tag = styled(Label)``;
+const Tag = styled(Label)`
+  border-radius: 2rem !important;
+`;
 
 const resultRenderer = ({ stack }) => <div>{stack}</div>;
 
@@ -132,8 +136,10 @@ const Write = () => {
   const [region, setRegion] = useState('지역 미지정');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [field, setField] = useState('');
   const [tech, onChangeTech, setTech] = useInput('');
   const [techlist, setTechlist] = useState([]);
+  const [projectData, setProjectData] = useState({});
 
   useEffect(() => {
     titleRef.current.focus();
@@ -170,7 +176,6 @@ const Write = () => {
         name: tech,
       });
     }
-    console.log(techstacks);
   }, [tech]);
 
   const updatePosition = (index, value) => {
@@ -197,10 +202,8 @@ const Write = () => {
     setPosition([...position, { position: null, num: null }]);
   };
 
-  const deletePosition = (index) => {
-    const temp = [...position];
-    temp.splice(index, 1);
-    setPosition(temp);
+  const deletePosition = (idx) => {
+    setPosition(position.filter((value, index) => index !== idx));
   };
 
   const onChangeEditorTextHandler = () => {
@@ -208,8 +211,31 @@ const Write = () => {
   };
 
   const handleResultSelect = (e, data) => {
-    setTechlist([...techlist, data.result.stack]);
+    if (!techlist.includes(data.result.stack)) {
+      setTechlist([...techlist, data.result.stack]);
+    } else {
+      alert('이미 입력된 기술스택입니다.');
+    }
     setTech('');
+  };
+
+  const handleDeleteTag = (idx) => {
+    setTechlist(techlist.filter((value, index) => index !== idx));
+  };
+
+  const handleSubmit = () => {
+    setProjectData({
+      title,
+      purpose,
+      region,
+      techStack: techlist,
+      startDate,
+      endDate,
+      field,
+      description: content,
+      thumbnail: '',
+      projectPositions: position,
+    });
   };
 
   return (
@@ -223,7 +249,7 @@ const Write = () => {
           ref={titleRef}
         />
       </Container.RowStartContainer>
-      <Form style={{ maxWidth: '1300px' }}>
+      <Form onSubmit={handleSubmit} style={{ maxWidth: '1300px' }}>
         <InputContainer>
           <Container.ColumnStartContainer
             style={{ paddingRight: '0.5rem', borderRight: '1.5px solid #cecece' }}
@@ -238,12 +264,12 @@ const Write = () => {
                     style={{ cursor: 'pointer' }}
                     onClick={addPosition}
                   />
-                  <Icon name="cancle" />
+                  <Icon />
                 </div>
               </Container.RowBetweenContainer>
               {position.map((pos, index) => {
                 return (
-                  <PositionContainer>
+                  <PositionContainer key={pos.id}>
                     <Select
                       placeholder="포지션 선택"
                       options={positionOption}
@@ -265,7 +291,7 @@ const Write = () => {
                         style={{ visibility: 'hidden', opacity: 0.5 }}
                       />
                     ) : (
-                      <Icon name="cancle" />
+                      <Icon />
                     )}
                   </PositionContainer>
                 );
@@ -304,14 +330,20 @@ const Write = () => {
                   dateFormat="yyyy년 MM월 dd일"
                   minDate={new Date()}
                   selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date) => {
+                    setStartDate(date);
+                    if (startDate > endDate) {
+                      setEndDate(date);
+                      console.log('asdf');
+                    }
+                  }}
                   customInput={<Input />}
                 />
                 <div style={{ margin: '0 1rem' }}>~</div>
                 <DatePicker
                   locale={ko}
                   dateFormat="yyyy년 MM월 dd일"
-                  minDate={new Date()}
+                  minDate={startDate}
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
                   customInput={<Input />}
@@ -322,12 +354,15 @@ const Write = () => {
               <Requiredlabel>분야</Requiredlabel>
               <Grid stackable columns={5}>
                 <Grid.Row>
-                  {fields.map((field) => {
+                  {fields.map((f) => {
                     return (
-                      <Grid.Column key={field.id} style={{ margin: '0.25rem 0' }}>
-                        <Form.Checkbox
-                          key={field.id}
-                          label={field.name}
+                      <Grid.Column key={f.id} style={{ margin: '0.25rem 0' }}>
+                        <Radio
+                          key={f.id}
+                          label={f.name}
+                          value={f.name}
+                          checked={field === f.name}
+                          onChange={(e, { value }) => setField(value)}
                           style={{ fontSize: '0.9rem' }}
                         />
                       </Grid.Column>
@@ -363,22 +398,17 @@ const Write = () => {
             />
           </Field>
         </Container.RowBetweenContainer>
-        <Container.RowStartContainer style={{ margin: '-1rem 0 2rem 0' }}>
-          {techlist.map((stack) => {
+        <Container.RowStartContainer style={{ margin: '-1rem 0 3rem 0' }}>
+          {techlist.map((stack, index) => {
             return (
               <Tag key={stack}>
                 {stack}
-                <Icon name="delete" />
+                <Icon name="delete" onClick={() => handleDeleteTag(index)} />
               </Tag>
             );
           })}
-          <Tag>
-            React.js
-            <Icon name="delete" />
-          </Tag>
         </Container.RowStartContainer>
-        {content}
-        {title}
+        <Requiredlabel>내용</Requiredlabel>
         <Editor
           height="80vh"
           previewStyle="vertical"
@@ -389,6 +419,9 @@ const Write = () => {
           plugins={[colorSyntax, [codeSyntaxHighlight, { hightlighter: Prism }]]}
           onChange={onChangeEditorTextHandler}
         />
+        <Container.AlignCenterContainer style={{ margin: '5rem 0' }}>
+          <SubmitWrite data={projectData} />
+        </Container.AlignCenterContainer>
       </Form>
     </WriteContainer>
   );

@@ -3,6 +3,8 @@ import { combineReducers } from 'redux';
 
 import authentication from './authentication';
 import techstack from './techstack';
+import image from './image';
+import project from './project';
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -12,6 +14,8 @@ const rootReducer = (state, action) => {
       const combineReducer = combineReducers({
         authentication,
         techstack,
+        image,
+        project,
       });
       return combineReducer(state, action);
     }
