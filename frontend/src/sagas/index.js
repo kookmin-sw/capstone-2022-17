@@ -3,10 +3,11 @@ import axios from 'axios';
 
 import { apiUrl } from 'config/api.config';
 import authenticationSaga from './authentication';
+import techstacksSaga from './techstack';
 
 axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;
 
 export default function* rootSaga() {
-  yield all([fork(authenticationSaga)]);
+  yield all([fork(authenticationSaga), fork(techstacksSaga)]);
 }

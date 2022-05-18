@@ -1,4 +1,5 @@
 import React, { useEffect, useState, createRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Editor } from '@toast-ui/react-editor';
 import useInput from 'hooks/useInput';
 import styled from 'styled-components';
@@ -8,7 +9,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 
-import { Form, Icon, Grid, Search } from 'semantic-ui-react';
+import { Form, Icon, Grid, Search, Label } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
 
 import './toastui-editor.css';
@@ -19,6 +20,7 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight/d
 import 'tui-color-picker/dist/tui-color-picker.css';
 import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
 import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
 import numOption from './numOption';
 import positionOption from './postionOption';
 import fields from './fields';
@@ -114,7 +116,13 @@ const AutoComplete = styled(Search)`
   }
 `;
 
+const Tag = styled(Label)``;
+
+const resultRenderer = ({ stack }) => <div>{stack}</div>;
+
 const Write = () => {
+  const dispatch = useDispatch();
+  const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const titleRef = createRef();
   const editorRef = createRef();
   const [title, onChangeTitle] = useInput('');
@@ -124,6 +132,46 @@ const Write = () => {
   const [region, setRegion] = useState('지역 미지정');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  const [tech, onChangeTech, setTech] = useInput('');
+  const [techlist, setTechlist] = useState([]);
+
+  useEffect(() => {
+    titleRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    if (editorRef.current) {
+      // 기존에 Image 를 Import 하는 Hook 을 제거한다.
+      editorRef.current.getInstance().removeHook('addImageBlobHook');
+
+      // 새롭게 Image 를 Import 하는 Hook 을 생성한다.
+      editorRef.current.getInstance().addHook('addImageBlobHook', (blob, callback) => {
+        (async () => {
+          const formData = new FormData();
+          formData.append('images', blob);
+
+          const { data: filename } = await axios.post('/upload', formData, {
+            headers: authHeader(),
+          });
+
+          callback(filename, '');
+        })();
+        return false;
+      });
+    }
+
+    return () => {};
+  }, [editorRef]);
+
+  useEffect(() => {
+    if (tech !== '') {
+      dispatch({
+        type: LOAD_TECHSTACK_REQUEST,
+        name: tech,
+      });
+    }
+    console.log(techstacks);
+  }, [tech]);
 
   const updatePosition = (index, value) => {
     const result = position.some((pos) => {
@@ -159,31 +207,10 @@ const Write = () => {
     setContent(editorRef.current.getInstance().getMarkdown());
   };
 
-  useEffect(() => titleRef.current.focus(), []);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      // 기존에 Image 를 Import 하는 Hook 을 제거한다.
-      editorRef.current.getInstance().removeHook('addImageBlobHook');
-
-      // 새롭게 Image 를 Import 하는 Hook 을 생성한다.
-      editorRef.current.getInstance().addHook('addImageBlobHook', (blob, callback) => {
-        (async () => {
-          const formData = new FormData();
-          formData.append('images', blob);
-
-          const { data: filename } = await axios.post('/upload', formData, {
-            headers: authHeader(),
-          });
-
-          callback(filename, '');
-        })();
-        return false;
-      });
-    }
-
-    return () => {};
-  }, [editorRef]);
+  const handleResultSelect = (e, data) => {
+    setTechlist([...techlist, data.result.stack]);
+    setTech('');
+  };
 
   return (
     <WriteContainer>
@@ -315,7 +342,15 @@ const Write = () => {
           <Field>
             <InputLabel>기술스택 입력</InputLabel>
             <Container.AlignMiddleContainer>
-              <AutoComplete placeholder="기술스택 검색" />
+              <AutoComplete
+                placeholder="기술스택 검색"
+                value={tech}
+                onSearchChange={onChangeTech}
+                results={techstacks}
+                onResultSelect={handleResultSelect}
+                loading={loadTechstacksLoading}
+                resultRenderer={resultRenderer}
+              />
             </Container.AlignMiddleContainer>
           </Field>
           <Field>
@@ -328,6 +363,20 @@ const Write = () => {
             />
           </Field>
         </Container.RowBetweenContainer>
+        <Container.RowStartContainer style={{ margin: '-1rem 0 2rem 0' }}>
+          {techlist.map((stack) => {
+            return (
+              <Tag key={stack}>
+                {stack}
+                <Icon name="delete" />
+              </Tag>
+            );
+          })}
+          <Tag>
+            React.js
+            <Icon name="delete" />
+          </Tag>
+        </Container.RowStartContainer>
         {content}
         {title}
         <Editor
