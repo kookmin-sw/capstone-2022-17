@@ -8,11 +8,10 @@ import CardName from './CardName';
 import Thumbnail from './Thumbnail';
 
 const Container = styled.div`
-  font-size: 1rem;
   font-family: 'Pr-Regular';
   color: #888888;
 
-  width: 10rem;
+  width: 11rem;
   height: 13rem;
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;

@@ -7,6 +7,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  max-width: 1300px;
 `;
 
 const Banner = styled.img`
