@@ -7,6 +7,7 @@ import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
@@ -23,8 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional(readOnly = true)
@@ -45,6 +45,7 @@ public class ProjectService {
             throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
         }
         Project project = dtoToToEntity(dto);
+        project.initScore();
         projectRepository.save(project);
     }
 
@@ -88,6 +89,7 @@ public class ProjectService {
     public ProjectRequestDTO findProjectDtoById(Long id) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         project.addViews();
+        project.updateScore();
         return ProjectRequestDTO.entityToDto(project);
     }
 
@@ -126,6 +128,7 @@ public class ProjectService {
             return false;
         } else {
             findProject.like();
+            findProject.updateScore();
             projectLikeRepository.save(new ProjectLike(findUser, findProject));
             return true;
         }
@@ -137,11 +140,19 @@ public class ProjectService {
 
         if (projectLikeRepository.existsUserLike(projectId, userId)) {
             findProject.unlike();
+            findProject.updateScore();
             projectLikeRepository.deleteLike(projectId, userId);
             return true;
         } else {
             return false;
         }
+    }
+
+    public Map<String, List<ProjectDTO>> getMainProject() {
+        Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
+        mainProject.put("topScore", projectRepository.getTopByScore());
+        mainProject.put("topLatest", projectRepository.getTopByCreated());
+        return mainProject;
     }
 
     public Project dtoToToEntity(ProjectRequestDTO dto) {

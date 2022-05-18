@@ -10,12 +10,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.FetchType.LAZY;
 import static org.thymeleaf.util.StringUtils.isEmpty;
@@ -24,6 +30,7 @@ import static org.thymeleaf.util.StringUtils.isEmpty;
 @Getter @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Project extends DateEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +57,9 @@ public class Project extends DateEntity {
     private Long score;
     private int likes;
     private int views;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<ProjectPosition> positions = new ArrayList<>();
@@ -84,6 +94,14 @@ public class Project extends DateEntity {
 
     public void unlike() {
         this.likes--;
+    }
+
+    public void initScore() {
+        this.score = 0L;
+    }
+
+    public void updateScore() {
+        this.score = Long.valueOf(this.likes * 5 + this.views);
     }
 
     //연관 관계 메서드

@@ -2,6 +2,7 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
 import kookmin.capstone.backend.domain.TechStack;
+import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -78,6 +80,13 @@ public class ProjectApiController {
     public ResponseEntity getProjectOne(@RequestParam Long id) {
         ProjectRequestDTO projectRequestDTO = projectService.findProjectDtoById(id);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_GET_SUCCESS, projectRequestDTO));
+    }
+
+    @GetMapping("/v1/project/main")
+    @ApiOperation(value = "메인화면 프로젝트 조회")
+    public ResponseEntity getMainProject() {
+        Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject();
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_MAIN_GET_SUCCESS, mainProject));
     }
 
     @PostMapping("/v1/project/like")
