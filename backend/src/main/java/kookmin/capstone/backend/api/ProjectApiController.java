@@ -113,7 +113,6 @@ public class ProjectApiController {
     }
 
 
-    @ApiImplicitParam(name = "project", value = "projectId", required = true)
     @DeleteMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 취소 API")
     public ResponseEntity unLike(@RequestBody ProjectRequestId projectRequestId, HttpServletRequest request) {
