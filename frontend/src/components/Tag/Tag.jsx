@@ -8,7 +8,7 @@ const TagDiv = styled.div`
   background-color: #f5f5f5;
   border-radius: 1rem;
   padding: 0.3rem 0.5rem;
-  margin: 0.5rem 0.2rem 0.5rem 0;
+  margin: 0 0.2rem 0.5rem 0;
   display: inline-block;
 `;
 
