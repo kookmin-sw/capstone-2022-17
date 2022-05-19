@@ -43,7 +43,7 @@ const RatePosition = () => {
           );
         })}
       </RateContainer>
-      <NextBtn onClick={() => navigate('/survey/techstack', { state: { positionRate } })} />
+      <NextBtn onClick={() => navigate('/survey/techstack')} />
     </FadeIn>
   );
 };
