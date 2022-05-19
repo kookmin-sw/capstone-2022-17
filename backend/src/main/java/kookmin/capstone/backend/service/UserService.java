@@ -1,10 +1,13 @@
 package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.domain.user.UserPosition;
 import kookmin.capstone.backend.domain.user.UserTech;
 import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
+import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
 import kookmin.capstone.backend.dto.userDTO.UserTechDTO;
+import kookmin.capstone.backend.repository.UserPositionRepository;
 import kookmin.capstone.backend.repository.UserRepository;
 import kookmin.capstone.backend.repository.UserTechRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserTechRepository userTechRepository;
+    private final UserPositionRepository userPositionRepository;
 
     @Transactional
     public User join(SignupDTO signupDTO) {
@@ -63,8 +67,29 @@ public class UserService {
         }
 
         userTechList.stream().forEach(stack -> findUser.addTechStack(new UserTech(stack)));
-
         return UserDTO.entityToDto(findUser);
+    }
+
+    @Transactional
+    public UserDTO updateUserPosition(Set<UserPositionDTO> userPositionList, Long userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        Set<UserPosition> findUserPositionList = findUser.getUserPositions();
+
+        Iterator<UserPosition> iter = findUserPositionList.iterator();
+        while(iter.hasNext()) {
+            UserPosition userPosition = iter.next();
+            if (!userPositionList.contains(userPosition.getPositionName())) {
+                userPosition.deleteUser(iter);
+                userPositionRepository.deleteById(userPosition.getId());
+            } else {
+                userPositionList.remove(userPosition.getPositionName());
+            }
+        }
+
+        userPositionList.stream().forEach(position -> findUser.addUserPosition(new UserPosition(position.getScore(), position.getPositionName())));
+        return UserDTO.entityToDto(findUser);
+//        return UserDTO.builder().build();
+
     }
 
     public User findUserById(Long id) {
