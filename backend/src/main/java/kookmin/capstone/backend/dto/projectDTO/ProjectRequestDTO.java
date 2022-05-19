@@ -33,6 +33,7 @@ public class ProjectRequestDTO {
     private List<ProjectPositionDTO> projectPositions;
     private Long userId;
     private boolean isLike;
+    private String leaderPosition;
 
 //  @QueryProjection
     public ProjectRequestDTO(Long id, ProjectStatus status, String title, String purpose,

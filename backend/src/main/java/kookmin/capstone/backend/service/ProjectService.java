@@ -7,6 +7,7 @@ import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
@@ -40,14 +41,19 @@ public class ProjectService {
     private final ProjectLikeRepository projectLikeRepository;
 
     @Transactional
-    public void registProject(ProjectRequestDTO dto) throws ProjectException {
+    public Project registProject(ProjectRequestDTO dto) throws ProjectException, MemberException {
         dto.setStatus(ProjectStatus.IN_PROGRESS);
         if (projectRepository.existsByTitle(dto.getTitle())) {
             throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
         }
+        if (dto.getLeaderPosition() != null) {
+
+        }
         Project project = dtoToToEntity(dto);
         project.initScore();
-        projectRepository.save(project);
+        Project saveProject = projectRepository.save(project);
+
+        return saveProject;
     }
 
     @Transactional
