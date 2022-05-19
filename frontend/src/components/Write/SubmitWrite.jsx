@@ -98,6 +98,11 @@ const SubmitWrite = ({ data }) => {
     }
   }, [addImageDone]);
 
+  const handleClose = () => {
+    setOpen(false);
+    setMode(false);
+  };
+
   return (
     <SubmitModal
       onClose={() => setOpen(false)}
@@ -106,7 +111,7 @@ const SubmitWrite = ({ data }) => {
       trigger={<SubmitBtn>작성완료</SubmitBtn>}
     >
       <ModalHeader>
-        <BtnText onClick={() => setOpen(false)}>취소</BtnText>
+        <BtnText onClick={handleClose}>취소</BtnText>
         <ModalTitle>대표 이미지 등록</ModalTitle>
         <BtnText onClick={handleSubmit} style={{ color: COLOR.PRIMARY }}>
           완료
@@ -118,21 +123,21 @@ const SubmitWrite = ({ data }) => {
             <Container.AlignCenterContainer>
               <BasicImg
                 onClick={handleBasicImg}
-                src={`${process.env.PUBLIC_URL}/images/cardImg1.png`}
+                src={`${process.env.PUBLIC_URL}/images/card/cardImg1.png`}
               />
               <BasicImg
                 onClick={handleBasicImg}
-                src={`${process.env.PUBLIC_URL}/images/cardImg2.png`}
+                src={`${process.env.PUBLIC_URL}/images/card/cardImg2.png`}
               />
             </Container.AlignCenterContainer>
             <Container.AlignCenterContainer>
               <BasicImg
                 onClick={handleBasicImg}
-                src={`${process.env.PUBLIC_URL}/images/cardImg3.png`}
+                src={`${process.env.PUBLIC_URL}/images/card/cardImg3.png`}
               />
               <BasicImg
                 onClick={handleBasicImg}
-                src={`${process.env.PUBLIC_URL}/images/cardImg4.png`}
+                src={`${process.env.PUBLIC_URL}/images/card/cardImg4.png`}
               />
             </Container.AlignCenterContainer>
           </Container.ColumnMiddleContainer>

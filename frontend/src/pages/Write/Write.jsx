@@ -8,6 +8,7 @@ import authHeader from 'sagas/auth-header';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
+import { toStringByFormatting } from 'utils/format';
 
 import './toastui-editor.css';
 import Prism from 'prismjs';
@@ -131,7 +132,7 @@ const Write = () => {
   const editorRef = createRef();
   const [title, onChangeTitle] = useInput('');
   const [content, setContent] = useState();
-  const [position, setPosition] = useState([{ position: '서버/백엔드', num: 1 }]);
+  const [position, setPosition] = useState([{ positionName: '서버/백엔드', total: 1 }]);
   const [purpose, setPurpose] = useState('');
   const [region, setRegion] = useState('지역 미지정');
   const [startDate, setStartDate] = useState(new Date());
@@ -139,6 +140,7 @@ const Write = () => {
   const [field, setField] = useState('');
   const [tech, onChangeTech, setTech] = useInput('');
   const [techlist, setTechlist] = useState([]);
+  const [leaderPosition, setLeaderPosition] = useState('');
   const [projectData, setProjectData] = useState({});
 
   useEffect(() => {
@@ -180,26 +182,26 @@ const Write = () => {
 
   const updatePosition = (index, value) => {
     const result = position.some((pos) => {
-      if (pos.position === value) {
+      if (pos.positionName === value) {
         alert('중복된 포지션은 선택할 수 없습니다.');
       }
-      return pos.position === value;
+      return pos.positionName === value;
     });
     if (!result) {
       const temp = [...position];
-      temp[index] = { position: value, num: position[index].num };
+      temp[index] = { positionName: value, total: position[index].total };
       setPosition(temp);
     }
   };
 
   const updateNum = (index, num) => {
     const temp = [...position];
-    temp[index] = { position: position[index].position, num };
+    temp[index] = { positionName: position[index].positionName, total: num };
     setPosition(temp);
   };
 
   const addPosition = () => {
-    setPosition([...position, { position: null, num: null }]);
+    setPosition([...position, { positionName: null, total: null }]);
   };
 
   const deletePosition = (idx) => {
@@ -229,12 +231,13 @@ const Write = () => {
       purpose,
       region,
       techStack: techlist,
-      startDate,
-      endDate,
+      startDate: toStringByFormatting(startDate),
+      endDate: toStringByFormatting(endDate),
       field,
       description: content,
       thumbnail: '',
       projectPositions: position,
+      leaderPosition,
     });
   };
 
@@ -252,7 +255,11 @@ const Write = () => {
       <Form onSubmit={handleSubmit} style={{ maxWidth: '1300px' }}>
         <InputContainer>
           <Container.ColumnStartContainer
-            style={{ paddingRight: '0.5rem', borderRight: '1.5px solid #cecece' }}
+            style={{
+              paddingRight: '0.5rem',
+              marginBottom: '2rem',
+              borderRight: '1.5px solid #cecece',
+            }}
           >
             <Field required>
               <Container.RowBetweenContainer>
@@ -273,14 +280,14 @@ const Write = () => {
                     <Select
                       placeholder="포지션 선택"
                       options={positionOption}
-                      value={pos.position}
+                      value={pos.positionName}
                       onChange={(e, { value }) => updatePosition(index, value)}
                     />
                     <NumSelect
                       compact
                       placeholder="-"
                       options={numOption}
-                      value={pos.num}
+                      value={pos.total}
                       onChange={(e, { value }) => updateNum(index, value)}
                     />
                     {index ? (
@@ -322,34 +329,49 @@ const Write = () => {
             </Field>
           </Container.ColumnStartContainer>
           <Container.ColumnStartContainer style={{ paddingLeft: '1.5rem' }}>
-            <Field required>
-              <Requiredlabel>프로젝트 기간</Requiredlabel>
-              <Container.AlignMiddleContainer>
-                <DatePicker
-                  locale={ko}
-                  dateFormat="yyyy년 MM월 dd일"
-                  minDate={new Date()}
-                  selected={startDate}
-                  onChange={(date) => {
-                    setStartDate(date);
-                    if (startDate > endDate) {
-                      setEndDate(date);
-                      console.log('asdf');
-                    }
-                  }}
-                  customInput={<Input />}
-                />
-                <div style={{ margin: '0 1rem' }}>~</div>
-                <DatePicker
-                  locale={ko}
-                  dateFormat="yyyy년 MM월 dd일"
-                  minDate={startDate}
-                  selected={endDate}
-                  onChange={(date) => setEndDate(date)}
-                  customInput={<Input />}
-                />
-              </Container.AlignMiddleContainer>
-            </Field>
+            <Container.RowStartContainer>
+              <Container.ColumnStartContainer style={{ marginRight: '2.5rem' }}>
+                <Field required>
+                  <Requiredlabel>팀장 포지션</Requiredlabel>
+                  <Select
+                    placeholder="포지션 선택"
+                    options={positionOption}
+                    value={leaderPosition}
+                    onChange={(e, { value }) => setLeaderPosition(value)}
+                  />
+                </Field>
+              </Container.ColumnStartContainer>
+              <Container.ColumnStartContainer>
+                <Field required>
+                  <Requiredlabel>프로젝트 기간</Requiredlabel>
+                  <Container.AlignMiddleContainer>
+                    <DatePicker
+                      locale={ko}
+                      dateFormat="yyyy년 MM월 dd일"
+                      minDate={new Date()}
+                      selected={startDate}
+                      onChange={(date) => {
+                        setStartDate(date);
+                        if (date > endDate) {
+                          setEndDate(date);
+                          alert('123');
+                        }
+                      }}
+                      customInput={<Input />}
+                    />
+                    <div style={{ margin: '0 1rem' }}>~</div>
+                    <DatePicker
+                      locale={ko}
+                      dateFormat="yyyy년 MM월 dd일"
+                      minDate={startDate}
+                      selected={endDate}
+                      onChange={(date) => setEndDate(date)}
+                      customInput={<Input />}
+                    />
+                  </Container.AlignMiddleContainer>
+                </Field>
+              </Container.ColumnStartContainer>
+            </Container.RowStartContainer>
             <Field required>
               <Requiredlabel>분야</Requiredlabel>
               <Grid stackable columns={5}>
