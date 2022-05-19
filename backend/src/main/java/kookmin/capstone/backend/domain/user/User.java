@@ -8,6 +8,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.*;
@@ -41,7 +42,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserTech> techStack = new ArrayList<>();
 
-    private String position;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserPosition> userPositions = new HashSet<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -114,6 +116,11 @@ public class User implements UserDetails {
     public void addTechStack(UserTech stack) {
         techStack.add(stack);
         stack.registToUser(this);
+    }
+
+    public void addUserPosition(UserPosition userPosition) {
+        userPositions.add(userPosition);
+        userPosition.registToUser(this);
     }
 
 }

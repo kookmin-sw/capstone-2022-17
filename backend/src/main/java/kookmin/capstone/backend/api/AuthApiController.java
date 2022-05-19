@@ -2,9 +2,11 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.authDTO.AuthRequestDTO;
 import kookmin.capstone.backend.dto.authDTO.response.*;
 import kookmin.capstone.backend.dto.authDTO.LoginDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
+import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.exception.authException.ExistNicknameException;
 import kookmin.capstone.backend.exception.authException.ExistUserException;
 import kookmin.capstone.backend.exception.authException.PasswordException;
@@ -65,13 +67,8 @@ public class AuthApiController {
         } catch (ExistNicknameException e){
             return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
         }
-        User user = userService.join(signupDTO);
-        return ResponseEntity.ok(ResponseDTO.builder().
-                email(user.getEmail()).
-                nickname(user.getNickname()).
-                userId(user.getId()).
-                accessToken(jwtTokenService.createToken(user.getUsername(), user.getId(), user.getRoles()))
-                .build());
+        AuthRequestDTO user = userService.join(signupDTO);
+        return ResponseEntity.ok(user);
     }
 
     // 로그인
@@ -90,13 +87,8 @@ public class AuthApiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
         }
-
-        return ResponseEntity.ok(ResponseDTO.builder().
-                email(user.getEmail()).
-                nickname(user.getNickname()).
-                userId(user.getId()).
-                accessToken(jwtTokenService.createToken(user.getUsername(), user.getId(), user.getRoles()))
-                .build());
+        String token = jwtTokenService.createToken(user.getEmail(), user.getId(), user.getRoles());
+        return ResponseEntity.ok(AuthRequestDTO.entityToDto(user, token));
     }
 
 }
