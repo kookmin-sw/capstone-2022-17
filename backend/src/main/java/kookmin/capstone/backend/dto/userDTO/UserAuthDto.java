@@ -13,9 +13,7 @@ import java.util.Collection;
 public class UserAuthDto extends User {
 
     private String email;
-
     private String name;
-
     private boolean fromSocial;
 
     public UserAuthDto(String username, String password,
