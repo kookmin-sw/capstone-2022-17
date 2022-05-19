@@ -31,6 +31,12 @@ export const ColumnStartContainer = styled.div`
   align-items: flex-start;
 `;
 
+export const ColumnBetweenContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
 export const ColumnMiddleContainer = styled.div`
   display: flex;
   flex-direction: column;

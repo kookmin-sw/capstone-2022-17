@@ -48,7 +48,7 @@ const Title = styled.input`
 
 const InputContainer = styled(Container.RowStartContainer)`
   width: 100%;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 2rem 0;
   padding: 2rem 2.5rem 0 2.5rem;
   border-radius: 0.5rem;
@@ -252,7 +252,7 @@ const Write = () => {
           ref={titleRef}
         />
       </Container.RowStartContainer>
-      <Form onSubmit={handleSubmit} style={{ maxWidth: '1300px' }}>
+      <Form onSubmit={handleSubmit} style={{ maxWidth: '1200px' }}>
         <InputContainer>
           <Container.ColumnStartContainer
             style={{

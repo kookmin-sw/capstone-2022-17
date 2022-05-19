@@ -15,7 +15,7 @@ const ContentContainer = styled.div`
   flex-direction: column !important;
   justify-content: center !important;
   align-items: center;
-  /* max-width: 1300px; */
+  /* max-width: 1200px; */
   /* width: 900px; */
 `;
 
@@ -34,7 +34,7 @@ const Banner = styled.img`
 const Content1 = styled.div`
   /* display: flex; */
   justify-content: center;
-  /* max-width: 1300px; */
+  /* max-width: 1200px; */
 `;
 
 const Content2 = styled.div`

@@ -12,7 +12,7 @@ import FloatingBox from 'components/FloatingBox/FloatingBox';
 const Container = styled.div`
   display: flex;
   min-width: 600px;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 0 auto 5rem auto;
   position: relative;
 
