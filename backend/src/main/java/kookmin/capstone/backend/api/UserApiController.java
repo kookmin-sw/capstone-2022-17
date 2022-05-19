@@ -58,7 +58,7 @@ public class UserApiController {
     public ResponseEntity updateUserPosition(@RequestBody Set<UserPositionDTO> userPositionList, HttpServletRequest request) {
         Long userId = jwtTokenService.get(request, "id", Long.class);
         UserDTO userDTO = userService.updateUserPosition(userPositionList, userId);
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_TECH_ADD_SUCESS, userDTO));
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_POSITION_ADD_SUCESS, userDTO));
 //        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_TECH_ADD_SUCESS));
     }
 }
