@@ -7,6 +7,7 @@ import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -39,14 +41,19 @@ public class ProjectService {
     private final ProjectLikeRepository projectLikeRepository;
 
     @Transactional
-    public void registProject(ProjectRequestDTO dto) throws ProjectException {
+    public Project registProject(ProjectRequestDTO dto) throws ProjectException, MemberException {
         dto.setStatus(ProjectStatus.IN_PROGRESS);
         if (projectRepository.existsByTitle(dto.getTitle())) {
             throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
         }
+        if (dto.getLeaderPosition() != null) {
+
+        }
         Project project = dtoToToEntity(dto);
         project.initScore();
-        projectRepository.save(project);
+        Project saveProject = projectRepository.save(project);
+
+        return saveProject;
     }
 
     @Transactional
@@ -86,11 +93,12 @@ public class ProjectService {
     }
 
     @Transactional
-    public ProjectRequestDTO findProjectDtoById(Long id) {
+    public ProjectRequestDTO findProjectDtoById(Long id, Long userId) {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         project.addViews();
         project.updateScore();
-        return ProjectRequestDTO.entityToDto(project);
+        boolean isLike = projectLikeRepository.existsUserLike(project.getId(), userId);
+        return ProjectRequestDTO.entityToDtoAddLike(project, isLike);
     }
 
 
@@ -148,10 +156,10 @@ public class ProjectService {
         }
     }
 
-    public Map<String, List<ProjectDTO>> getMainProject() {
+    public Map<String, List<ProjectDTO>> getMainProject(Long userId) {
         Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
-        mainProject.put("topScore", projectRepository.getTopByScore());
-        mainProject.put("topLatest", projectRepository.getTopByCreated());
+        mainProject.put("topScore", projectRepository.getTopByScore(userId));
+        mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
         return mainProject;
     }
 

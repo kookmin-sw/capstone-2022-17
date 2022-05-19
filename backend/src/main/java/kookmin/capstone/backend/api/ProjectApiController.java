@@ -1,28 +1,32 @@
 package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
-import kookmin.capstone.backend.domain.TechStack;
+import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.response.DefalutResponse;
 import kookmin.capstone.backend.response.ResponseMessage;
 import kookmin.capstone.backend.response.StatusCode;
+import kookmin.capstone.backend.service.MemberService;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,18 +37,27 @@ public class ProjectApiController {
 
     private final ProjectService projectService;
     private final JwtTokenService jwtTokenService;
+    private final MemberService memberService;
 
     // 보낸 객체를 그대로
     @PostMapping("/v1/project")
     @ApiOperation(value = "프로젝트 등록")
-    public ResponseEntity registProject(@RequestBody ProjectRequestDTO projectRequestDTO, HttpServletRequest request) throws ProjectException {
+    public ResponseEntity registProject(@RequestBody ProjectRequestDTO projectRequestDTO, HttpServletRequest request) throws ProjectException, MemberException {
         // JWT 토큰에서 유저 ID 가져오기
-        projectRequestDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        projectRequestDTO.setUserId(userId);
+        Project project = null;
         try {
-            projectService.registProject(projectRequestDTO);
+            project = projectService.registProject(projectRequestDTO);
+            projectRequestDTO.setId(project.getId());
         } catch (DuplicateProjectException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
         }
+
+        memberService.addProjectLeader(userId, project, projectRequestDTO.getLeaderPosition());
+        projectRequestDTO.setProjectPositions(project.getPositions().stream().map(e -> ProjectPositionDTO.entityToDto(e)).
+                collect(Collectors.toCollection(ArrayList::new))
+                );
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_ADD_SUCCESS, projectRequestDTO));
     }
 
@@ -77,15 +90,27 @@ public class ProjectApiController {
 
     @GetMapping("/v1/project")
     @ApiOperation(value = "프로젝트 단건 조회")
-    public ResponseEntity getProjectOne(@RequestParam Long id) {
-        ProjectRequestDTO projectRequestDTO = projectService.findProjectDtoById(id);
+    public ResponseEntity getProjectOne(@RequestParam Long id, HttpServletRequest request) {
+        Long userId = 0L;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            log.error("토큰 정보가 없습니다.");
+        }
+        ProjectRequestDTO projectRequestDTO = projectService.findProjectDtoById(id, userId);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_GET_SUCCESS, projectRequestDTO));
     }
 
     @GetMapping("/v1/project/main")
     @ApiOperation(value = "메인화면 프로젝트 조회")
-    public ResponseEntity getMainProject() {
-        Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject();
+    public ResponseEntity getMainProject(HttpServletRequest request) {
+        Long userId = 0L;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            log.error("토큰 정보가 없습니다.");
+        }
+        Map<String, List<ProjectDTO>> mainProject = projectService.getMainProject(userId);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_MAIN_GET_SUCCESS, mainProject));
     }
 

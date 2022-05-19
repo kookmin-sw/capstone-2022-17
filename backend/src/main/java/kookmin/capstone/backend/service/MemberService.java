@@ -34,6 +34,30 @@ public class MemberService {
         return memberRepository.findMember(projectId, userId).orElseThrow(EntityNotFoundException::new);
     }
 
+
+    @Transactional
+    public void addProjectLeader(Long userId, Project project, String leaderPositon) throws MemberException {
+        User findUser = userService.findUserById(userId);
+
+        Position findPosition = null;
+        for (ProjectPosition projectPosition : project.getPositions()) {
+            if (projectPosition.getPosition().getPositionName().equals(leaderPositon)) {
+                findPosition = projectPosition.getPosition();
+                break;
+            }
+        }
+
+        Member member = Member.builder().
+                user(findUser).
+                project(project).
+                memberType(MemberType.MEMBER).
+                position(findPosition).
+                build();
+        Member savedMember = memberRepository.save(member);
+        projectService.addProjectPostionCnt(savedMember.getPosition());
+
+    }
+
     @Transactional
     public Member addMember(RequestMemberDTO requestMemberDTO) throws MemberAddException {
         User findUser = userService.findUserById(requestMemberDTO.getUserId());

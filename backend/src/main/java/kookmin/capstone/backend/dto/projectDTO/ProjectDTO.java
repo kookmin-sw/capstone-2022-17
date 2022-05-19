@@ -37,13 +37,18 @@ public class ProjectDTO {
     private Long score;
     private int likes;
     private int views;
+    private boolean isLike;
 
-    public static ProjectDTO entityToDto(Project project) {
+    public static ProjectDTO entityToDto(Project project, Long userId) {
         List<ProjectTechDTO> projectTechList = project.getTechStack().stream().map(e ->
                 ProjectTechDTO.entityToDto(e)).collect(Collectors.toCollection(ArrayList::new));
 
+        List<Long> userList = project.getProjectLikes().stream().map(e -> e.getUser().getId()).
+                collect(Collectors.toCollection(ArrayList::new));
+
         List<ProjectPositionDTO> projectPositionList = project.getPositions().stream().map(e ->
                 ProjectPositionDTO.entityToDto(e)).collect(Collectors.toCollection(ArrayList::new));
+
         return ProjectDTO.builder().
                 id(project.getId()).
                 status(project.getStatus()).
@@ -59,6 +64,7 @@ public class ProjectDTO {
                 score(project.getScore()).
                 likes(project.getLikes()).
                 views(project.getViews()).
+                isLike(userList.contains(userId)).
                 build();
     }
 }

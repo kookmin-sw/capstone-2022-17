@@ -10,7 +10,7 @@ public interface ProjectRepositoryCustom {
 
     List<Project> search(ProjectSearchCond condition);
 
-    List<ProjectDTO> getTopByScore();
+    List<ProjectDTO> getTopByScore(Long userId);
 
-    List<ProjectDTO> getTopByCreated();
+    List<ProjectDTO> getTopByCreated(Long userId);
 }

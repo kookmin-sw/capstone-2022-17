@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.dto;
+package kookmin.capstone.backend.dto.userDTO;
 
 import lombok.Getter;
 import lombok.Setter;

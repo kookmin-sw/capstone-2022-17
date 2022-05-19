@@ -5,11 +5,13 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import kookmin.capstone.backend.domain.QProjectTech;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.QProject;
+import kookmin.capstone.backend.domain.project.QProjectLike;
 import kookmin.capstone.backend.domain.project.QProjectPosition;
 import kookmin.capstone.backend.domain.user.QUser;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 import kookmin.capstone.backend.repository.customProjectRepository.ProjectRepositoryCustom;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 
 import static kookmin.capstone.backend.domain.QProjectTech.projectTech;
 import static kookmin.capstone.backend.domain.project.QProject.project;
+import static kookmin.capstone.backend.domain.project.QProjectLike.projectLike;
 import static kookmin.capstone.backend.domain.project.QProjectPosition.projectPosition;
 import static kookmin.capstone.backend.domain.user.QUser.user;
 import static org.thymeleaf.util.StringUtils.isEmpty;
@@ -59,12 +62,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     @Override
-    public List<ProjectDTO> getTopByScore() {
+    public List<ProjectDTO> getTopByScore(Long userId) {
         List<Project> content = queryFactory
                 .select(project).from(project)
                 .rightJoin(project.techStack, projectTech)
                 .fetchJoin()
                 .leftJoin(project.user, user)
+                .fetchJoin()
+                .leftJoin(project.projectLikes, projectLike)
                 .fetchJoin()
                 .distinct()
                 .orderBy(project.score.desc())
@@ -72,18 +77,20 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                 .limit(4)
                 .fetch();
 
-        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e)).
+        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
                 collect(Collectors.toCollection(ArrayList::new));
         return projectDTOList;
     }
 
     @Override
-    public List<ProjectDTO> getTopByCreated() {
+    public List<ProjectDTO> getTopByCreated(Long userId) {
         List<Project> content = queryFactory
                 .select(project).from(project)
                 .rightJoin(project.techStack, projectTech)
                 .fetchJoin()
                 .leftJoin(project.user, user)
+                .fetchJoin()
+                .leftJoin(project.projectLikes, projectLike)
                 .fetchJoin()
                 .distinct()
                 .orderBy(project.createdAt.desc())
@@ -91,7 +98,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                 .limit(4)
                 .fetch();
 
-        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e)).
+        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
                 collect(Collectors.toCollection(ArrayList::new));
         return projectDTOList;
     }
