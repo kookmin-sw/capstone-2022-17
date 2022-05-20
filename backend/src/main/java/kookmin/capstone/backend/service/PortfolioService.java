@@ -12,5 +12,4 @@ public class PortfolioService {
 
     private final PortfolioRepository portfolioRepository;
 
-
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExternalProjects {
+public class ExternalProject {
     
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "external_id")

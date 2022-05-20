@@ -1,8 +1,5 @@
 package kookmin.capstone.backend.domain.portfolio;
 
-import kookmin.capstone.backend.domain.portfolio.Career;
-import kookmin.capstone.backend.domain.portfolio.Education;
-import kookmin.capstone.backend.domain.portfolio.ExternalProjects;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -21,7 +18,7 @@ public class Portfolio {
     private Set<Career> careerSet = new HashSet<>();
 
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
-    private Set<ExternalProjects> externalProjectsSet = new HashSet<>();
+    private Set<ExternalProject> externalProjectSet = new HashSet<>();
 
     @OneToMany(mappedBy = "portfolio", cascade = CascadeType.ALL)
     private Set<Education> educationSet = new HashSet<>();

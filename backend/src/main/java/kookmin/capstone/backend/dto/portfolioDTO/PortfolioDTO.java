@@ -21,7 +21,7 @@ public class PortfolioDTO {
     public static PortfolioDTO entityToDto(Portfolio portfolio) {
         return PortfolioDTO.builder().
                 careerDTOSet(portfolio.getCareerSet().stream().map(e -> CareerDTO.entityToDto(e)).collect(Collectors.toCollection(HashSet::new))).
-                externalProjectDTOSet(portfolio.getExternalProjectsSet().stream().map(e -> ExternalProjectDTO.entityToDto(e)).collect(Collectors.toCollection(HashSet::new))).
+                externalProjectDTOSet(portfolio.getExternalProjectSet().stream().map(e -> ExternalProjectDTO.entityToDto(e)).collect(Collectors.toCollection(HashSet::new))).
                 educationDTOSet(portfolio.getEducationSet().stream().map(e -> EducationDTO.entityToDto(e)).collect(Collectors.toCollection(HashSet::new))).
                 build();
     }
