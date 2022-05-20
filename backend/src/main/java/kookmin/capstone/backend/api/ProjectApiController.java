@@ -19,6 +19,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,10 +79,11 @@ public class ProjectApiController {
     }
 
     @GetMapping("/v1/project/list")
-    @ApiOperation(value = "프로젝트 조회")
-    public Long list(@RequestParam("page") Long page, @RequestBody ProjectSearchCond condition) {
-
-        return page;
+    @ApiOperation(value = "프로젝트 둘러보기 검색 조회")
+    public Page<ProjectDTO> list(@RequestBody ProjectSearchCond condition, @RequestParam("page") Integer page, @RequestParam("size") Integer size, HttpServletRequest request) {
+        PageRequest pageRequest = PageRequest.of(page-1, size);
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        return projectService.getSearchProject(condition, pageRequest, userId);
     }
 
     @GetMapping("/v1/project/position")
@@ -136,6 +140,7 @@ public class ProjectApiController {
         }
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS));
     }
+
 
     @Data @AllArgsConstructor
     static class CreatePojectResponse {
