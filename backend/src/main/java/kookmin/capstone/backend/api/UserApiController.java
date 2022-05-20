@@ -53,7 +53,7 @@ public class UserApiController {
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_TECH_ADD_SUCESS, userDTO));
     }
 
-    @GetMapping("/v1/user/position")
+    @PatchMapping("/v1/user/position")
     @ApiOperation(value = "유저 포지션 업데이트 API")
     public ResponseEntity updateUserPosition(@RequestBody Set<UserPositionDTO> userPositionList, HttpServletRequest request) {
         Long userId = jwtTokenService.get(request, "id", Long.class);
