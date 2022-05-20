@@ -167,6 +167,7 @@ public class ProjectService {
         Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
         mainProject.put("topScore", projectRepository.getTopByScore(userId));
         mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
+        mainProject.put("recommend", projectRepository.getTopByCreated(userId));
         return mainProject;
     }
 
