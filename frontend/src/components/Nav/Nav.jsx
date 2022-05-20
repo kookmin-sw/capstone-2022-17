@@ -22,7 +22,7 @@ const NavContainer = styled.div`
 
 const NavContent = styled.div`
   width: 100%;
-  max-width: 1300px;
+  max-width: 1200px;
   height: 2.5rem;
   margin: 0 3rem;
   display: flex;

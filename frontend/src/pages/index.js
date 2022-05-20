@@ -7,3 +7,4 @@ export { default as SelectPosition } from 'pages/Survey/SelectPosition';
 export { default as RatePosition } from 'pages/Survey/RatePosition';
 export { default as TechStack } from 'pages/Survey/TechStack';
 export { default as Write } from 'pages/Write/Write';
+export { default as Profile } from 'pages/Profile/Profile';
