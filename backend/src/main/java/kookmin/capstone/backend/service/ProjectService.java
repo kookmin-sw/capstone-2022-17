@@ -11,6 +11,7 @@ import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
+import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -20,6 +21,8 @@ import kookmin.capstone.backend.repository.projectRepository.ProjectPositionRepo
 import kookmin.capstone.backend.repository.projectRepository.ProjectRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectTechRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -154,6 +157,10 @@ public class ProjectService {
         } else {
             return false;
         }
+    }
+
+    public Page<ProjectDTO> getSearchProject(ProjectSearchCond projectSearchCond, Pageable pageable, Long userId) {
+        return projectRepository.search(projectSearchCond, pageable, userId);
     }
 
     public Map<String, List<ProjectDTO>> getMainProject(Long userId) {
