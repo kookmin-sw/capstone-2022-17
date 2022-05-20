@@ -1,7 +1,7 @@
-package kookmin.capstone.backend.domain;
+package kookmin.capstone.backend.domain.portfolio;
 
+import kookmin.capstone.backend.domain.DateEntity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Career extends DateEntity{
+public class Career extends DateEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "career_id")

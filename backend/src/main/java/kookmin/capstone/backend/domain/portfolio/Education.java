@@ -1,18 +1,18 @@
-package kookmin.capstone.backend.domain;
+package kookmin.capstone.backend.domain.portfolio;
 
+import kookmin.capstone.backend.domain.DateEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Education extends DateEntity{
+public class Education extends DateEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "education_id")

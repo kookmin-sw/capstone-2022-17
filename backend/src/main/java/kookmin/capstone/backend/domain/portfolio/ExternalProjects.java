@@ -1,4 +1,4 @@
-package kookmin.capstone.backend.domain;
+package kookmin.capstone.backend.domain.portfolio;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,5 +1,8 @@
-package kookmin.capstone.backend.domain;
+package kookmin.capstone.backend.domain.portfolio;
 
+import kookmin.capstone.backend.domain.portfolio.Career;
+import kookmin.capstone.backend.domain.portfolio.Education;
+import kookmin.capstone.backend.domain.portfolio.ExternalProjects;
 import lombok.Getter;
 
 import javax.persistence.*;
