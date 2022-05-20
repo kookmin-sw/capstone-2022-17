@@ -1,7 +1,10 @@
 import React from 'react';
+// , { useEffect }
 import Card from 'components/Card/Card';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
+// import { useDispatch } from 'react-redux';
+// import { LOAD_MAINPROJECTLIST_REQUEST } from 'reducers/projectList';
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +23,6 @@ const ContentContainer = styled.div`
 
 const Banner = styled.img`
   width: 100vw;
-  /* height: 45vh; */
   margin-bottom: 3rem;
   object-fit: cover;
   border-bottom: 1px solid #cecece;
@@ -76,6 +78,16 @@ const CardList = styled.div`
 `;
 
 const Home = () => {
+  // const dispatch = useDispatch();
+  // const [mainlist, setMainlist] = useState([]);
+
+  // useEffect(() => {[{
+  //   dispatch({
+  //     type: LOAD_MAINPROJECTLIST_REQUEST
+  //   });
+  // }]
+  // });
+
   return (
     <Container>
       <Banner src={`${process.env.PUBLIC_URL}/images/home/bannerImg.png`} />
@@ -84,7 +96,7 @@ const Home = () => {
           <Title>
             <TextBox>
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
-              <Text> &nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
+              <Text>&nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
             </TextBox>
             <PlusIcon name="plus" style={{ cursor: 'pointer' }} />
           </Title>

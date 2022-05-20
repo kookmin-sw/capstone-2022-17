@@ -7,9 +7,8 @@ import { Grid } from 'semantic-ui-react';
 const Container = styled.div`
   display: flex;
   min-width: 600px;
-  max-width: 1300px;
+  max-width: 1200px;
   margin: 2rem auto 5rem auto;
-  width: 70%;
 `;
 
 const GridDiv = styled(Grid)`
@@ -21,28 +20,28 @@ const MyProject = () => {
     <Container>
       <SideMenu />
       <Grid>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={6} computer={4}>
           <Card />
         </GridDiv.Column>
       </Grid>
