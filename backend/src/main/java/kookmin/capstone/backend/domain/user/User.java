@@ -1,14 +1,12 @@
 package kookmin.capstone.backend.domain.user;
 
-import kookmin.capstone.backend.domain.Portfolio;
-import kookmin.capstone.backend.domain.ProjectTech;
+import kookmin.capstone.backend.domain.portfolio.Portfolio;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.dto.memberDTO.MemberSignupRequestDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.*;

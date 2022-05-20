@@ -26,7 +26,7 @@ public class Career extends DateEntity {
     private boolean isWorking;
 
     @Column(name = "company_name")
-    private String name;
+    private String companyName;
     
     @Column(name = "career_position")
     private String position;

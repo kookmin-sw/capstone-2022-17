@@ -20,7 +20,6 @@ public class ExternalProjects {
     private String projectName;
     private String githubLink;
     private String description;
-    private String releaseLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "portfolio_id")

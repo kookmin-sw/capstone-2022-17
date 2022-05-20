@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Education extends DateEntity {
+public class Education {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "education_id")
@@ -26,7 +26,7 @@ public class Education extends DateEntity {
     private boolean isGraduate;
 
     @Column(name = "school_name")
-    private String name;
+    private String schoolName;
 
     private String major;
 
