@@ -59,7 +59,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Member addMember(RequestMemberDTO requestMemberDTO) throws MemberAddException {
+    public Member addMember(RequestMemberDTO requestMemberDTO, MemberType memberType) throws MemberAddException {
         User findUser = userService.findUserById(requestMemberDTO.getUserId());
         Project findProject = projectService.findProjectById(requestMemberDTO.getProjectId());
 
@@ -80,7 +80,7 @@ public class MemberService {
         Member member = Member.builder().
                 user(findUser).
                 project(findProject).
-                memberType(requestMemberDTO.getMemberType()).
+                memberType(memberType).
                 position(findPosition).
                 build();
         member.changeMember(findUser, findProject);
@@ -93,10 +93,25 @@ public class MemberService {
 
         if (findMember.getMemberType().equals(MemberType.MEMBER)) {
             throw new DuplicateMemberException(ResponseMessage.DUPLICATED_MEMBER);
-        }else if (requestMemberDTO.getMemberType().equals(MemberType.MEMBER)) {
+        }else  {
             projectService.addProjectPostionCnt(findMember.getPosition());
         }
-        findMember.updateMember(requestMemberDTO.getMemberType());
+        findMember.updateMember(MemberType.MEMBER);
+
+        MemberResDTO memberResDTO = MemberResDTO.builder().
+                title(findMember.getProject().getTitle()).
+                email(findMember.getUser().getEmail()).
+                memberType(findMember.getMemberType()).
+                build();
+
+        return memberResDTO;
+    }
+
+    @Transactional
+    public MemberResDTO rejectMember(RequestMemberDTO requestMemberDTO) {
+        Member findMember = memberRepository.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId()).orElseThrow(EntityNotFoundException::new);
+
+        findMember.updateMember(MemberType.REJECT);
 
         MemberResDTO memberResDTO = MemberResDTO.builder().
                 title(findMember.getProject().getTitle()).
