@@ -80,10 +80,10 @@ public class ProjectApiController {
 
     @GetMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 둘러보기 검색 조회")
-    public Page<ProjectDTO> list(@RequestBody ProjectSearchCond condition, @RequestParam("page") Integer page, @RequestParam("size") Integer size, HttpServletRequest request) {
+    public ResponseEntity list(@RequestBody ProjectSearchCond condition, @RequestParam("page") Integer page, @RequestParam("size") Integer size, HttpServletRequest request) {
         PageRequest pageRequest = PageRequest.of(page-1, size);
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        return projectService.getSearchProject(condition, pageRequest, userId);
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_SEARCH_SUCCESS, projectService.getSearchProject(condition, pageRequest, userId)));
     }
 
     @GetMapping("/v1/project/position")
