@@ -10,6 +10,7 @@ import SurveyLayout from 'components/Survey/SurveyLayout';
 import SubTitle from 'components/Survey/SubTitle';
 import NextBtn from 'components/Survey/NextBtn';
 import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
+import { UPDATE_USERTECH_REQUEST } from 'reducers/user';
 
 const TechContainer = styled(Container.ColumnMiddleContainer)`
   width: 40rem;
@@ -40,6 +41,7 @@ const TechStack = () => {
   const [techlist, setTechlist] = useState([]);
   const [tech, onChangeTech, setTech] = useInput('');
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
+  const { updateUserTechDone } = useSelector((state) => state.user);
 
   const handleResultSelect = (e, data) => {
     if (!techlist.includes(data.result.stack)) {
@@ -54,6 +56,13 @@ const TechStack = () => {
     setTechlist(techlist.filter((value, index) => index !== idx));
   };
 
+  const handleSubmit = () => {
+    dispatch({
+      type: UPDATE_USERTECH_REQUEST,
+      data: techlist,
+    });
+  };
+
   useEffect(() => {
     if (tech !== '') {
       dispatch({
@@ -62,6 +71,12 @@ const TechStack = () => {
       });
     }
   }, [tech]);
+
+  useEffect(() => {
+    if (updateUserTechDone) {
+      navigate('/');
+    }
+  }, [updateUserTechDone]);
 
   return (
     <FadeIn delay={800} transitionDuration={600} wrapperTag={SurveyLayout}>
@@ -86,7 +101,7 @@ const TechStack = () => {
             );
           })}
         </Container.AlignCenterContainer>
-        <NextBtn onClick={() => navigate('/')} />
+        <NextBtn onClick={handleSubmit} />
       </TechContainer>
     </FadeIn>
   );
