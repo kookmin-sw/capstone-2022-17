@@ -1,44 +1,49 @@
 import React from 'react';
 import Card from 'components/Card/Card';
 import styled from 'styled-components';
-import { Icon, Grid } from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 const Container = styled.div`
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: -3.5rem;
 `;
 
 const ContentContainer = styled.div`
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  /* max-width: 1300px; */
-  /* width: 900px; */
-`;
-
-const GridDiv = styled(Grid)`
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  /* margin: 2rem 2rem !important; */
+  width: 100%;
 `;
 
 const Banner = styled.img`
-  width: 100%;
+  width: 100vw;
+  /* height: 45vh; */
   margin-bottom: 3rem;
+  object-fit: cover;
+  border-bottom: 1px solid #cecece;
 `;
 
 const Content1 = styled.div`
-  /* display: flex; */
-  justify-content: center;
-  /* max-width: 1300px; */
+  width: 100vw;
+  max-width: 1200px;
+  padding: 0 5rem !important;
 `;
 
 const Content2 = styled.div`
+  width: 100vw;
+  max-width: 1200px;
+  padding: 0 5rem !important;
+`;
+
+const Content2Bg = styled.div`
   background-color: #f6f6f6;
+  width: 100%;
+  padding: 2rem 0 1rem 0;
+  margin: 1rem 0 2.5rem 0;
+  display: flex;
   justify-content: center;
 `;
 
@@ -62,11 +67,12 @@ const TextBox = styled.div`
 
 const Text = styled.div`
   font-family: 'Pr-Medium';
-  font-size: 1rem;
+  font-size: 1.2rem;
 `;
 
 const CardList = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 
 const Home = () => {
@@ -82,41 +88,35 @@ const Home = () => {
             </TextBox>
             <PlusIcon name="plus" style={{ cursor: 'pointer' }} />
           </Title>
-          <Grid>
-            <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
-              <Card />
-            </GridDiv.Column>
-            <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
-              <Card />
-            </GridDiv.Column>
-            <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
-              <Card />
-            </GridDiv.Column>
-            <GridDiv.Column mobile={8} tablet={5.3} computer={4} style={{ margin: '0 !important' }}>
-              <Card />
-            </GridDiv.Column>
-          </Grid>
-        </Content1>
-        <Content2>
-          <Title>
-            <TextBox>
-              <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon2.png`} />
-              <Text>&nbsp;요즘 뜨는 프로젝트</Text>
-            </TextBox>
-            <PlusIcon name="plus" />
-          </Title>
           <CardList>
             <Card />
             <Card />
             <Card />
             <Card />
           </CardList>
-        </Content2>
+        </Content1>
+        <Content2Bg>
+          <Content2>
+            <Title>
+              <TextBox>
+                <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon2.png`} />
+                <Text>&nbsp; 요즘 뜨는 프로젝트</Text>
+              </TextBox>
+              <PlusIcon name="plus" />
+            </Title>
+            <CardList>
+              <Card />
+              <Card />
+              <Card />
+              <Card />
+            </CardList>
+          </Content2>
+        </Content2Bg>
         <Content1>
           <Title>
             <TextBox>
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon3.png`} />
-              <Text>&nbsp;최근 올라온 프로젝트</Text>
+              <Text>&nbsp; 최근 올라온 프로젝트</Text>
             </TextBox>
             <PlusIcon name="plus" />
           </Title>
