@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.service;
 
+import kookmin.capstone.backend.domain.Notification;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.member.MemberType;
@@ -84,11 +85,15 @@ public class MemberService {
                 position(findPosition).
                 build();
         member.changeMember(findUser, findProject);
+        if (member.getMemberType() == MemberType.INVITED) {
+            member.notifyChanged(Notification.builder().checked(false).build());
+        }
+
         return member;
     }
 
     @Transactional
-    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO) throws MemberException {
+    public MemberResDTO joinMember(RequestMemberDTO requestMemberDTO, boolean isLeader) throws MemberException {
         Member findMember = memberRepository.findMember(requestMemberDTO.getProjectId(), requestMemberDTO.getUserId()).orElseThrow(EntityNotFoundException::new);
 
         if (findMember.getMemberType().equals(MemberType.MEMBER)) {
@@ -97,7 +102,8 @@ public class MemberService {
             projectService.addProjectPostionCnt(findMember.getPosition());
         }
         findMember.updateMember(MemberType.MEMBER);
-
+        //TODO 승인 알림 처리
+//        findMember.notifyChanged(Notification.builder().checked(false).build());
         MemberResDTO memberResDTO = MemberResDTO.builder().
                 title(findMember.getProject().getTitle()).
                 email(findMember.getUser().getEmail()).
@@ -118,6 +124,8 @@ public class MemberService {
                 email(findMember.getUser().getEmail()).
                 memberType(findMember.getMemberType()).
                 build();
+        //TODO 거절 처리
+//        findMember.notifyChanged(Notification.builder().checked(false).build());
 
         return memberResDTO;
     }

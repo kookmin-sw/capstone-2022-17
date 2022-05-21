@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
@@ -16,5 +17,8 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying
     @Query("delete from Member m where m.project.id =:projectId and m.user.id =:userId")
     void deleteMember(@Param("projectId") Long projectId, @Param("userId") Long userId);
+
+    @Query("select m from Member m where m.user.id =:userId")
+    List<Member> findMemberByUserId(@Param("userId") Long userId);
 
 }
