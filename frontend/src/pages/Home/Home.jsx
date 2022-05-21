@@ -80,6 +80,7 @@ const CardList = styled.div`
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.authentication);
   const { mainProjectList, loadMainProjectListDone } = useSelector((state) => state.projectList);
   const [topLatest, setTopLatest] = useState([]);
   const [topScore, setTopScore] = useState([]);
@@ -109,9 +110,13 @@ const Home = () => {
           <Title>
             <TextBox>
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
-              <Text>&nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
+              <Text>&nbsp; {user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
             </TextBox>
-            <PlusIcon name="plus" style={{ cursor: 'pointer' }} />
+            <PlusIcon
+              name="plus"
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/project-list')}
+            />
           </Title>
           <CardList>
             {recommend.map((project) => {
@@ -132,7 +137,7 @@ const Home = () => {
                 <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon2.png`} />
                 <Text>&nbsp; 요즘 뜨는 프로젝트</Text>
               </TextBox>
-              <PlusIcon name="plus" />
+              <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
             </Title>
             <CardList>
               {topScore.map((project) => {
@@ -153,7 +158,7 @@ const Home = () => {
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon3.png`} />
               <Text>&nbsp; 최근 올라온 프로젝트</Text>
             </TextBox>
-            <PlusIcon name="plus" />
+            <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
           </Title>
           <CardList>
             {topLatest.map((project) => {
