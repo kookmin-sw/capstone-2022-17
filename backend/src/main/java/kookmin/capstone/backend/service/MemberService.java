@@ -52,7 +52,7 @@ public class MemberService {
         Member member = Member.builder().
                 user(findUser).
                 project(project).
-                memberType(MemberType.MEMBER).
+                memberType(MemberType.LEADER).
                 position(findPosition).
                 build();
         Member savedMember = memberRepository.save(member);

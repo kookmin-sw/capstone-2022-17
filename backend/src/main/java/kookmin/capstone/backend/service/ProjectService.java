@@ -122,6 +122,9 @@ public class ProjectService {
             projectRequestDTO.setLeader(true);
         }
 
+        projectRequestDTO.setLeaderNickName(project.getUser().getNickname());
+//        projectRequestDTO.setLeaderPosition(project.getMembers().);
+
         return projectRequestDTO;
     }
 
