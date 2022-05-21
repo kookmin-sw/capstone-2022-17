@@ -65,6 +65,7 @@ const SubmitWrite = ({ data }) => {
   const [open, setOpen] = useState(false);
   const inputRef = useRef();
   const { image, addImageDone } = useSelector((state) => state.image);
+  const { addProjectDone, project } = useSelector((state) => state.project);
   const [imageUrl, setImageUrl] = useState(
     `${process.env.PUBLIC_URL}/images/write/placeholder.png`,
   );
@@ -91,6 +92,12 @@ const SubmitWrite = ({ data }) => {
       data,
     });
   };
+
+  useEffect(() => {
+    if (addProjectDone) {
+      window.location.replace(`/project/${project.id}`);
+    }
+  }, [addProjectDone]);
 
   useEffect(() => {
     if (addImageDone) {

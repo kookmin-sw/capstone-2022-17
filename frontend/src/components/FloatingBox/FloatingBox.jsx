@@ -66,7 +66,7 @@ const LikesBtn = styled.div`
   cursor: pointer;
 `;
 
-const FloatingBox = () => {
+const FloatingBox = ({ project }) => {
   return (
     <Wrapper>
       <StatusBox>
@@ -107,7 +107,7 @@ const FloatingBox = () => {
         <LikesBtn>
           <Likes>114</Likes>
         </LikesBtn>
-        <ApplyBtn />
+        <ApplyBtn project={project} />
       </ButtonBox>
     </Wrapper>
   );

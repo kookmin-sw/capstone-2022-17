@@ -6,6 +6,7 @@ import techstack from './techstack';
 import image from './image';
 import project from './project';
 import user from './user';
+import member from './member';
 
 const rootReducer = (state, action) => {
   switch (action.type) {
@@ -18,6 +19,7 @@ const rootReducer = (state, action) => {
         image,
         project,
         user,
+        member,
       });
       return combineReducer(state, action);
     }

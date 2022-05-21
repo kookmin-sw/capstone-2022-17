@@ -1,5 +1,7 @@
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import Tag from 'components/Tag/Tag';
-import React from 'react';
 import styled from 'styled-components';
 import Title from 'components/Projects/ProjectDetail/Title';
 import WrittenDate from 'components/Projects/ProjectDetail/WrittenDate';
@@ -8,6 +10,7 @@ import Likes from 'components/common/Likes';
 import Views from 'components/Projects/ProjectDetail/Views';
 import Content from 'components/Projects/ProjectDetail/Content';
 import FloatingBox from 'components/FloatingBox/FloatingBox';
+import { LOAD_PROJECT_REQUEST } from 'reducers/project';
 
 const Container = styled.div`
   display: flex;
@@ -60,6 +63,17 @@ const IconBox = styled.div`
 `;
 
 const Project = () => {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { project } = useSelector((state) => state.project);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_PROJECT_REQUEST,
+      id,
+    });
+  }, []);
+
   return (
     <Container>
       <ContentsBox>
@@ -139,7 +153,7 @@ const Project = () => {
           love dive
         </Content>
       </ContentsBox>
-      <FloatingBox />
+      <FloatingBox project={project} />
     </Container>
   );
 };
