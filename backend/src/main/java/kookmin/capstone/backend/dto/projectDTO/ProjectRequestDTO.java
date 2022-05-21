@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.dto.projectDTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import lombok.*;
@@ -34,6 +35,7 @@ public class ProjectRequestDTO {
     private Long userId;
     private boolean isLike;
     private String leaderPosition;
+    private String memberType;
 
 //  @QueryProjection
     public ProjectRequestDTO(Long id, ProjectStatus status, String title, String purpose,
@@ -80,9 +82,10 @@ public class ProjectRequestDTO {
         return projectRequestDTO;
     }
 
-    public static ProjectRequestDTO entityToDtoAddLike(Project project, boolean isLike) {
+    public static ProjectRequestDTO entityToDtoAddLike(Project project, boolean isLike, String memberType) {
         ProjectRequestDTO projectRequestDTO = ProjectRequestDTO.entityToDto(project);
         projectRequestDTO.setLike(isLike);
+        projectRequestDTO.setMemberType(memberType);
         return projectRequestDTO;
     }
 }
