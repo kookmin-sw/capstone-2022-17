@@ -1,10 +1,9 @@
 import HeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
-
 import styled from 'styled-components';
-import Position from 'components/Projects/ProjectDetail/Position';
 import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
+import Position from 'components/Projects/Project/Position';
 import ContentName from './ContentName';
 import Period from './Period';
 import Purpose from './Purpose';

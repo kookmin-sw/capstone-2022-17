@@ -26,6 +26,9 @@ const ProjectList = () => {
   useEffect(() => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
+      data: {},
+      page: 1,
+      size: 16,
     });
   }, []);
 

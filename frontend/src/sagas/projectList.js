@@ -37,12 +37,12 @@ function* watchMainProjectListLoad() {
 }
 
 // 프로젝트 둘러보기 페이지 - 프로젝트 불러오기
-const projectListLoadAPI = () =>
-  axios.get(`/project/list`, { headers: authHeader() }, { size: 5 }, { page: 1 });
+const projectListLoadAPI = (page, size, data) =>
+  axios.get(`/project/list?page=${page}&size=${size}`, data, { headers: authHeader() });
 
-function* projectListLoad() {
+function* projectListLoad(action) {
   try {
-    const result = yield call(projectListLoadAPI);
+    const result = yield call(projectListLoadAPI, action.page, action.size, action.data);
     yield put({
       type: LOAD_PROJECTLIST_SUCCESS,
       data: camelize(result.data.data),

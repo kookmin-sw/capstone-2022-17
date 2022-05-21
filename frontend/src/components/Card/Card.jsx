@@ -1,5 +1,5 @@
 import Likes from 'components/common/Likes';
-import Views from 'components/Projects/ProjectDetail/Views';
+import Views from 'components/Projects/Project/Views';
 import Tag from 'components/Tag/Tag';
 import React from 'react';
 import styled from 'styled-components';

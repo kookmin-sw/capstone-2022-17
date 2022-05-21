@@ -3,11 +3,11 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Tag from 'components/Tag/Tag';
 import styled from 'styled-components';
-import Title from 'components/Projects/ProjectDetail/Title';
-import Leader from 'components/Projects/ProjectDetail/Leader';
+import Title from 'components/Projects/Project/Title';
+import Leader from 'components/Projects/Project/Leader';
 import Likes from 'components/common/Likes';
-import Views from 'components/Projects/ProjectDetail/Views';
-import Content from 'components/Projects/ProjectDetail/Content';
+import Views from 'components/Projects/Project/Views';
+import Content from 'components/Projects/Project/Content';
 import FloatingBox from 'components/FloatingBox/FloatingBox';
 import { LOAD_PROJECT_REQUEST } from 'reducers/project';
 
