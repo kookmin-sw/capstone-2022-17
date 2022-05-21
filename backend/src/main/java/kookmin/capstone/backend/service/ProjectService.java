@@ -116,9 +116,13 @@ public class ProjectService {
         if (member.isPresent()) {
             memberType = member.get().getMemberType().toString();
         }
-
         boolean isLike = projectLikeRepository.existsUserLike(project.getId(), userId);
-        return ProjectRequestDTO.entityToDtoAddLike(project, isLike, memberType);
+        ProjectRequestDTO projectRequestDTO = ProjectRequestDTO.entityToDtoAddLike(project, isLike, memberType);
+        if (project.getUser().getId() == userId) {
+            projectRequestDTO.setLeader(true);
+        }
+
+        return projectRequestDTO;
     }
 
 
