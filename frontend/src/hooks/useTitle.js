@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useTitle = () => {
-  const [title, setTitle] = useState(null);
+const useTitle = (input) => {
+  const [title, setTitle] = useState(input);
 
   const updateTitle = () => {
     const htmlTitle = document.querySelector('title');
