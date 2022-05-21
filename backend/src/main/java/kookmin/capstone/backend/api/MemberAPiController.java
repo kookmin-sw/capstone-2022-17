@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.member.MemberType;
+import kookmin.capstone.backend.dto.NotificationDTO;
 import kookmin.capstone.backend.dto.memberDTO.DeleteMemberDTO;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
@@ -25,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -118,8 +120,13 @@ public class MemberAPiController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_LOGIN));
         }
+        List<NotificationDTO> notificationList = notificationSerivce.getNotificationList(userId);
 
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NOTI_GET_SUCESS, notificationSerivce.getNotificationList(userId)));
+        if (notificationList == null) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.NOTIFY_GET_FAIL));
+        }
+
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NOTIFY_GET_SUCCESS, notificationList));
     }
 
 }

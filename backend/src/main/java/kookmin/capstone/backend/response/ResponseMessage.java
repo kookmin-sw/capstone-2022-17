@@ -24,4 +24,6 @@ public class ResponseMessage {
     public static final String USER_TECH_ADD_SUCCESS = "유저 테크 스택 추가 성공";
     public static final String USER_POSITION_ADD_SUCCESS = "유저 포지션 추가 성공";
     public static final String PORTFOLIO_CREATE_SUCCESS = "포트폴리오 생성 성공";
+    public static final String NOTIFY_GET_SUCCESS = "알림 정보 가져오기 성공";
+    public static final String NOTIFY_GET_FAIL = "가져올 알림 정보가 없음";
 }

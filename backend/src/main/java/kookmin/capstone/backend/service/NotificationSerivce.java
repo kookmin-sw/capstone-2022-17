@@ -24,7 +24,10 @@ public class NotificationSerivce {
 
     public List<NotificationDTO> getNotificationList(Long userId) {
         List<Member> member = memberRepository.findMemberByUserId(userId);
-        List<Notification> notificationList = notificationRepositiory.findTop10ByMember_User_IdOrderByCreatedAtDesc(member.get(0).getId());
-        return notificationList.stream().map(e -> NotificationDTO.entityToDto(e)).collect(Collectors.toCollection(ArrayList::new));
+        if (member.size() > 0) {
+            List<Notification> notificationList = notificationRepositiory.findTop10ByMember_User_IdOrderByCreatedAtDesc(member.get(0).getUser().getId());
+            return notificationList.stream().map(e -> NotificationDTO.entityToDto(e)).collect(Collectors.toCollection(ArrayList::new));
+        }
+        return null;
     }
 }
