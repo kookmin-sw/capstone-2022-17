@@ -52,7 +52,7 @@ public class UserService {
         User findUser = userRepository.findById(userDTO.getId()).orElseThrow(EntityNotFoundException::new);
 
         findUser.update(userDTO.getNickname(), userDTO.getAvatar(), userDTO.getInstaId(),
-                userDTO.getBlog(), userDTO.getGithub());
+                userDTO.getBlog(), userDTO.getGithub(), userDTO.getIntroduce());
 
         return userDTO;
     }
