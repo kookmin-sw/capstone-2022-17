@@ -32,6 +32,7 @@ import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -50,12 +51,17 @@ public class ProjectService {
     @Transactional
     public Project registProject(ProjectRequestDTO dto) throws ProjectException, MemberException {
         dto.setStatus(ProjectStatus.IN_PROGRESS);
-        if (projectRepository.existsByTitle(dto.getTitle())) {
-            throw new DuplicateProjectException("이미 등록된 프로젝트 입니다.");
-        }
-        if (dto.getLeaderPosition() != null) {
 
+        List<String> positionNames = dto.getProjectPositions().stream().map(e -> e.getPositionName()).collect(Collectors.toCollection(ArrayList::new));
+
+        if (!positionNames.contains(dto.getLeaderPosition())) {
+           dto.getProjectPositions().add(ProjectPositionDTO.builder().
+                   positionName(dto.getLeaderPosition()).
+                   currentCnt(0).
+                   total(1).
+                   build());
         }
+
         Project project = dtoToToEntity(dto);
         project.initScore();
         Project saveProject = projectRepository.save(project);
