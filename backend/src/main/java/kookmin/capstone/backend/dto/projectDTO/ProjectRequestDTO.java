@@ -37,6 +37,9 @@ public class ProjectRequestDTO {
     private boolean isLike;
     private String leaderPosition;
     private String memberType;
+    private String leaderNickName;
+    private int views;
+    private int likes;
 
 //  @QueryProjection
     public ProjectRequestDTO(Long id, ProjectStatus status, String title, String purpose,
@@ -87,6 +90,8 @@ public class ProjectRequestDTO {
         ProjectRequestDTO projectRequestDTO = ProjectRequestDTO.entityToDto(project);
         projectRequestDTO.setLike(isLike);
         projectRequestDTO.setMemberType(memberType);
+        projectRequestDTO.setLikes(project.getLikes());
+        projectRequestDTO.setViews(project.getViews());
         return projectRequestDTO;
     }
 }
