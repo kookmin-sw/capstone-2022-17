@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const HeadCount = styled.div`
+const Headcount = styled.div`
   font-size: 0.9rem;
   font-family: 'Pr-Regular';
   color: #adadad;
@@ -15,7 +15,7 @@ const HeadCount = styled.div`
 `;
 
 // 현재모집인원/총인원수 보여줌
-const CardHeadCount = ({ children }) => {
-  return <HeadCount>{children}</HeadCount>;
+const HeadCount = ({ children }) => {
+  return <Headcount>{children}</Headcount>;
 };
-export default CardHeadCount;
+export default HeadCount;

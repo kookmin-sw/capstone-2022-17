@@ -12,6 +12,7 @@ import {
   SignUp,
   Project,
   MyProject,
+  ProjectList,
   SelectPosition,
   RatePosition,
   TechStack,
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/project/:id" element={<Project />} />
             <Route path="/myproject" element={<MyProject />} />
+            <Route path="/project-list" element={<ProjectList />} />
             <Route path="/survey/select-position" element={<SelectPosition />} />
             <Route path="/survey/rate-position" element={<RatePosition />} />
             <Route path="/survey/techstack" element={<TechStack />} />

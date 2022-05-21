@@ -11,11 +11,11 @@ const Container = styled.div`
   margin: 0 0 0 0.3rem;
 `;
 
-const Views = ({ children }) => {
+const Views = ({ viewsNum }) => {
   return (
     <Container>
       <Icon name="eye" />
-      {children}
+      {viewsNum}
     </Container>
   );
 };

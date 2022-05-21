@@ -13,7 +13,6 @@ const Container = styled.div`
   background-color: white;
 
   width: 14rem;
-  /* height: 1rem; */
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
   cursor: pointer;
@@ -34,17 +33,19 @@ const LikesViews = styled.div`
   padding: 0.5rem 0;
 `;
 
-const Card = () => {
+const Card = ({ project, onClick }) => {
   return (
-    <Container>
-      <Thumbnail />
+    <Container onClick={onClick}>
+      <Thumbnail img={project.thumbnail} />
       <Content>
-        <Tag>프론트엔드</Tag>
-        <Tag>프론트엔드</Tag>
-        <CardName>프로젝트 제목</CardName>
+        {project.techStack &&
+          project.techStack.map((tech) => {
+            return <Tag techName={tech.stack} />;
+          })}
+        <CardName cardName={project.title} />
         <LikesViews>
-          <Likes>100</Likes>
-          <Views>50</Views>
+          <Likes likesNum={project.likes} />
+          <Views viewsNum={project.views} />
         </LikesViews>
       </Content>
     </Container>

@@ -50,7 +50,7 @@ const Nav = () => {
       <NavContent>
         <LeftContainer>
           <Logo />
-          <Link to="projects">
+          <Link to="project-list">
             <NavMenu>프로젝트 둘러보기</NavMenu>
           </Link>
           <Link to="myproject">

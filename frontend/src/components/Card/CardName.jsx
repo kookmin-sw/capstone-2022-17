@@ -7,8 +7,8 @@ const ProjectName = styled.div`
   border-bottom: 1px solid;
 `;
 
-const CardName = ({ children }) => {
-  return <ProjectName> {children} </ProjectName>;
+const CardName = ({ cardName }) => {
+  return <ProjectName> {cardName} </ProjectName>;
 };
 
 export default CardName;
