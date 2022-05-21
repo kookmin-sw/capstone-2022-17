@@ -1,12 +1,12 @@
 import Tag from 'components/Tag/Tag';
 import React from 'react';
 import styled from 'styled-components';
-import Title from 'components/Projects/ProjectDetail/Title';
-import WrittenDate from 'components/Projects/ProjectDetail/WrittenDate';
-import Leader from 'components/Projects/ProjectDetail/Leader';
+import Title from 'components/Projects/Project/Title';
+import WrittenDate from 'components/Projects/Project/WrittenDate';
+import Leader from 'components/Projects/Project/Leader';
 import Likes from 'components/common/Likes';
-import Views from 'components/Projects/ProjectDetail/Views';
-import Content from 'components/Projects/ProjectDetail/Content';
+import Views from 'components/Projects/Project/Views';
+import Content from 'components/Projects/Project/Content';
 import FloatingBox from 'components/FloatingBox/FloatingBox';
 
 const Container = styled.div`

@@ -2,7 +2,7 @@ import CardHeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';
-import Position from 'components/Projects/ProjectDetail/Position';
+import Position from 'components/Projects/Project/Position';
 import * as Btn from 'components/common/Btn';
 import ContentName from './ContentName';
 import Contents from './Contents';
