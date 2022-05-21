@@ -1,11 +1,14 @@
 package kookmin.capstone.backend.dto.portfolioDTO;
 
 import kookmin.capstone.backend.domain.portfolio.Career;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
-@Builder
+@Data @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CareerDTO {
 
     private boolean isWorking;

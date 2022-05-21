@@ -1,6 +1,7 @@
 package kookmin.capstone.backend.domain.portfolio;
 
 import kookmin.capstone.backend.domain.DateEntity;
+import kookmin.capstone.backend.dto.portfolioDTO.EducationDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,4 +31,18 @@ public class Education {
 
     private String major;
 
+    private int grade;
+
+    protected void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
+    }
+
+    public static Education dtoToEntity(EducationDTO educationDTO) {
+        return Education.builder().
+                grade(educationDTO.getGrade()).
+                schoolName(educationDTO.getSchoolName()).
+                major(educationDTO.getMajor()).
+                isGraduate(educationDTO.isGraduate()).
+                build();
+    }
 }

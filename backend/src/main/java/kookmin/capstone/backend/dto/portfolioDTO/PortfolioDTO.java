@@ -3,14 +3,18 @@ package kookmin.capstone.backend.dto.portfolioDTO;
 
 
 import kookmin.capstone.backend.domain.portfolio.Portfolio;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class PortfolioDTO {
 
     private Long id;
