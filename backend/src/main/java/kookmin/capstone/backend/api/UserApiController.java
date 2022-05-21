@@ -2,6 +2,7 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
 import kookmin.capstone.backend.dto.userDTO.UserTechDTO;
@@ -27,13 +28,20 @@ public class UserApiController {
     private final UserService userService;
     private final JwtTokenService jwtTokenService;
 
-    @GetMapping("/v1/user")
+    @GetMapping("/v1/user/duplicate")
     @ApiOperation(value = "중복 닉네임 확인 API")
     public ResponseEntity checkNickName(@RequestParam String nickName) {
         if (userService.existUserByNickname(nickName)) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.DUPLICATED_NICKNAME));
         }
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NICKNAME_CHECK, nickName));
+    }
+
+    @GetMapping("/v1/user")
+    @ApiOperation(value = "유저 조회 API")
+    public ResponseEntity getUser(@RequestParam Long userId) {
+
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_GET_SUCCESS, userService.findUserDTOById(userId)));
     }
 
     @PatchMapping("/v1/user")
