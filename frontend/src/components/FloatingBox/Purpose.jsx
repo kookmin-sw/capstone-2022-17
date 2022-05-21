@@ -13,8 +13,8 @@ const Name = styled.div`
 `;
 
 // 항목 이름
-const Purpose = ({ children }) => {
-  return <Name>{children}</Name>;
+const Purpose = ({ purpose }) => {
+  return <Name>{purpose}</Name>;
 };
 
 export default Purpose;

@@ -13,8 +13,8 @@ const Name = styled.div`
 `;
 
 // 항목 이름
-const Region = ({ children }) => {
-  return <Name>{children}</Name>;
+const Region = ({ region }) => {
+  return <Name>{region}</Name>;
 };
 
 export default Region;

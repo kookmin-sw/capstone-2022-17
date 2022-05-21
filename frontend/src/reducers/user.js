@@ -1,6 +1,11 @@
 import produce from 'utils/produce.util';
 
 export const initialState = {
+  userData: null,
+  loadUserLoading: false,
+  loadUserDone: false,
+  loadUserError: null,
+
   updateUserPositionLoading: false,
   updateUserPositionDone: false,
   updateUserPositionError: null,
@@ -8,6 +13,10 @@ export const initialState = {
   updateUserTechDone: false,
   updateUserTechError: false,
 };
+
+export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
+export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
+export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
 
 export const UPDATE_USERPOSITION_REQUEST = 'UPDATE_USERPOSITION_REQUEST';
 export const UPDATE_USERPOSITION_SUCCESS = 'UPDATE_USERPOSITION_SUCCESS';
@@ -20,6 +29,20 @@ export const UPDATE_USERTECH_FAILURE = 'UPDATE_USERTECH_FAILURE';
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_USER_REQUEST:
+        draft.loadUserLoading = true;
+        draft.loadUserDone = false;
+        draft.loadUserError = null;
+        break;
+      case LOAD_USER_SUCCESS:
+        draft.loadUserLoading = false;
+        draft.loadUserDone = true;
+        draft.userData = action.data.data;
+        break;
+      case LOAD_USER_FAILURE:
+        draft.loadUserLoading = false;
+        draft.loadUserError = action.error;
+        break;
       case UPDATE_USERPOSITION_REQUEST:
         draft.updateUserPositionLoading = true;
         draft.updateUserPositionDone = false;

@@ -13,8 +13,8 @@ const Name = styled.div`
 `;
 
 // 항목 이름
-const Field = ({ children }) => {
-  return <Name>{children}</Name>;
+const Field = ({ field }) => {
+  return <Name>{field}</Name>;
 };
 
 export default Field;
