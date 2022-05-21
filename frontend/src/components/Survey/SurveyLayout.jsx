@@ -5,7 +5,7 @@ import * as Container from 'components/common/Containers';
 
 const SurveyBackground = styled(Container.ColumnMiddleContainer)`
   position: relative;
-  padding-top: 6rem;
+  padding: 6rem 0;
   min-width: 100vw;
 
   &:after {
