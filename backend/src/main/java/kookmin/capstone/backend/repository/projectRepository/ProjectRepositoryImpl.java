@@ -3,10 +3,9 @@ package kookmin.capstone.backend.repository.projectRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kookmin.capstone.backend.domain.QProjectTech;
-import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.domain.project.QProject;
-import kookmin.capstone.backend.domain.project.QProjectLike;
-import kookmin.capstone.backend.domain.project.QProjectPosition;
+import kookmin.capstone.backend.domain.member.MemberType;
+import kookmin.capstone.backend.domain.member.QMember;
+import kookmin.capstone.backend.domain.project.*;
 import kookmin.capstone.backend.domain.user.QUser;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
@@ -24,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static kookmin.capstone.backend.domain.QProjectTech.projectTech;
+import static kookmin.capstone.backend.domain.member.QMember.member;
 import static kookmin.capstone.backend.domain.project.QProject.project;
 import static kookmin.capstone.backend.domain.project.QProjectLike.projectLike;
 import static kookmin.capstone.backend.domain.project.QProjectPosition.projectPosition;
@@ -36,6 +36,37 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
     public ProjectRepositoryImpl(EntityManager em) {
         this.queryFactory = new JPAQueryFactory(em);
+    }
+
+    @Override
+    public Page<ProjectDTO> progress(Pageable pageable, Long userId) {
+
+        List<Project> content = queryFactory
+                .select(project)
+                .from(project)
+                .rightJoin(project.members, member)
+                .fetchJoin()
+                .distinct()
+                .where(project.status.eq(ProjectStatus.IN_PROGRESS),
+                        member.memberType.eq(MemberType.MEMBER),
+                        member.user.id.eq(userId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = queryFactory
+                .select(project.count())
+                .from(project)
+                .rightJoin(project.members, member)
+                .fetchJoin()
+                .distinct()
+                .where(project.status.eq(ProjectStatus.IN_PROGRESS))
+                .fetchOne();
+
+        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
+                collect(Collectors.toCollection(ArrayList::new));
+
+        return new PageImpl(projectDTOList, pageable, count);
     }
 
     @Override

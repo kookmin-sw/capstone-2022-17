@@ -15,4 +15,6 @@ public interface ProjectRepositoryCustom {
     List<ProjectDTO> getTopByScore(Long userId);
 
     List<ProjectDTO> getTopByCreated(Long userId);
+
+    Page<ProjectDTO> progress(Pageable pageable, Long userId);
 }
