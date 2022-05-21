@@ -103,6 +103,11 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
+    public UserDTO findUserDTOById(Long id) {
+        User findUser = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        return UserDTO.entityToDto(findUser);
+    }
+
     public boolean existUserByEmail(String email) {
         return userRepository.existsByEmail(email);
     }
