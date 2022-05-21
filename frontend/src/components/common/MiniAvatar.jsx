@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { LOAD_USER_REQUEST } from 'reducers/user';
 
 const Container = styled.div`
   overflow: hidden;
@@ -16,10 +19,24 @@ const Img = styled.img`
   object-fit: cover;
 `;
 
-const MiniAvatar = ({ img }) => {
+const MiniAvatar = ({ userId }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userData } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+      id: userId,
+    });
+  }, []);
+
   return (
     <Container>
-      <Img src={img || `${process.env.PUBLIC_URL}/images/missing.png`} />
+      <Img
+        src={userData?.avatar || `${process.env.PUBLIC_URL}/images/missing.png`}
+        onClick={() => navigate(`/profile/${userId}`)}
+      />
     </Container>
   );
 };

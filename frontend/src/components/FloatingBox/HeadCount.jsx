@@ -15,7 +15,11 @@ const Headcount = styled.div`
 `;
 
 // 현재모집인원/총인원수 보여줌
-const HeadCount = ({ children }) => {
-  return <Headcount>{children}</Headcount>;
+const HeadCount = ({ currentCnt, total }) => {
+  return (
+    <Headcount>
+      {currentCnt}/{total}
+    </Headcount>
+  );
 };
 export default HeadCount;

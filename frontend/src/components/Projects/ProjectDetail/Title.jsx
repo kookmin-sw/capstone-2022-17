@@ -13,8 +13,8 @@ const Container = styled.div`
   }
 `;
 
-const Title = ({ children }) => {
-  return <Container>{children}</Container>;
+const Title = ({ title }) => {
+  return <Container>{title}</Container>;
 };
 
 export default Title;

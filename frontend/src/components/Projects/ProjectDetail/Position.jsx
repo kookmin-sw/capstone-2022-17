@@ -12,8 +12,8 @@ const Container = styled.div`
   }
 `;
 
-const Position = ({ children }) => {
-  return <Container>{children}</Container>;
+const Position = ({ position }) => {
+  return <Container>{position}</Container>;
 };
 
 export default Position;

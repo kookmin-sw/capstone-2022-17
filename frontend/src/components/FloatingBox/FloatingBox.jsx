@@ -1,6 +1,7 @@
 import HeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
+
 import styled from 'styled-components';
 import Position from 'components/Projects/ProjectDetail/Position';
 import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
@@ -57,6 +58,7 @@ const PositionBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 0.4rem;
+  width: 100%;
 `;
 
 const ButtonBox = styled.div`
@@ -75,40 +77,37 @@ const FloatingBox = ({ project }) => {
       <StatusBox>
         <PositionBox>
           <ContentName>모집인원</ContentName>
-          <Status>모집중</Status>
+          {project.status === 'IN_PROGRESS' ? <Status>모집중</Status> : <Status>모집완료</Status>}
         </PositionBox>
-        <PositionBox>
-          <Position>웹프론트</Position>
-          <HeadCount>1/2</HeadCount>
-        </PositionBox>
-        <PositionBox>
-          <Position>디자인</Position>
-          <HeadCount>1/2</HeadCount>
-        </PositionBox>
-        <PositionBox>
-          <Position>기획</Position>
-          <HeadCount>1/2</HeadCount>
-        </PositionBox>
+
+        {project.projectPositions.map((position) => {
+          return (
+            <PositionBox>
+              <Position position={position.positionName} />
+              <HeadCount currentCnt={position.currentCnt} total={position.total} />
+            </PositionBox>
+          );
+        })}
       </StatusBox>
       <ContentBox>
         <ContentName>프로젝트 기간</ContentName>
-        <Period>23.12.7 ~ 23.12.9</Period>
+        <Period startDate={project.startDate} endDate={project.endDate} />
       </ContentBox>
       <ContentBox>
         <ContentName>분야</ContentName>
-        <Field>미디어</Field>
+        <Field field={project.field} />
       </ContentBox>
       <ContentBox>
         <ContentName>목적</ContentName>
-        <Purpose>공모전</Purpose>
+        <Purpose purpose={project.purpose} />
       </ContentBox>
       <ContentBox>
         <ContentName>지역</ContentName>
-        <Region>서울</Region>
+        <Region region={project.region} />
       </ContentBox>
       <ButtonBox>
         <LikesBtn>
-          <Likes>114</Likes>
+          <Likes likesNum={project.likes} />
         </LikesBtn>
         <ApplyBtn project={project} />
       </ButtonBox>

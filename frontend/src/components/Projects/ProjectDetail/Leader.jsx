@@ -12,11 +12,11 @@ const Container = styled.div`
   cursor: pointer;
 `;
 
-const Leader = ({ children }) => {
+const Leader = ({ leaderNickName, userId }) => {
   return (
     <Container>
-      <MiniAvatar />
-      {children}
+      <MiniAvatar userId={userId} />
+      {leaderNickName}
     </Container>
   );
 };
