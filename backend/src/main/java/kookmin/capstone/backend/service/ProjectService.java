@@ -2,6 +2,7 @@ package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
@@ -16,6 +17,7 @@ import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
+import kookmin.capstone.backend.repository.MemberRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectLikeRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectPositionRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectRepository;
@@ -42,6 +44,8 @@ public class ProjectService {
     private final ProjectTechRepository projectTechRepository;
     private final ProjectPositionRepository projectPositionRepository;
     private final ProjectLikeRepository projectLikeRepository;
+
+    private final MemberRepository memberRepository;
 
     @Transactional
     public Project registProject(ProjectRequestDTO dto) throws ProjectException, MemberException {
@@ -100,8 +104,15 @@ public class ProjectService {
         Project project = projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         project.addViews();
         project.updateScore();
+        String memberType = null;
+
+        Optional<Member> member = memberRepository.findMember(project.getId(), userId);
+        if (member.isPresent()) {
+            memberType = member.get().getMemberType().toString();
+        }
+
         boolean isLike = projectLikeRepository.existsUserLike(project.getId(), userId);
-        return ProjectRequestDTO.entityToDtoAddLike(project, isLike);
+        return ProjectRequestDTO.entityToDtoAddLike(project, isLike, memberType);
     }
 
 
