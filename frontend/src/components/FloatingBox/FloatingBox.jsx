@@ -1,12 +1,15 @@
-import CardHeadCount from 'components/FloatingBox/HeadCount';
+import HeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';
 import Position from 'components/Projects/ProjectDetail/Position';
 import * as Btn from 'components/common/Btn';
 import ContentName from './ContentName';
-import Contents from './Contents';
+import Period from './Period';
+import Purpose from './Purpose';
+import Field from './Field';
 import Status from './Status';
+import Region from './Region';
 
 const Wrapper = styled.div`
   font-family: 'Pr-Regular';
@@ -90,32 +93,32 @@ const FloatingBox = () => {
         </PositionBox>
         <PositionBox>
           <Position>웹프론트</Position>
-          <CardHeadCount>1/2</CardHeadCount>
+          <HeadCount>1/2</HeadCount>
         </PositionBox>
         <PositionBox>
           <Position>디자인</Position>
-          <CardHeadCount>1/2</CardHeadCount>
+          <HeadCount>1/2</HeadCount>
         </PositionBox>
         <PositionBox>
           <Position>기획</Position>
-          <CardHeadCount>1/2</CardHeadCount>
+          <HeadCount>1/2</HeadCount>
         </PositionBox>
       </StatusBox>
       <ContentBox>
         <ContentName>프로젝트 기간</ContentName>
-        <Contents>23.12.7 ~ 23.12.9</Contents>
+        <Period>23.12.7 ~ 23.12.9</Period>
       </ContentBox>
       <ContentBox>
         <ContentName>분야</ContentName>
-        <Contents>미디어</Contents>
+        <Field>미디어</Field>
       </ContentBox>
       <ContentBox>
         <ContentName>목적</ContentName>
-        <Contents>공모전</Contents>
+        <Purpose>공모전</Purpose>
       </ContentBox>
       <ContentBox>
         <ContentName>지역</ContentName>
-        <Contents>서울</Contents>
+        <Region>서울</Region>
       </ContentBox>
       <ButtonBox>
         <LikesBtn>

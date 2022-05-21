@@ -1,8 +1,11 @@
-import { all, fork, put, throttle, call } from 'redux-saga/effects';
+import { all, fork, put, call, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 import camelize from 'camelize';
 
 import {
+  LOAD_MAINPROJECTLIST_REQUEST,
+  LOAD_MAINPROJECTLIST_SUCCESS,
+  LOAD_MAINPROJECTLIST_FAILURE,
   LOAD_PROJECTLIST_REQUEST,
   LOAD_PROJECTLIST_SUCCESS,
   LOAD_PROJECTLIST_FAILURE,
@@ -10,15 +13,39 @@ import {
 
 import authHeader from './auth-header';
 
-const projectListLoadAPI = (name) =>
-  axios.get(`/project/list?name=${name}`, { headers: authHeader() });
+// 메인페이지 - 프로젝트 불러오기
+const mainProjectListLoadAPI = () => axios.get(`/project/main`, { headers: authHeader() });
 
-function* projectListLoad(action) {
+function* mainProjectListLoad() {
   try {
-    const result = yield call(projectListLoadAPI, action.name);
+    const result = yield call(mainProjectListLoadAPI);
+    yield put({
+      type: LOAD_MAINPROJECTLIST_SUCCESS,
+      data: camelize(result.data.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_MAINPROJECTLIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMainProjectListLoad() {
+  yield takeLatest(LOAD_MAINPROJECTLIST_REQUEST, mainProjectListLoad);
+}
+
+// 프로젝트 둘러보기 페이지 - 프로젝트 불러오기
+const projectListLoadAPI = () =>
+  axios.get(`/project/list`, { headers: authHeader() }, { size: 5 }, { page: 1 });
+
+function* projectListLoad() {
+  try {
+    const result = yield call(projectListLoadAPI);
     yield put({
       type: LOAD_PROJECTLIST_SUCCESS,
-      data: camelize(result.data),
+      data: camelize(result.data.data),
     });
   } catch (err) {
     console.error(err);
@@ -30,9 +57,10 @@ function* projectListLoad(action) {
 }
 
 function* watchProjectListLoad() {
-  yield throttle(500, LOAD_PROJECTLIST_REQUEST, projectListLoad);
+  yield takeLatest(LOAD_PROJECTLIST_REQUEST, projectListLoad);
 }
 
 export default function* projectList() {
+  yield all([fork(watchMainProjectListLoad)]);
   yield all([fork(watchProjectListLoad)]);
 }
