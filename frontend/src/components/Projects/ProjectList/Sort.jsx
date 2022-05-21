@@ -11,8 +11,9 @@ const Container = styled.div`
   cursor: pointer;
 
   &:hover {
-    color:#7fb6fa;
+    color: #7fb6fa;
     border: 1px solid #7fb6fa;
+  }
 `;
 
 const Sort = ({ children }) => {
