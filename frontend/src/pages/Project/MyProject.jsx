@@ -21,28 +21,28 @@ const MyProject = () => {
     <Container>
       <SideMenu />
       <Grid>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
-        <GridDiv.Column mobile={8} tablet={5.3} computer={4}>
+        <GridDiv.Column mobile={8} tablet={5.3} computer={5}>
           <Card />
         </GridDiv.Column>
       </Grid>
