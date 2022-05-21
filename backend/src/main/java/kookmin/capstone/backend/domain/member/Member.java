@@ -40,14 +40,14 @@ public class Member {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    @OneToOne(fetch = LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-    private Notification notification;
+//    @OneToOne(fetch = LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+//    private Notification notification;
 
-    public void notifyChanged(Notification notification) {
-        this.notification = notification;
-        notification.setMember(this);
-
-    }
+//    public void notifyChanged(Notification notification) {
+//        this.notification = notification;
+//        notification.setMember(this);
+//
+//    }
 
     public void changeMember(User user, Project project) {
         this.user = user;

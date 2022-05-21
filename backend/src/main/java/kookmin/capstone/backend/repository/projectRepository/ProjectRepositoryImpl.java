@@ -48,7 +48,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                 .fetchJoin()
                 .distinct()
                 .where(project.status.eq(ProjectStatus.IN_PROGRESS),
-                        member.memberType.eq(MemberType.MEMBER),
+                        member.memberType.eq(MemberType.MEMBER).
+                                or(member.memberType.eq(MemberType.LEADER)),
                         member.user.id.eq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -57,9 +58,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         Long count = queryFactory
                 .select(project.count())
                 .from(project)
-                .rightJoin(project.members, member)
-                .fetchJoin()
-                .distinct()
                 .where(project.status.eq(ProjectStatus.IN_PROGRESS))
                 .fetchOne();
 

@@ -87,7 +87,7 @@ public class MemberService {
                 build();
         member.changeMember(findUser, findProject);
         if (member.getMemberType() == MemberType.INVITED) {
-            member.notifyChanged(Notification.builder().checked(false).build());
+//            member.notifyChanged(Notification.builder().checked(false).build());
         }
 
         return member;
