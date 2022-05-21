@@ -33,6 +33,7 @@ public class ProjectRequestDTO {
     private List<String> techStack;
     private List<ProjectPositionDTO> projectPositions;
     private Long userId;
+    private boolean leader = false;
     private boolean isLike;
     private String leaderPosition;
     private String memberType;
