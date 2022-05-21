@@ -25,6 +25,7 @@ public class UserDTO {
     private String instaId;
     private String blog;
     private String github;
+    private String introduce;
     private List<UserTechDTO> userTechList;
     private Set<UserPositionDTO> userPositionSet;
 
@@ -35,6 +36,7 @@ public class UserDTO {
                 avatar(user.getAvatar()).
                 blog(user.getBlog()).
                 github(user.getGithub()).
+                introduce(user.getIntroduce()).
                 userTechList(user.getTechStack().stream().map(e -> UserTechDTO.entityToDto(e)).collect(Collectors.toCollection(ArrayList::new))).
                 userPositionSet(user.getUserPositions().stream().map(e -> UserPositionDTO.entityToDto(e)).collect(Collectors.toCollection(HashSet::new))).
                 build();

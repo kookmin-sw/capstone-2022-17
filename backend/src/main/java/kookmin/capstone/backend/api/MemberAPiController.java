@@ -17,6 +17,7 @@ import kookmin.capstone.backend.response.MemberResDTO;
 import kookmin.capstone.backend.response.ResponseMessage;
 import kookmin.capstone.backend.response.StatusCode;
 import kookmin.capstone.backend.service.MemberService;
+import kookmin.capstone.backend.service.NotificationSerivce;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.jwt.JwtTokenService;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,7 @@ public class MemberAPiController {
     private final JwtTokenService jwtTokenService;
     private final MemberService memberService;
     private final ProjectService projectService;
+    private final NotificationSerivce notificationSerivce;
 
     @PostMapping("/v1/member")
     @ApiImplicitParam(name = "requestMemberDTO", value = "필수: positionName , 필수 아님: userId")
@@ -67,12 +69,13 @@ public class MemberAPiController {
     public ResponseEntity joinMember(@RequestBody RequestMemberDTO requestMemberDTO, HttpServletRequest request) throws MemberException {
 
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        if (!projectService.isLeader(requestMemberDTO.getProjectId(), userId)) {
+        boolean isLeader = projectService.isLeader(requestMemberDTO.getProjectId(), userId);
+        if (!isLeader) {
             requestMemberDTO.setUserId(userId);
         }
         MemberResDTO memberResDTO = null;
         try {
-            memberResDTO = memberService.joinMember(requestMemberDTO);
+            memberResDTO = memberService.joinMember(requestMemberDTO, isLeader);
         } catch(MemberAddException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, e.getMessage()));
         } catch (DuplicateMemberException e) {
@@ -91,9 +94,8 @@ public class MemberAPiController {
         if (!projectService.isLeader(requestMemberDTO.getProjectId(), userId)) {
             requestMemberDTO.setUserId(userId);
         }
-        MemberResDTO memberResDTO = null;
 
-        memberService.rejectMember(requestMemberDTO);
+        MemberResDTO memberResDTO = memberService.rejectMember(requestMemberDTO);
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_CHANGE_STATUS_SUCCESS, memberResDTO));
     }
@@ -105,4 +107,19 @@ public class MemberAPiController {
         memberService.deleteMember(memberDTO);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_DELETE_SUCCESS));
     }
+
+    //TODO
+    @GetMapping("/v1/member/notify")
+    @ApiOperation(value = "멤버 알람")
+    public ResponseEntity notify(HttpServletRequest request) {
+        Long userId;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.NOT_LOGIN));
+        }
+
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NOTI_GET_SUCESS, notificationSerivce.getNotificationList(userId)));
+    }
+
 }
