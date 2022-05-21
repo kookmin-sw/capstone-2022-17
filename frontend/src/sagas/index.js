@@ -7,6 +7,7 @@ import techstacksSaga from './techstack';
 import imageSaga from './image';
 import projectSaga from './project';
 import userSaga from './user';
+import memberSaga from './member';
 
 axios.defaults.baseURL = apiUrl;
 axios.defaults.withCredentials = true;
@@ -18,5 +19,6 @@ export default function* rootSaga() {
     fork(imageSaga),
     fork(projectSaga),
     fork(userSaga),
+    fork(memberSaga),
   ]);
 }
