@@ -8,4 +8,6 @@ export { default as SelectPosition } from 'pages/Survey/SelectPosition';
 export { default as RatePosition } from 'pages/Survey/RatePosition';
 export { default as TechStack } from 'pages/Survey/TechStack';
 export { default as Write } from 'pages/Write/Write';
+export { default as Modify } from 'pages/Write/Modify';
 export { default as Profile } from 'pages/Profile/Profile';
+export { default as Setting } from 'pages/Project/Setting';
