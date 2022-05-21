@@ -34,6 +34,7 @@ public class User implements UserDetails {
     private String instaId;
     private String blog;
     private String github;
+    private String introduce;
 
     private boolean fromSocial;
 

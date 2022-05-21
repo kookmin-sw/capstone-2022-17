@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain.member;
 
+import kookmin.capstone.backend.domain.Notification;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.user.User;
@@ -20,6 +21,7 @@ import static javax.persistence.FetchType.LAZY;
 public class Member {
 
     @Id @GeneratedValue
+    @Column(name = "member_id")
     private Long id;
 
     @ManyToOne(fetch = LAZY)
@@ -36,6 +38,15 @@ public class Member {
     @OneToOne(fetch = LAZY)
     @JoinColumn(name = "position_id")
     private Position position;
+
+    @OneToOne(fetch = LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+    private Notification notification;
+
+    public void notifyChanged(Notification notification) {
+        this.notification = notification;
+        notification.setMember(this);
+
+    }
 
     public void changeMember(User user, Project project) {
         this.user = user;
