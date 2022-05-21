@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.Notification;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.project.Project;

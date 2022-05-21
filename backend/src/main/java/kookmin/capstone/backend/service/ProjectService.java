@@ -3,6 +3,7 @@ package kookmin.capstone.backend.service;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.member.Member;
+import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
@@ -123,7 +124,12 @@ public class ProjectService {
         }
 
         projectRequestDTO.setLeaderNickName(project.getUser().getNickname());
-//        projectRequestDTO.setLeaderPosition(project.getMembers().);
+        List<Member> members = project.getMembers();
+        for (Member each : members) {
+            if(each.getMemberType() == MemberType.LEADER) {
+                projectRequestDTO.setLeaderPosition(each.getPosition().getPositionName());
+            }
+        }
 
         return projectRequestDTO;
     }
