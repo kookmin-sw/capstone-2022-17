@@ -36,14 +36,14 @@ const WriteContainer = styled(Container.ColumnStartContainer)`
 `;
 
 const TitleIcon = styled.img`
-  width: 1.8rem;
+  width: 3rem;
   height: auto;
   margin-right: 0.5rem;
 `;
 
 const Title = styled.input`
   font-family: 'Pr-SemiBold';
-  font-size: 1.6rem;
+  font-size: 2.3rem;
 `;
 
 const InputContainer = styled(Container.RowStartContainer)`

@@ -25,9 +25,9 @@ const OutBtn = styled(Btn.PrimaryBtn)`
 
 const ManageBtn = styled(Btn.PrimaryBtn)`
   font-size: 0.9rem !important;
-  border-radius: 0.3rem !important;
+  border-radius: 2rem !important;
   height: 2.2rem !important;
-  margin: 0.5rem 0 !important;
+  margin-top: 1.5rem !important;
   width: 100%;
   cursor: pointer;
 `;
@@ -39,12 +39,13 @@ const Container = styled.div`
 
   font-family: 'Pr-Regular';
   color: #888888;
-  background-color: white;
+  background-color: #f8f9fa;
 
   width: 14rem;
-  height: 18rem;
+  min-height: 18rem;
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
+  padding-bottom: 0.3rem;
   cursor: pointer;
   transition: transform 300ms ease-in-out;
 

@@ -18,7 +18,8 @@ const TextContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 70rem;
+  width: 100vw;
+  max-width: 1000px;
   height: 20rem;
 
   opacity: 0.4;
@@ -29,8 +30,13 @@ const Text = styled.div`
   font-size: 1.5rem;
 `;
 
-const GridDiv = styled(Grid)`
-  margin: 2rem 2rem !important;
+const GridContainer = styled(Grid)`
+  width: 100%;
+  max-width: 1000px;
+`;
+
+const GridDiv = styled(Grid.Column)`
+  margin-bottom: -1rem;
 `;
 
 const MyProject = () => {
@@ -74,15 +80,29 @@ const MyProject = () => {
           <Text>프로젝트가 없습니다!</Text>
         </TextContainer>
       ) : (
-        <Grid>
+        <GridContainer>
           {myProjectList.map((project) => {
             return (
-              <GridDiv.Column tablet={6} computer={4}>
+              <GridDiv tablet={6} computer={4}>
                 <MyProjCard project={project} />
-              </GridDiv.Column>
+              </GridDiv>
             );
           })}
-        </Grid>
+          {myProjectList.map((project) => {
+            return (
+              <GridDiv tablet={6} computer={4}>
+                <MyProjCard project={project} />
+              </GridDiv>
+            );
+          })}
+          {myProjectList.map((project) => {
+            return (
+              <GridDiv tablet={6} computer={4}>
+                <MyProjCard project={project} />
+              </GridDiv>
+            );
+          })}
+        </GridContainer>
       )}
     </Container>
   );
