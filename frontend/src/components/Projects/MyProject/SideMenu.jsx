@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import Menu from './Menu';
 
 const Container = styled.div`
@@ -10,20 +9,20 @@ const Container = styled.div`
   margin-top: 1rem;
 `;
 
-const SideMenu = () => {
+const SideMenu = ({ setStatus }) => {
   return (
     <Container>
-      <Link to="projects">
-        <Menu>진행중인 프로젝트</Menu>
-      </Link>
+      <Menu status="PROGRESS" setStatus={setStatus}>
+        진행중인 프로젝트
+      </Menu>
       <hr />
-      <Link to="projects">
-        <Menu>완료된 프로젝트</Menu>
-      </Link>
+      <Menu status="DONE" setStatus={setStatus}>
+        완료된 프로젝트
+      </Menu>
       <hr />
-      <Link to="projects">
-        <Menu>찜한 프로젝트</Menu>
-      </Link>
+      <Menu status="LIKES" setStatus={setStatus}>
+        찜한 프로젝트
+      </Menu>
     </Container>
   );
 };

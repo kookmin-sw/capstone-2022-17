@@ -16,8 +16,8 @@ const Container = styled.div`
   }
 `;
 
-const Menu = ({ children }) => {
-  return <Container>{children}</Container>;
+const Menu = ({ children, status, setStatus }) => {
+  return <Container onClick={() => setStatus(status)}>{children}</Container>;
 };
 
 export default Menu;
