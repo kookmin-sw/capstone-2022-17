@@ -21,6 +21,7 @@ import kookmin.capstone.backend.service.MemberService;
 import kookmin.capstone.backend.service.NotificationSerivce;
 import kookmin.capstone.backend.service.ProjectService;
 import kookmin.capstone.backend.service.jwt.JwtTokenService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -104,9 +105,9 @@ public class MemberAPiController {
 
     @DeleteMapping("/v1/member")
     @ApiOperation(value = "멤버 삭제")
-    public ResponseEntity deleteMember(@RequestBody DeleteMemberDTO memberDTO, HttpServletRequest request) {
-        memberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
-        memberService.deleteMember(memberDTO);
+    public ResponseEntity deleteMember(@RequestParam Long projectId, HttpServletRequest request) {
+//        memberDTO.setUserId(jwtTokenService.get(request, "id", Long.class));
+        memberService.deleteMember(projectId, jwtTokenService.get(request, "id", Long.class));
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.MEMBER_DELETE_SUCCESS));
     }
 
@@ -127,6 +128,18 @@ public class MemberAPiController {
         }
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NOTIFY_GET_SUCCESS, notificationList));
+    }
+
+    @PatchMapping("/v1/member/notify")
+    @ApiOperation(value = "알림 읽음 처리")
+    public ResponseEntity checkNotify(@RequestBody NotifyRequest notifyRequest) {
+        memberService.checkNotification(notifyRequest.getId());
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.NOTIFY_CHECK_SUCCESS));
+    }
+
+    @Data
+    static class NotifyRequest {
+        Long id;
     }
 
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 @Data @Builder
 public class NotificationDTO {
 
+    private Long id;
     private Long projectId;
     private String projectName;
     private String positionName;
@@ -17,6 +18,7 @@ public class NotificationDTO {
                 projectName(notification.getMember().getProject().getTitle()).
                 positionName(notification.getMember().getPosition().getPositionName()).
                 checked(notification.isChecked()).
+                id(notification.getId()).
                 build();
     }
 }

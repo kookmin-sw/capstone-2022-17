@@ -34,4 +34,8 @@ public class Notification {
     public void setMember(Member member) {
         this.member = member;
     }
+
+    public void check() {
+        this.checked = true;
+    }
 }

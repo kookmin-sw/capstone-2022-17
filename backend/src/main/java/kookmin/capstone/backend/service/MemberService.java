@@ -13,6 +13,7 @@ import kookmin.capstone.backend.exception.memberException.DuplicateMemberExcepti
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.repository.MemberRepository;
+import kookmin.capstone.backend.repository.NotificationRepositiory;
 import kookmin.capstone.backend.response.MemberResDTO;
 import kookmin.capstone.backend.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final UserService userService;
     private final ProjectService projectService;
+    private final NotificationRepositiory notificationRepositiory;
 
     public Member findMember(Long projectId, Long userId) {
         return memberRepository.findMember(projectId, userId).orElseThrow(EntityNotFoundException::new);
@@ -88,6 +90,9 @@ public class MemberService {
         member.changeMember(findUser, findProject);
         if (member.getMemberType() == MemberType.INVITED) {
 //            member.notifyChanged(Notification.builder().checked(false).build());
+            Notification notify = Notification.builder().checked(false).build();
+            notify.setMember(member);
+            notificationRepositiory.save(notify);
         }
 
         return member;
@@ -132,7 +137,13 @@ public class MemberService {
     }
 
     @Transactional
-    public void deleteMember(DeleteMemberDTO memberDTO) {
-        memberRepository.deleteMember(memberDTO.getProjectId(), memberDTO.getUserId());
+    public void deleteMember(Long projectId, Long userId) {
+        memberRepository.deleteMember(projectId, userId);
+    }
+
+    @Transactional
+    public void checkNotification(Long id) {
+        Notification notification = notificationRepositiory.findById(id).orElseThrow(EntityNotFoundException::new);
+        notification.check();
     }
 }
