@@ -1,10 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 import CardName from 'components/Card/CardName';
 import Thumbnail from 'components/Card/Thumbnail';
 import * as Btn from 'components/common/Btn';
+import { DESTROY_MEMBER_REQUEST } from 'reducers/member';
 import CardPeriod from './CardPeriod';
 import MyPosition from './MyPosition';
 
@@ -60,7 +62,25 @@ const Text = styled.div`
 `;
 
 const MyProjCard = ({ project }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { destroyMemberDone } = useSelector((state) => state.member);
   const { user } = useSelector((state) => state.authentication);
+
+  const handleOut = () => {
+    if (window.confirm('정말 나가시겠습니까?')) {
+      dispatch({
+        type: DESTROY_MEMBER_REQUEST,
+        id: project.id,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (destroyMemberDone) {
+      window.location.reload();
+    }
+  }, [destroyMemberDone]);
 
   return (
     <Container>
@@ -70,10 +90,11 @@ const MyProjCard = ({ project }) => {
         <CardPeriod startDate={project.startDate} endDate={project.endDate} />
         <MyPosition myPosition={project.myPosition}>프론트엔드</MyPosition>
         {project.status === 'IN_PROGRESS' && project.userId === user.id ? (
-          <ManageBtn>관리하기</ManageBtn>
-        ) : (
-          <OutBtn>프로젝트 나가기</OutBtn>
-        )}
+          <ManageBtn onClick={() => navigate(`/project/setting/${project.id}`)}>관리하기</ManageBtn>
+        ) : null}
+        {project.status === 'IN_PROGRESS' && project.userId !== user.id ? (
+          <OutBtn onClick={handleOut}>프로젝트 나가기</OutBtn>
+        ) : null}
       </Text>
     </Container>
   );

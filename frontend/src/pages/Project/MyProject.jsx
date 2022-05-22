@@ -88,20 +88,6 @@ const MyProject = () => {
               </GridDiv>
             );
           })}
-          {myProjectList.map((project) => {
-            return (
-              <GridDiv tablet={6} computer={4}>
-                <MyProjCard project={project} />
-              </GridDiv>
-            );
-          })}
-          {myProjectList.map((project) => {
-            return (
-              <GridDiv tablet={6} computer={4}>
-                <MyProjCard project={project} />
-              </GridDiv>
-            );
-          })}
         </GridContainer>
       )}
     </Container>
