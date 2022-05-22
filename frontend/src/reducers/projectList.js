@@ -12,16 +12,6 @@ export const initialState = {
   loadProjectListLoading: false,
   loadProjectListDone: false,
   loadProjectListError: false,
-  currentPage: 1,
-  totalPage: null,
-
-  // 내 프로젝트 페이지 - 프로젝트 불러오기
-  myProjectList: [],
-  loadMyProjectListLoading: false,
-  loadMyProjectListDone: false,
-  loadMyProjectListError: false,
-  myCurrentPage: 1,
-  myTotalPage: null,
 };
 
 // 메인 페이지 - 프로젝트 불러오기
@@ -33,12 +23,6 @@ export const LOAD_MAINPROJECTLIST_FAILURE = 'LOAD_MAINPROJECTLIST_FAILURE';
 export const LOAD_PROJECTLIST_REQUEST = 'LOAD_PROJECTLIST_REQUEST';
 export const LOAD_PROJECTLIST_SUCCESS = 'LOAD_PROJECTLIST_SUCCESS';
 export const LOAD_PROJECTLIST_FAILURE = 'LOAD_PROJECTLIST_FAILURE';
-
-// 내 프로젝트 페이지 - 프로젝트 불러오기
-export const LOAD_MYPROJECTLIST_REQUEST = 'LOAD_MYPROJECTLIST_REQUEST';
-export const LOAD_MYPROJECTLIST_SUCCESS = 'LOAD_MYPROJECTLIST_SUCCESS';
-export const LOAD_MYPROJECTLIST_FAILURE = 'LOAD_MYPROJECTLIST_FAILURE';
-export const SIZE = '16';
 
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -72,24 +56,6 @@ export const reducer = (state = initialState, action) =>
       case LOAD_PROJECTLIST_FAILURE:
         draft.loadProjectListLoading = false;
         draft.loadProjectListError = action.error;
-        break;
-      // 내 프로젝트 페이지 - 프로젝트 불러오기
-      case LOAD_MYPROJECTLIST_REQUEST:
-        draft.loadMyProjectListLoading = true;
-        draft.loadMyProjectListDone = false;
-        draft.loadMyProjectListError = null;
-        break;
-      case LOAD_MYPROJECTLIST_SUCCESS:
-        draft.loadMyProjectListLoading = false;
-        draft.loadMyProjectListDone = true;
-        draft.myProjectList = action.data.content;
-        draft.myTotalPage = action.data.totalPages;
-        draft.myCurrentPage =
-          draft.myTotalPage > draft.myCurrenPage ? draft.myCurrentPage + 1 : draft.myCurrentPage;
-        break;
-      case LOAD_MYPROJECTLIST_FAILURE:
-        draft.loadMyProjectListLoading = false;
-        draft.loadMyProjectListError = action.error;
         break;
       default:
         break;
