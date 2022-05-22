@@ -13,6 +13,7 @@ import lombok.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,6 +25,10 @@ public class ProjectDTO {
     private ProjectStatus status;
 
     private String title;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate startDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
+    private LocalDate endDate;
     private String purpose;
     private String region;
     private String description;
@@ -36,6 +41,8 @@ public class ProjectDTO {
     private int likes;
     private int views;
     private boolean isLike;
+
+    private String myPosition;
 
     public static ProjectDTO entityToDto(Project project, Long userId) {
         List<ProjectTechDTO> projectTechList = project.getTechStack().stream().map(e ->
@@ -63,6 +70,8 @@ public class ProjectDTO {
                 likes(project.getLikes()).
                 views(project.getViews()).
                 isLike(userList.contains(userId)).
+                endDate(project.getEndDate()).
+                startDate(project.getStartDate()).
                 build();
     }
 
