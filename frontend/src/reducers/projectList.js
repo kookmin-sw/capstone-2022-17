@@ -22,6 +22,7 @@ export const initialState = {
   loadMyProjectListError: false,
   myCurrentPage: 1,
   myTotalPage: null,
+  myTotalElements: null,
 };
 
 // 메인 페이지 - 프로젝트 불러오기
@@ -86,6 +87,7 @@ export const reducer = (state = initialState, action) =>
         draft.myTotalPage = action.data.totalPages;
         draft.myCurrentPage =
           draft.myTotalPage > draft.myCurrenPage ? draft.myCurrentPage + 1 : draft.myCurrentPage;
+        draft.myTotalElements = action.data.totalElements;
         break;
       case LOAD_MYPROJECTLIST_FAILURE:
         draft.loadMyProjectListLoading = false;

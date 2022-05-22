@@ -6,6 +6,7 @@ import SideMenu from 'components/Projects/MyProject/SideMenu';
 import MyProjCard from 'components/Projects/MyProject/MyProjCard/MyProjCard';
 import { Grid, Pagination } from 'semantic-ui-react';
 import { SIZE, LOAD_MYPROJECTLIST_REQUEST } from 'reducers/projectList';
+import * as Ct from 'components/common/Containers';
 
 const Container = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const Container = styled.div`
 
 const CardContainer = styled.div`
   text-align: center;
+  margin: 2rem 0;
 `;
 
 const TextContainer = styled.div`
@@ -35,7 +37,7 @@ const Text = styled.div`
 `;
 
 const GridContainer = styled(Grid)`
-  width: 100%;
+  width: 100vw;
   max-width: 1000px;
 `;
 
@@ -45,9 +47,8 @@ const GridDiv = styled(Grid.Column)`
 
 const MyProject = () => {
   const dispatch = useDispatch();
-  const { myCurrentPage, myTotalPage, myProjectList, loadMyProjectListDone } = useSelector(
-    (state) => state.projectList,
-  );
+  const { myCurrentPage, myTotalPage, myProjectList, myTotalElements, loadMyProjectListDone } =
+    useSelector((state) => state.projectList);
   const [status, setStatus] = useState('PROGRESS');
 
   useEffect(() => {
@@ -93,7 +94,7 @@ const MyProject = () => {
           <Text>프로젝트가 없습니다!</Text>
         </TextContainer>
       ) : (
-        <CardContainer>
+        <Ct.ColumnMiddleContainer>
           <GridContainer>
             {myProjectList.map((project) => {
               return (
@@ -103,15 +104,19 @@ const MyProject = () => {
               );
             })}
           </GridContainer>
-          <Pagination
-            activePage={myCurrentPage}
-            onPageChange={handlePaginationChange}
-            size="mini"
-            siblingRange={2}
-            totalPages={myTotalPage}
-            secondary
-          />
-        </CardContainer>
+          {myTotalElements > SIZE && (
+            <CardContainer>
+              <Pagination
+                activePage={myCurrentPage}
+                onPageChange={handlePaginationChange}
+                size="mini"
+                siblingRange={2}
+                totalPages={myTotalPage}
+                secondary
+              />
+            </CardContainer>
+          )}
+        </Ct.ColumnMiddleContainer>
       )}
     </Container>
   );
