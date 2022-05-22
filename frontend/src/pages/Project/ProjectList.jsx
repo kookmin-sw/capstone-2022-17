@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_PROJECTLIST_REQUEST } from 'reducers/projectList';
 
+import useInput from 'hooks/useInput';
+
 import styled from 'styled-components';
-import { Form, Grid, Search } from 'semantic-ui-react';
+import { Form, Grid, Input } from 'semantic-ui-react';
 
 import Card from 'components/Card/Card';
 import LeftRecoCard from 'components/Projects/ProjectList/LeftRecoCard/LeftRecoCard';
@@ -63,6 +65,7 @@ const SearchBox = styled.div`
 const FilterName = styled.div`
   font-family: 'Pr-Medium';
   font-size: 1rem;
+  margin-bottom: 1rem;
 `;
 
 const SelectDiv = styled.div`
@@ -77,7 +80,6 @@ const SelectMiniDiv = styled.div`
 
 const Select = styled(Form.Select)`
   font-size: 0.9rem !important;
-  margin: 1rem 0 !important;
 
   .menu > .item > .text {
     font-size: 0.9rem !important;
@@ -93,10 +95,6 @@ const SearchMiniDiv = styled.div`
   margin: 0 1rem 1rem 1rem;
 `;
 
-const SearchStyled = styled(Search)`
-  margin: 1rem 0 !important;
-`;
-
 const SortDiv = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -106,11 +104,19 @@ const GridDiv = styled(Grid)`
   margin: 2rem 2rem !important;
 `;
 
+const StyledInput = styled(Input)`
+  > input {
+    font-family: 'Pr-Regular' !important;
+    font-size: 0.9rem !important;
+  }
+`;
+
 const ProjectList = () => {
-  // const [position, setPosition] = useState('전체');
-  // const [purpose, setPurpose] = useState('전체');
-  // const [region, setRegion] = useState('지역 미지정');
-  // const [field, setField] = useState('분야 선택');
+  const [position, setPosition] = useState('전체');
+  const [purpose, setPurpose] = useState('전체');
+  const [region, setRegion] = useState('지역 미지정');
+  const [field, setField] = useState('분야 선택');
+  const [search, onChangeSearch] = useInput('');
   // const [filterData, setFilterData] = useState({});
 
   // const { user } = useSelector((state) => state.authentication);
@@ -134,6 +140,10 @@ const ProjectList = () => {
       setContent([]);
     }
   }, [loadProjectListDone]);
+
+  useEffect(() => {
+    console.log(position, region, purpose, field);
+  }, [position, region, purpose, field]);
 
   return (
     <Container>
@@ -162,7 +172,8 @@ const ProjectList = () => {
             <Select
               placeholder="포지션"
               options={positionOption}
-              // onChange={(e, { value }) => setPosition(value)}
+              value={position}
+              onChange={(e, { value }) => setPosition(value)}
             />
           </SelectMiniDiv>
           <SelectMiniDiv>
@@ -170,8 +181,8 @@ const ProjectList = () => {
             <Select
               placehodler="지역"
               options={regionOption}
-              // value={region}
-              // onChange={(e, { value }) => setRegion(value)}
+              value={region}
+              onChange={(e, { value }) => setRegion(value)}
             />
           </SelectMiniDiv>
           <SelectMiniDiv>
@@ -179,7 +190,8 @@ const ProjectList = () => {
             <Select
               placeholder="목적"
               options={purposeOption}
-              // onChange={(e, { value }) => setPurpose(value)}
+              value={purpose}
+              onChange={(e, { value }) => setPurpose(value)}
             />
           </SelectMiniDiv>
           <SelectMiniDiv>
@@ -187,14 +199,15 @@ const ProjectList = () => {
             <Select
               placeholder="분야"
               options={fieldOption}
-              // onChange={(e, { name }) => setField(name)}
+              value={field}
+              onChange={(e, { value }) => setField(value)}
             />
           </SelectMiniDiv>
         </SelectDiv>
         <SearchDiv>
           <SearchMiniDiv>
             <FilterName>검색어 입력</FilterName>
-            <SearchStyled placehodler="검색어 입력" />
+            <StyledInput placeholder="검색어 입력" onChange={onChangeSearch} value={search} />
           </SearchMiniDiv>
           기술스택 검색
         </SearchDiv>
