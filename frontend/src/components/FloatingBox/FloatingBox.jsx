@@ -1,6 +1,7 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
 import HeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
-import React from 'react';
 import styled from 'styled-components';
 import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
 import Position from 'components/Projects/Project/Position';
@@ -71,6 +72,7 @@ const LikesBtn = styled.div`
 `;
 
 const FloatingBox = ({ project }) => {
+  const { user } = useSelector((state) => state.authentication);
   return (
     <Wrapper>
       <StatusBox>
@@ -108,7 +110,7 @@ const FloatingBox = ({ project }) => {
         <LikesBtn>
           <Likes likesNum={project.likes} />
         </LikesBtn>
-        <ApplyBtn project={project} />
+        {user && <ApplyBtn project={project} />}
       </ButtonBox>
     </Wrapper>
   );

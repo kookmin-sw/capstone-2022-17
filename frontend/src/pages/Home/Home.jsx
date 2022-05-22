@@ -93,8 +93,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log(mainProjectList);
-
     if (loadMainProjectListDone) {
       setTopLatest(mainProjectList.topLatest);
       setTopScore(mainProjectList.topScore);

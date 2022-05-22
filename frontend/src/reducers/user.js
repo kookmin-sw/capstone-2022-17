@@ -32,6 +32,8 @@ export const UPDATE_USERTECH_REQUEST = 'UPDATE_USERTECH_REQUEST';
 export const UPDATE_USERTECH_SUCCESS = 'UPDATE_USERTECH_SUCCESS';
 export const UPDATE_USERTECH_FAILURE = 'UPDATE_USERTECH_FAILURE';
 
+let tempuser = {};
+
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -58,6 +60,9 @@ export const reducer = (state = initialState, action) =>
         draft.updateUserLoading = false;
         draft.updateUserDone = true;
         draft.userData = action.data.data;
+        tempuser = JSON.parse(localStorage.getItem('user'));
+        tempuser.user = action.data.data;
+        localStorage.setItem('user', JSON.stringify(tempuser));
         break;
       case UPDATE_USER_FAILURE:
         draft.updateUserLoading = false;

@@ -67,12 +67,6 @@ const Project = () => {
   const { project, loadProjectDone } = useSelector((state) => state.project);
 
   useEffect(() => {
-    if (loadProjectDone) {
-      console.log(project);
-    }
-  }, [loadProjectDone]);
-
-  useEffect(() => {
     dispatch({
       type: LOAD_PROJECT_REQUEST,
       id,

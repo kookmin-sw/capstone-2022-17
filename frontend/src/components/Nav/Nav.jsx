@@ -53,9 +53,11 @@ const Nav = () => {
           <Link to="project-list">
             <NavMenu>프로젝트 둘러보기</NavMenu>
           </Link>
-          <Link to="myproject">
-            <NavMenu>내 프로젝트</NavMenu>
-          </Link>
+          {user && (
+            <Link to="myproject">
+              <NavMenu>내 프로젝트</NavMenu>
+            </Link>
+          )}
         </LeftContainer>
         <RightContainer>
           {user ? (
