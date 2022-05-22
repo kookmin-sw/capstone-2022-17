@@ -20,22 +20,24 @@ import java.util.stream.Collectors;
 @NoArgsConstructor @AllArgsConstructor
 public class AuthRequestDTO {
     private String accessToken;
-    private Long id;
-    private String nickname;
-    private String avatar;
-    private String instaId;
-    private String blog;
-    private String github;
+//    private Long id;
+//    private String nickname;
+//    private String avatar;
+//    private String instaId;
+//    private String blog;
+//    private String github;
+    private UserDTO user;
 
 
     public static AuthRequestDTO entityToDto(User user, String accessToken) {
         return AuthRequestDTO.builder().
-                id(user.getId()).
-                accessToken(accessToken).
-                nickname(user.getNickname()).
-                avatar(user.getAvatar()).
-                blog(user.getBlog()).
-                github(user.getGithub()).
+//                id(user.getId()).
+//                accessToken(accessToken).
+//                nickname(user.getNickname()).
+//                avatar(user.getAvatar()).
+//                blog(user.getBlog()).
+//                github(user.getGithub()).
+                user(UserDTO.entityToDto(user)).
                 build();
     }
 }
