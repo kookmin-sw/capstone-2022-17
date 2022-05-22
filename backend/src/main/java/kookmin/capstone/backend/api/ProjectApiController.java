@@ -83,7 +83,12 @@ public class ProjectApiController {
     @ApiOperation(value = "프로젝트 둘러보기 검색 조회")
     public ResponseEntity list(@RequestBody ProjectSearchCond condition, @RequestParam("page") Integer page, @RequestParam("size") Integer size, HttpServletRequest request) {
         PageRequest pageRequest = PageRequest.of(page-1, size);
-        Long userId = jwtTokenService.get(request, "id", Long.class);
+        Long userId = 0L;
+        try {
+            userId = jwtTokenService.get(request, "id", Long.class);
+        } catch (Exception e) {
+            log.error("토큰 정보가 없습니다.");
+        }
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_SEARCH_SUCCESS, projectService.getSearchProject(condition, pageRequest, userId)));
     }
 
