@@ -34,6 +34,7 @@ public class UserDTO {
                 id(user.getId()).
                 nickname(user.getNickname()).
                 avatar(user.getAvatar()).
+                instaId(user.getInstaId()).
                 blog(user.getBlog()).
                 github(user.getGithub()).
                 introduce(user.getIntroduce()).
