@@ -65,7 +65,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         Long count = queryFactory
                 .select(project.count())
                 .from(project)
-                .where(project.status.eq(ProjectStatus.IN_PROGRESS))
+                .where(project.status.eq(ProjectStatus.IN_PROGRESS),
+                        project.members.any().memberType.eq(MemberType.MEMBER).
+                                or(project.members.any().memberType.eq(MemberType.LEADER)),
+                        project.members.any().user.id.eq(userId))
                 .fetchOne();
 
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
@@ -140,7 +143,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         Long count = queryFactory
                 .select(project.count())
                 .from(project)
-                .where(project.status.eq(ProjectStatus.DONE))
+                .where(project.status.eq(ProjectStatus.DONE),
+                        project.members.any().memberType.eq(MemberType.MEMBER).
+                                or(project.members.any().memberType.eq(MemberType.LEADER)),
+                        project.members.any().user.id.eq(userId))
                 .fetchOne();
 
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
