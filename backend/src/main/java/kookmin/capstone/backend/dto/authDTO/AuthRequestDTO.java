@@ -4,10 +4,7 @@ import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
 import kookmin.capstone.backend.dto.userDTO.UserTechDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,24 +17,32 @@ import java.util.stream.Collectors;
 @NoArgsConstructor @AllArgsConstructor
 public class AuthRequestDTO {
     private String accessToken;
-//    private Long id;
-//    private String nickname;
-//    private String avatar;
-//    private String instaId;
-//    private String blog;
-//    private String github;
     private UserDTO user;
 
 
     public static AuthRequestDTO entityToDto(User user, String accessToken) {
         return AuthRequestDTO.builder().
-//                id(user.getId()).
-//                accessToken(accessToken).
-//                nickname(user.getNickname()).
-//                avatar(user.getAvatar()).
-//                blog(user.getBlog()).
-//                github(user.getGithub()).
-                user(UserDTO.entityToDto(user)).
+                accessToken(accessToken).
+                user(UserDTO.builder().
+                        avatar(user.getAvatar()).
+                        id(user.getId()).
+                        blog(user.getBlog()).
+                        nickname(user.getNickname()).
+                        instaId(user.getInstaId()).
+                        github(user.getGithub()).
+                        introduce(user.getIntroduce()).
+                        build()).
                 build();
+    }
+
+    @Data @Builder
+    static class UserDTO {
+        private Long id;
+        private String nickname;
+        private String avatar;
+        private String instaId;
+        private String blog;
+        private String github;
+        private String introduce;
     }
 }
