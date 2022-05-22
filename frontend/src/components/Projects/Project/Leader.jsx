@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MiniAvatar from 'components/common/MiniAvatar';
 
@@ -13,8 +14,9 @@ const Container = styled.div`
 `;
 
 const Leader = ({ leaderNickName, userId }) => {
+  const navigate = useNavigate();
   return (
-    <Container>
+    <Container onClick={() => navigate(`/profile/${userId}`)}>
       <MiniAvatar userId={userId} />
       {leaderNickName}
     </Container>

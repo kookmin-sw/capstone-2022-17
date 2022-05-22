@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { LOAD_USER_REQUEST } from 'reducers/user';
@@ -21,7 +20,6 @@ const Img = styled.img`
 
 const MiniAvatar = ({ userId }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { userData } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -33,10 +31,7 @@ const MiniAvatar = ({ userId }) => {
 
   return (
     <Container>
-      <Img
-        src={userData?.avatar || `${process.env.PUBLIC_URL}/images/missing.png`}
-        onClick={() => navigate(`/profile/${userId}`)}
-      />
+      <Img src={userData?.avatar || `${process.env.PUBLIC_URL}/images/missing.png`} />
     </Container>
   );
 };

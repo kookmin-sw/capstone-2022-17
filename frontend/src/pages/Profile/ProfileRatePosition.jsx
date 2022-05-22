@@ -37,7 +37,7 @@ const ProfileRatePosition = () => {
 
   useEffect(() => {
     if (updateUserPositionDone) {
-      navigate(`/profile/${user.id}`);
+      navigate(`/profile/${user.user.id}`);
     }
   }, [updateUserPositionDone]);
 

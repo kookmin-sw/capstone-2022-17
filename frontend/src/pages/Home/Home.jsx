@@ -108,7 +108,7 @@ const Home = () => {
           <Title>
             <TextBox>
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
-              <Text>&nbsp; {user?.nickname}님! 이런 프로젝트는 어떠세요?</Text>
+              <Text>&nbsp; {user?.user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
             </TextBox>
             <PlusIcon
               name="plus"

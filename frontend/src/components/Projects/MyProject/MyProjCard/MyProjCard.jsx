@@ -89,10 +89,10 @@ const MyProjCard = ({ project }) => {
         <CardName cardName={project.title} />
         <CardPeriod startDate={project.startDate} endDate={project.endDate} />
         <MyPosition myPosition={project.myPosition}>프론트엔드</MyPosition>
-        {project.status === 'IN_PROGRESS' && project.userId === user.id ? (
+        {project.status === 'IN_PROGRESS' && project.userId === user.user.id ? (
           <ManageBtn onClick={() => navigate(`/project/setting/${project.id}`)}>관리하기</ManageBtn>
         ) : null}
-        {project.status === 'IN_PROGRESS' && project.userId !== user.id ? (
+        {project.status === 'IN_PROGRESS' && project.userId !== user.user.id ? (
           <OutBtn onClick={handleOut}>프로젝트 나가기</OutBtn>
         ) : null}
       </Text>

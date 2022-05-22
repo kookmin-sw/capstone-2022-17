@@ -171,7 +171,7 @@ const Profile = () => {
       type: LOAD_USER_REQUEST,
       id,
     });
-  }, []);
+  }, [id]);
 
   const handleImageUpload = (e) => {
     const formData = new FormData();
@@ -206,7 +206,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (updateUserDone) {
-      // window.location.reload();
+      window.location.reload();
     }
   }, [updateUserDone]);
 
@@ -309,7 +309,7 @@ const Profile = () => {
               </Container.ColumnStartContainer>
             </Container.AlignMiddleContainer>
             <Container.ColumnBetweenContainer style={{ padding: '1rem 0' }}>
-              <div style={user?.id != id ? { visibility: 'hidden' } : null}>
+              <div style={user?.user.id != id ? { visibility: 'hidden' } : null}>
                 {!edit ? (
                   <Btn.BasicBtn onClick={() => setEdit(true)}>수정</Btn.BasicBtn>
                 ) : (

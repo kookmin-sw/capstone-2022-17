@@ -101,7 +101,7 @@ const ApplyBtn = ({ project }) => {
       type: APPROVE_MEMBER_REQUEST,
       data: {
         projectId: project.id,
-        userId: user.id,
+        userId: user.user.id,
       },
     });
   };
@@ -111,7 +111,7 @@ const ApplyBtn = ({ project }) => {
       type: REJECT_MEMBER_REQUEST,
       data: {
         projectId: project.id,
-        userId: user.id,
+        userId: user.user.id,
       },
     });
   };
