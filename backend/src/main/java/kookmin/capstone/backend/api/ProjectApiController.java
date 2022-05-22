@@ -79,7 +79,7 @@ public class ProjectApiController {
         projectService.removeProject(id);
     }
 
-    @GetMapping("/v1/project/list")
+    @PostMapping("/v1/project/list")
     @ApiOperation(value = "프로젝트 둘러보기 검색 조회")
     public ResponseEntity list(@RequestBody ProjectSearchCond condition, @RequestParam("page") Integer page, @RequestParam("size") Integer size, HttpServletRequest request) {
         PageRequest pageRequest = PageRequest.of(page-1, size);
