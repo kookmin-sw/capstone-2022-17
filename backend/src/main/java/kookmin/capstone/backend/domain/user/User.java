@@ -100,7 +100,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void update(String nickname, String avatar, String instaId, String blog, String github, String introduce) {
+    public void update(String nickname, String avatar, String instaId, String blog,
+                       String github, String introduce) {
         this.nickname = nickname;
         this.avatar = avatar;
         this.instaId = instaId;

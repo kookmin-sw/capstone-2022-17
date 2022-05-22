@@ -46,8 +46,9 @@ public class UserApiController {
 
     @PatchMapping("/v1/user")
     @ApiOperation(value = "유저 정보 업데이트 API")
-    public ResponseEntity updateUser(@RequestBody UserDTO requestUserDTO) {
-        UserDTO userDTO = userService.updateUser(requestUserDTO);
+    public ResponseEntity updateUser(@RequestBody UserDTO requestUserDTO, HttpServletRequest request) {
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        UserDTO userDTO = userService.updateUser(requestUserDTO, userId);
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_UPDATE_SUCCESS, userDTO));
     }

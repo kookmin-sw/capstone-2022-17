@@ -2,6 +2,7 @@ package kookmin.capstone.backend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.project.Project;
+import kookmin.capstone.backend.dto.userDTO.UserTechDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,4 +41,21 @@ public class UserTech {
         iter.remove();
         this.user = null;
     }
+
+//    public void deleteUserTech(Iterator<UserTech> iter) {
+//        iter.remove();
+//        this.user = null;
+//    }
+
+    public static UserTech dtoToEntity(UserTechDTO userTechDTO, User user) {
+        return UserTech.builder().
+                stack(userTechDTO.getUserTech()).
+                user(user).
+                build();
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }

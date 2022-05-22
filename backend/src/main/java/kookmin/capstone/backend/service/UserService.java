@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,12 +49,30 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO updateUser(UserDTO userDTO) {
-        User findUser = userRepository.findById(userDTO.getId()).orElseThrow(EntityNotFoundException::new);
+    public UserDTO updateUser(UserDTO userDTO, Long userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+
+        List<String> userStack = userDTO.getUserTechList().stream().map(e -> e.getUserTech()).collect(Collectors.toCollection(ArrayList::new));
+        //TODO
+        List<String> userPosition = userDTO.getUserPositionSet().stream().map(e -> e.getPositionName()).collect(Collectors.toCollection(ArrayList::new));
+        List<UserTech> savedStack = findUser.getTechStack();
+
+        Iterator<UserTech> iter = savedStack.iterator();
+        while(iter.hasNext()) {
+            UserTech userTech = iter.next();
+            if (!userStack.contains(userTech.getStack())) {
+                userTech.deleteUser(iter);
+                userTechRepository.deleteById(userTech.getId());
+            } else {
+                userStack.remove(userTech.getStack());
+            }
+        }
+
+        userStack.stream().forEach(stack -> findUser.addTechStack(new UserTech(stack)));
 
         findUser.update(userDTO.getNickname(), userDTO.getAvatar(), userDTO.getInstaId(),
                 userDTO.getBlog(), userDTO.getGithub(), userDTO.getIntroduce());
-
+        userDTO.setId(findUser.getId());
         return userDTO;
     }
 

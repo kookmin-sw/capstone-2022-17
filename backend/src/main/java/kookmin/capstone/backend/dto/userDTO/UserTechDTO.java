@@ -3,9 +3,10 @@ package kookmin.capstone.backend.dto.userDTO;
 import kookmin.capstone.backend.domain.user.UserTech;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
+@AllArgsConstructor @NoArgsConstructor
 public class UserTechDTO {
 
     String userTech;
