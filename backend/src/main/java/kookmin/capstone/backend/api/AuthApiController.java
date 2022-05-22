@@ -41,7 +41,6 @@ public class AuthApiController {
     // 회원가입
     @PostMapping("/join")
     @ApiOperation(value = "회원가입, eamil과 password 보내주면 됨")
-    @Transactional(readOnly = true)
     public ResponseEntity<?> join(@Validated @RequestBody SignupDTO signupDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
@@ -76,7 +75,6 @@ public class AuthApiController {
     // 로그인
     @PostMapping("/login")
     @ApiOperation(value = "로그인")
-    @Transactional(readOnly = true)
     public ResponseEntity<?> login(@RequestBody LoginDTO userDTO) {
         User user = null;
         try {
