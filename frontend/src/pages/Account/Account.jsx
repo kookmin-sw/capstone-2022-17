@@ -11,11 +11,11 @@ const Account = () => {
   const { destroyUserDone } = useSelector((state) => state.authentication);
 
   const handleWithdraw = () => {
-    if (window.confirm('정말 탈퇴하시겠습니까?\n모든 글과 댓글이 사라집니다. 😥')) {
+    if (window.confirm('정말 탈퇴하시겠습니까? 😥')) {
       dispatch({
         type: DESTROY_USER_REQUEST,
       });
-      alert('삭제되었습니다');
+      alert('탈퇴되었습니다.');
     } else {
       alert('취소되었습니다 😊');
     }
