@@ -6,7 +6,12 @@ import media from 'utils/media';
 import { Modal, Icon, Radio, Label } from 'semantic-ui-react';
 import * as Btn from 'components/common/Btn';
 import * as Container from 'components/common/Containers';
-import { ADD_MEMBER_REQUEST, DESTROY_MEMBER_REQUEST } from 'reducers/member';
+import {
+  ADD_MEMBER_REQUEST,
+  APPROVE_MEMBER_REQUEST,
+  DESTROY_MEMBER_REQUEST,
+  REJECT_MEMBER_REQUEST,
+} from 'reducers/member';
 
 const SupplyBtn = styled(Btn.PrimaryBtn)`
   font-size: 0.9rem !important;
@@ -50,6 +55,7 @@ const ApplyBtn = ({ project }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { addMemberDone, destroyMemberDone } = useSelector((state) => state.member);
+  const { user } = useSelector((state) => state.authentication);
   const [open, setOpen] = useState(false);
   const [positions, setPositions] = useState([]);
   const [selected, setSelected] = useState('');
@@ -73,6 +79,14 @@ const ApplyBtn = ({ project }) => {
       case 'LEADER':
         navigate(`/project/setting/${project.id}`);
         break;
+      case 'MEMBER':
+        if (window.confirm('정말 프로젝트를 나가시겠습니까?')) {
+          dispatch({
+            type: DESTROY_MEMBER_REQUEST,
+            id: project.id,
+          });
+        }
+        break;
       default:
         dispatch({
           type: ADD_MEMBER_REQUEST,
@@ -82,8 +96,25 @@ const ApplyBtn = ({ project }) => {
     }
   };
 
-  const handleApprove = () => {};
-  const handleReject = () => {};
+  const handleApprove = () => {
+    dispatch({
+      type: APPROVE_MEMBER_REQUEST,
+      data: {
+        projectId: project.id,
+        userId: user.id,
+      },
+    });
+  };
+
+  const handleReject = () => {
+    dispatch({
+      type: REJECT_MEMBER_REQUEST,
+      data: {
+        projectId: project.id,
+        userId: user.id,
+      },
+    });
+  };
 
   useEffect(() => {
     if (addMemberDone) {
@@ -108,6 +139,9 @@ const ApplyBtn = ({ project }) => {
       case 'LEADER':
         setText('관리페이지 이동');
         break;
+      case 'MEMBER':
+        setText('프로젝트 나가기');
+        break;
       default:
         setText('지원하기');
         break;
@@ -127,16 +161,22 @@ const ApplyBtn = ({ project }) => {
           {text}
         </SupplyBtn>
       );
-    case 'REJECT':
+    case 'INVITED':
       return (
         <Container.RowBetweenContainer>
           <RejectBtn fluid onClick={handleReject}>
-            거절
+            초대 거절
           </RejectBtn>
           <SupplyBtn fluid onClick={handleApprove}>
-            승인
+            초대 승인
           </SupplyBtn>
         </Container.RowBetweenContainer>
+      );
+    case 'MEMBER':
+      return (
+        <SupplyBtn onClick={handleSubmit} fluid>
+          {text}
+        </SupplyBtn>
       );
     default:
       return (

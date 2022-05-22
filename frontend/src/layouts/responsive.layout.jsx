@@ -19,8 +19,14 @@ const ResponsiveLayout = ({ children }) => {
   const location = useLocation();
   return (
     <MainContainer>
-      {!location.pathname.includes('survey') && <Nav />}
-      <ContentContainer style={location.pathname.includes('survey') ? { marginTop: '0' } : null}>
+      {!location.pathname.includes('survey') && !location.pathname.includes('-position') && <Nav />}
+      <ContentContainer
+        style={
+          location.pathname.includes('survey') || location.pathname.includes('-position')
+            ? { marginTop: '0' }
+            : null
+        }
+      >
         {children}
       </ContentContainer>
     </MainContainer>

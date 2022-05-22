@@ -9,6 +9,12 @@ import {
   DESTROY_MEMBER_REQUEST,
   DESTROY_MEMBER_SUCCESS,
   DESTROY_MEMBER_FAILURE,
+  APPROVE_MEMBER_REQUEST,
+  APPROVE_MEMBER_SUCCESS,
+  APPROVE_MEMBER_FAILURE,
+  REJECT_MEMBER_REQUEST,
+  REJECT_MEMBER_SUCCESS,
+  REJECT_MEMBER_FAILURE,
 } from 'reducers/member';
 import authHeader from './auth-header';
 
@@ -56,6 +62,55 @@ function* watchMemberDestroy() {
   yield takeLatest(DESTROY_MEMBER_REQUEST, memberDestroy);
 }
 
+const memberApproveAPI = (data) => axios.patch('/member/join', data, { headers: authHeader() });
+
+function* memberApprove(action) {
+  try {
+    const result = yield call(memberApproveAPI, action.data);
+    yield put({
+      type: APPROVE_MEMBER_SUCCESS,
+      data: camelize(result.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: APPROVE_MEMBER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMemberApprove() {
+  yield takeLatest(APPROVE_MEMBER_REQUEST, memberApprove);
+}
+
+const memberRejectAPI = (data) => axios.patch('/member/reject', data, { headers: authHeader() });
+
+function* memberReject(action) {
+  try {
+    const result = yield call(memberRejectAPI, action.data);
+    yield put({
+      type: REJECT_MEMBER_SUCCESS,
+      data: camelize(result.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: REJECT_MEMBER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMemberReject() {
+  yield takeLatest(REJECT_MEMBER_REQUEST, memberReject);
+}
+
 export default function* member() {
-  yield all([fork(watchMemberAdd), fork(watchMemberDestroy)]);
+  yield all([
+    fork(watchMemberAdd),
+    fork(watchMemberDestroy),
+    fork(watchMemberApprove),
+    fork(watchMemberReject),
+  ]);
 }
