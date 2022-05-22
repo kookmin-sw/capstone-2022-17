@@ -5,7 +5,9 @@ export const initialState = {
   loadUserLoading: false,
   loadUserDone: false,
   loadUserError: null,
-
+  updateUserLoading: false,
+  updateUserDone: false,
+  updateUserError: null,
   updateUserPositionLoading: false,
   updateUserPositionDone: false,
   updateUserPositionError: null,
@@ -17,6 +19,10 @@ export const initialState = {
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS';
 export const LOAD_USER_FAILURE = 'LOAD_USER_FAILURE';
+
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 export const UPDATE_USERPOSITION_REQUEST = 'UPDATE_USERPOSITION_REQUEST';
 export const UPDATE_USERPOSITION_SUCCESS = 'UPDATE_USERPOSITION_SUCCESS';
@@ -42,6 +48,20 @@ export const reducer = (state = initialState, action) =>
       case LOAD_USER_FAILURE:
         draft.loadUserLoading = false;
         draft.loadUserError = action.error;
+        break;
+      case UPDATE_USER_REQUEST:
+        draft.updateUserLoading = true;
+        draft.updateUserDone = false;
+        draft.updateUserError = null;
+        break;
+      case UPDATE_USER_SUCCESS:
+        draft.updateUserLoading = false;
+        draft.updateUserDone = true;
+        draft.userData = action.data.data;
+        break;
+      case UPDATE_USER_FAILURE:
+        draft.updateUserLoading = false;
+        draft.updateUserError = action.error;
         break;
       case UPDATE_USERPOSITION_REQUEST:
         draft.updateUserPositionLoading = true;

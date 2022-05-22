@@ -10,6 +10,9 @@ export const initialState = {
   signupLoading: false,
   signupDone: false,
   signupError: null,
+  destroyUserLoading: false,
+  destroyUserDone: false,
+  destroyUserError: null,
 };
 
 export const SIGN_IN_REQUEST = 'SIGNIN_REQUEST';
@@ -19,6 +22,10 @@ export const SIGN_IN_FAILURE = 'SIGNIN_FAILURE';
 export const SIGN_UP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGNUP_FAILURE';
+
+export const DESTROY_USER_REQUEST = 'DESTROY_USER_REQUEST';
+export const DESTROY_USER_SUCCESS = 'DESTROY_USER_SUCCESS';
+export const DESTROY_USER_FAILURE = 'DESTROY_USER_FAILURE';
 
 export const signinRequestAction = (data) => ({
   type: SIGN_IN_REQUEST,
@@ -59,6 +66,21 @@ const reducer = (state = initialState, action) =>
       case SIGN_UP_FAILURE:
         draft.signupLoading = false;
         draft.signupError = action.error;
+        break;
+      case DESTROY_USER_REQUEST:
+        draft.destroyUserLoading = true;
+        draft.destroyUserDone = false;
+        draft.destroyUserError = null;
+        break;
+      case DESTROY_USER_SUCCESS:
+        draft.destroyUserLoading = false;
+        draft.user = null;
+        localStorage.removeItem('user');
+        draft.destroyUserDone = true;
+        break;
+      case DESTROY_USER_FAILURE:
+        draft.destroyUserLoading = false;
+        draft.destroyUserError = action.error;
         break;
       default:
         break;

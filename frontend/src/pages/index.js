@@ -11,3 +11,4 @@ export { default as Write } from 'pages/Write/Write';
 export { default as Modify } from 'pages/Write/Modify';
 export { default as Profile } from 'pages/Profile/Profile';
 export { default as Setting } from 'pages/Project/Setting';
+export { default as Account } from 'pages/Account/Account';

@@ -20,6 +20,7 @@ import {
   Profile,
   Setting,
   Modify,
+  Account,
 } from 'pages';
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/write" element={<Write />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/project/:id" element={<Project />} />
             <Route path="/project/setting/:id" element={<Setting />} />

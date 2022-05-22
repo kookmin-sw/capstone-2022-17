@@ -10,8 +10,8 @@ import { Form, Grid, Divider } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
 import * as Btn from 'components/common/Btn';
 import SignTitle from 'components/Sign/SignTitle';
-import PrivacyModal from 'components/Terms/PrivacyModal';
-import TermModal from 'components/Terms/TermModal';
+import TermsModal from 'components/Terms/TermsModal';
+import ServiceModal from 'components/Terms/ServiceModal';
 import COLOR from 'constant/color';
 
 const SignContainer = styled(Container.AlignCenterContainer)`
@@ -153,8 +153,8 @@ const SignUp = () => {
         {/* 약관확인 */}
         <P>
           <Span>
-            회원가입 시 TEAMING의 <TermModal /> 및 <br />
-            <PrivacyModal /> 을 확인하였으며, 동의합니다.
+            회원가입 시 TEAMING의 <ServiceModal /> 및 <br />
+            <TermsModal /> 을 확인하였으며, 동의합니다.
           </Span>
         </P>
       </Grid.Column>

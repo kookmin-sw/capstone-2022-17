@@ -5,6 +5,9 @@ import {
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
   UPDATE_USERPOSITION_REQUEST,
   UPDATE_USERPOSITION_SUCCESS,
   UPDATE_USERPOSITION_FAILURE,
@@ -81,6 +84,33 @@ function* watchUserLoad() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
 
+const UpdateUserAPI = (data) => axios.patch('/user', data, { headers: authHeader() });
+
+function* UpdateUser(action) {
+  try {
+    const result = yield call(UpdateUserAPI, action.data);
+    yield put({
+      type: UPDATE_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPDATE_USER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchUserUpdate() {
+  yield takeLatest(UPDATE_USER_REQUEST, UpdateUser);
+}
+
 export default function* user() {
-  yield all([fork(watchUserPositionUpdate), fork(watchUserTechUpdate), fork(watchUserLoad)]);
+  yield all([
+    fork(watchUserPositionUpdate),
+    fork(watchUserTechUpdate),
+    fork(watchUserLoad),
+    fork(watchUserUpdate),
+  ]);
 }
