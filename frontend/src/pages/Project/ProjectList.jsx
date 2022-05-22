@@ -78,6 +78,7 @@ const SelectMiniDiv = styled.div`
 const Select = styled(Form.Select)`
   font-size: 0.9rem !important;
   margin: 1rem 0 !important;
+
   .menu > .item > .text {
     font-size: 0.9rem !important;
   }
