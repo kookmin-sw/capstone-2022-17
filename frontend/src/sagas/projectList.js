@@ -38,7 +38,7 @@ function* watchMainProjectListLoad() {
 
 // 프로젝트 둘러보기 페이지 - 프로젝트 불러오기
 const projectListLoadAPI = (page, size, data) =>
-  axios.get(`/project/list?page=${page}&size=${size}`, data, { headers: authHeader() });
+  axios.post(`/project/list?page=${page}&size=${size}`, data, { headers: authHeader() });
 
 function* projectListLoad(action) {
   try {

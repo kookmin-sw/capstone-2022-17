@@ -51,7 +51,7 @@ export const reducer = (state = initialState, action) =>
       case LOAD_PROJECTLIST_SUCCESS:
         draft.loadProjectListLoading = false;
         draft.loadProjectListDone = true;
-        draft.ProjectList = action.data;
+        draft.projectList = action.data;
         break;
       case LOAD_PROJECTLIST_FAILURE:
         draft.loadProjectListLoading = false;
