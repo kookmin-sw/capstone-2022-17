@@ -9,7 +9,7 @@ import { SIZE, LOAD_MYPROJECTLIST_REQUEST } from 'reducers/projectList';
 
 const Container = styled.div`
   display: flex;
-  min-width: 600px;
+  width: 100vw;
   max-width: 1200px;
   margin: 2rem auto 5rem auto;
 `;

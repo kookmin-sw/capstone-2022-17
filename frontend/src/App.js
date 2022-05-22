@@ -18,6 +18,8 @@ import {
   TechStack,
   Write,
   Profile,
+  ProfileSelectPosition,
+  ProfileRatePosition,
   Setting,
   Modify,
   Account,
@@ -36,6 +38,8 @@ const App = () => {
             <Route path="/signup" element={<SignUp />} />
             <Route path="/account" element={<Account />} />
             <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/profile/select-position" element={<ProfileSelectPosition />} />
+            <Route path="/profile/rate-position" element={<ProfileRatePosition />} />
             <Route path="/project/:id" element={<Project />} />
             <Route path="/project/setting/:id" element={<Setting />} />
             <Route path="/modify" element={<Modify />} />
