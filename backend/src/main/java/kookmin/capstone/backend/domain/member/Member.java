@@ -1,5 +1,6 @@
 package kookmin.capstone.backend.domain.member;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import kookmin.capstone.backend.domain.Notification;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.project.Project;
@@ -39,14 +40,14 @@ public class Member {
     @JoinColumn(name = "position_id")
     private Position position;
 
-    @OneToOne(fetch = LAZY, mappedBy = "member", cascade = CascadeType.ALL)
-    private Notification notification;
+//    @OneToOne(fetch = LAZY, mappedBy = "member", cascade = CascadeType.ALL)
+//    private Notification notification;
 
-    public void notifyChanged(Notification notification) {
-        this.notification = notification;
-        notification.setMember(this);
-
-    }
+//    public void notifyChanged(Notification notification) {
+//        this.notification = notification;
+//        notification.setMember(this);
+//
+//    }
 
     public void changeMember(User user, Project project) {
         this.user = user;

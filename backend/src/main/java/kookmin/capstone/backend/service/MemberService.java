@@ -52,7 +52,7 @@ public class MemberService {
         Member member = Member.builder().
                 user(findUser).
                 project(project).
-                memberType(MemberType.MEMBER).
+                memberType(MemberType.LEADER).
                 position(findPosition).
                 build();
         Member savedMember = memberRepository.save(member);
@@ -87,7 +87,7 @@ public class MemberService {
                 build();
         member.changeMember(findUser, findProject);
         if (member.getMemberType() == MemberType.INVITED) {
-            member.notifyChanged(Notification.builder().checked(false).build());
+//            member.notifyChanged(Notification.builder().checked(false).build());
         }
 
         return member;

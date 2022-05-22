@@ -3,6 +3,7 @@ package kookmin.capstone.backend.service;
 import kookmin.capstone.backend.domain.Position;
 import kookmin.capstone.backend.domain.ProjectTech;
 import kookmin.capstone.backend.domain.member.Member;
+import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
@@ -13,6 +14,7 @@ import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -122,6 +124,14 @@ public class ProjectService {
             projectRequestDTO.setLeader(true);
         }
 
+        projectRequestDTO.setLeaderNickName(project.getUser().getNickname());
+        List<Member> members = project.getMembers();
+        for (Member each : members) {
+            if(each.getMemberType() == MemberType.LEADER) {
+                projectRequestDTO.setLeaderPosition(each.getPosition().getPositionName());
+            }
+        }
+
         return projectRequestDTO;
     }
 
@@ -190,6 +200,10 @@ public class ProjectService {
         mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
         mainProject.put("recommend", projectRepository.getTopByCreated(userId));
         return mainProject;
+    }
+
+    public List<UserResDTO> getProjectApply(Long projectId, Long userId) {
+        return projectRepository.getCandidateUser(projectId, userId);
     }
 
     public Project dtoToToEntity(ProjectRequestDTO dto) {
