@@ -253,13 +253,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     public List<ProjectDTO> getTopByScore(Long userId) {
         List<Project> content = queryFactory
                 .select(project).from(project)
-                .rightJoin(project.techStack, projectTech)
-                .fetchJoin()
-                .leftJoin(project.user, user)
-                .fetchJoin()
-                .leftJoin(project.projectLikes, projectLike)
-                .fetchJoin()
-                .distinct()
                 .orderBy(project.score.desc())
                 .offset(0)
                 .limit(4)
@@ -274,13 +267,6 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     public List<ProjectDTO> getTopByCreated(Long userId) {
         List<Project> content = queryFactory
                 .select(project).from(project)
-                .rightJoin(project.techStack, projectTech)
-                .fetchJoin()
-                .leftJoin(project.user, user)
-                .fetchJoin()
-                .leftJoin(project.projectLikes, projectLike)
-                .fetchJoin()
-                .distinct()
                 .orderBy(project.createdAt.desc())
                 .offset(0)
                 .limit(4)
