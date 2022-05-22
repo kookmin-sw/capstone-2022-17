@@ -23,7 +23,7 @@ const ContentContainer = styled.div`
 
 const Banner = styled.img`
   width: 100vw;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   object-fit: cover;
   border-bottom: 1px solid #cecece;
 `;
@@ -32,6 +32,7 @@ const Content1 = styled.div`
   width: 100vw;
   max-width: 1200px;
   padding: 0 5rem !important;
+  margin-bottom: 3.5rem;
 `;
 
 const Content2 = styled.div`
@@ -41,10 +42,10 @@ const Content2 = styled.div`
 `;
 
 const Content2Bg = styled.div`
-  background-color: #f6f6f6;
+  background-color: ${(props) => (props.isSign ? '#f6f6f6' : '#fff')};
   width: 100%;
   padding: 2rem 0 1rem 0;
-  margin: 1rem 0 2.5rem 0;
+  margin: -2rem 0 2.5rem 0;
   display: flex;
   justify-content: center;
 `;
@@ -104,31 +105,33 @@ const Home = () => {
     <Container>
       <Banner src={`${process.env.PUBLIC_URL}/images/home/bannerImg.png`} />
       <ContentContainer>
-        <Content1>
-          <Title>
-            <TextBox>
-              <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
-              <Text>&nbsp; {user?.user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
-            </TextBox>
-            <PlusIcon
-              name="plus"
-              style={{ cursor: 'pointer' }}
-              onClick={() => navigate('/project-list')}
-            />
-          </Title>
-          <CardList>
-            {recommend.map((project) => {
-              return (
-                <Card
-                  project={project}
-                  key={project.id}
-                  onClick={() => navigate(`project/${project.id}`)}
-                />
-              );
-            })}
-          </CardList>
-        </Content1>
-        <Content2Bg>
+        {user && (
+          <Content1>
+            <Title>
+              <TextBox>
+                <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
+                <Text>&nbsp; {user?.user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
+              </TextBox>
+              <PlusIcon
+                name="plus"
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate('/project-list')}
+              />
+            </Title>
+            <CardList>
+              {recommend.map((project) => {
+                return (
+                  <Card
+                    project={project}
+                    key={project.id}
+                    onClick={() => navigate(`project/${project.id}`)}
+                  />
+                );
+              })}
+            </CardList>
+          </Content1>
+        )}
+        <Content2Bg isSign={user}>
           <Content2>
             <Title>
               <TextBox>
@@ -150,26 +153,28 @@ const Home = () => {
             </CardList>
           </Content2>
         </Content2Bg>
-        <Content1>
-          <Title>
-            <TextBox>
-              <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon3.png`} />
-              <Text>&nbsp; 최근 올라온 프로젝트</Text>
-            </TextBox>
-            <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
-          </Title>
-          <CardList>
-            {topLatest.map((project) => {
-              return (
-                <Card
-                  project={project}
-                  key={project.id}
-                  onClick={() => navigate(`project/${project.id}`)}
-                />
-              );
-            })}
-          </CardList>
-        </Content1>
+        <Content2Bg isSign={!user}>
+          <Content1>
+            <Title>
+              <TextBox>
+                <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon3.png`} />
+                <Text>&nbsp; 최근 올라온 프로젝트</Text>
+              </TextBox>
+              <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
+            </Title>
+            <CardList>
+              {topLatest.map((project) => {
+                return (
+                  <Card
+                    project={project}
+                    key={project.id}
+                    onClick={() => navigate(`project/${project.id}`)}
+                  />
+                );
+              })}
+            </CardList>
+          </Content1>
+        </Content2Bg>
       </ContentContainer>
     </Container>
   );
