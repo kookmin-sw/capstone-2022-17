@@ -14,6 +14,10 @@ const Container = styled.div`
   margin: 2rem auto 5rem auto;
 `;
 
+const CardContainer = styled.div`
+  text-align: center;
+`;
+
 const TextContainer = styled.div`
   display: flex;
   align-items: center;
@@ -89,14 +93,16 @@ const MyProject = () => {
           <Text>프로젝트가 없습니다!</Text>
         </TextContainer>
       ) : (
-        <GridContainer>
-          {myProjectList.map((project) => {
-            return (
-              <GridDiv tablet={6} computer={4}>
-                <MyProjCard project={project} />
-              </GridDiv>
-            );
-          })}
+        <CardContainer>
+          <GridContainer>
+            {myProjectList.map((project) => {
+              return (
+                <GridDiv tablet={6} computer={4}>
+                  <MyProjCard project={project} />
+                </GridDiv>
+              );
+            })}
+          </GridContainer>
           <Pagination
             activePage={myCurrentPage}
             onPageChange={handlePaginationChange}
@@ -105,7 +111,7 @@ const MyProject = () => {
             totalPages={myTotalPage}
             secondary
           />
-        </GridContainer>
+        </CardContainer>
       )}
     </Container>
   );
