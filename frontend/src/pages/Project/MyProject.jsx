@@ -19,7 +19,7 @@ const TextContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100vw;
-  max-width: 1000px;
+  max-width: 990px;
   height: 20rem;
 
   opacity: 0.4;
