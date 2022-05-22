@@ -20,5 +20,9 @@ public interface ProjectRepositoryCustom {
 
     Page<ProjectDTO> progress(Pageable pageable, Long userId);
 
+    Page<ProjectDTO> likes(Pageable pageable, Long userId);
+
+    Page<ProjectDTO> done(Pageable pageable, Long userId);
+
     List<UserResDTO> getCandidateUser(Long projectId, Long userId);
 }

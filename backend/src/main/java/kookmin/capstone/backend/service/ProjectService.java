@@ -194,6 +194,18 @@ public class ProjectService {
         return projectRepository.search(projectSearchCond, pageable, userId);
     }
 
+    public Page<ProjectDTO> getProgressProject(Pageable pageable, Long userId) {
+        return projectRepository.progress(pageable, userId);
+    }
+
+    public Page<ProjectDTO> getLikesProject(Pageable pageable, Long userId) {
+        return projectRepository.likes(pageable, userId);
+    }
+
+    public Page<ProjectDTO> getDoneProject(Pageable pageable, Long userId) {
+        return projectRepository.done(pageable, userId);
+    }
+
     public Map<String, List<ProjectDTO>> getMainProject(Long userId) {
         Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
         mainProject.put("topScore", projectRepository.getTopByScore(userId));

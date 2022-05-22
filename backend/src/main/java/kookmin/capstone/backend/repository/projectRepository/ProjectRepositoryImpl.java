@@ -74,6 +74,65 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     @Override
+    public Page<ProjectDTO> likes(Pageable pageable, Long userId) {
+
+        List<Project> content = queryFactory
+                .select(project)
+                .from(project)
+                .rightJoin(project.projectLikes, projectLike)
+                .fetchJoin()
+                .leftJoin(projectLike.user, user)
+                .fetchJoin()
+                .distinct()
+                .where(project.id.eq(project.projectLikes.any().project.id),
+                        project.projectLikes.any().user.id.eq(userId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = queryFactory
+                .select(project.count())
+                .from(project)
+                .where(project.id.eq(project.projectLikes.any().project.id),
+                        project.projectLikes.any().user.id.eq(userId))
+                .fetchOne();
+
+        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
+                collect(Collectors.toCollection(ArrayList::new));
+
+        return new PageImpl(projectDTOList, pageable, count);
+    }
+
+    @Override
+    public Page<ProjectDTO> done(Pageable pageable, Long userId) {
+
+        List<Project> content = queryFactory
+                .select(project)
+                .from(project)
+                .rightJoin(project.members, member)
+                .fetchJoin()
+                .distinct()
+                .where(project.status.eq(ProjectStatus.DONE),
+                        member.memberType.eq(MemberType.MEMBER).
+                                or(member.memberType.eq(MemberType.LEADER)),
+                        member.user.id.eq(userId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long count = queryFactory
+                .select(project.count())
+                .from(project)
+                .where(project.status.eq(ProjectStatus.DONE))
+                .fetchOne();
+
+        List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
+                collect(Collectors.toCollection(ArrayList::new));
+
+        return new PageImpl(projectDTOList, pageable, count);
+    }
+
+    @Override
     public List<UserResDTO> getCandidateUser(Long projectId, Long userId) {
         List<User> userList = queryFactory
                 .select(user)

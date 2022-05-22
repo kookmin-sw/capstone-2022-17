@@ -8,10 +8,7 @@ import kookmin.capstone.backend.domain.TechStack;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Data @Builder
 @NoArgsConstructor @AllArgsConstructor
+@ToString
 public class ProjectDTO {
     private Long id;
     private ProjectStatus status;
