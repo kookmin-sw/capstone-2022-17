@@ -1,0 +1,28 @@
+const positionOption = [
+  { key: 1, text: '서버/백엔드', value: '서버/백엔드' },
+  { key: 2, text: '프론트엔드', value: '프론트엔드' },
+  { key: 3, text: '웹 풀스택', value: '웹 풀스택' },
+  { key: 4, text: '안드로이드 앱', value: '안드로이드 앱' },
+  { key: 5, text: '아이폰 앱', value: '아이폰 앱' },
+  { key: 6, text: '크로스플랫폼', value: '크로스플랫폼' },
+  { key: 7, text: '머신러닝', value: '머신러닝' },
+  { key: 8, text: '인공지능(AI)', value: '인공지능(AI)' },
+  { key: 9, text: '데이터 엔지니어', value: '데이터 엔지니어' },
+  { key: 10, text: 'DBA', value: 'DBA' },
+  { key: 12, text: '모바일 게임', value: '모바일 게임' },
+  { key: 13, text: '게임 클라이언트', value: '게임 클라이언트' },
+  { key: 14, text: '게임 서버', value: '게임 서버' },
+  { key: 15, text: '시스템/네트워크', value: '시스템/네트워크' },
+  { key: 16, text: '시스템 소프트웨어', value: '시스템 소프트웨어' },
+  { key: 17, text: '데브옵스', value: '데브옵스' },
+  { key: 18, text: '인터넷 보안', value: '인터넷 보안' },
+  { key: 19, text: '임베디드 소프트웨어', value: '임베디드 소프트웨어' },
+  { key: 20, text: '로보틱스 미들웨어', value: '로보틱스 미들웨어' },
+  { key: 21, text: 'QA', value: 'QA' },
+  { key: 22, text: '사물인터넷(IoT)', value: '사물인터넷(IoT)' },
+  { key: 23, text: '응용 프로그램', value: '응용 프로그램' },
+  { key: 24, text: '블록체인', value: '블록체인' },
+  { key: 25, text: '프로젝트 매니저', value: '프로젝트 매니저' },
+];
+
+export default positionOption;
