@@ -9,6 +9,8 @@ import COLOR from 'constant/color';
 import Applicant from 'components/Setting/Applicant';
 import Suggestion from 'components/Setting/Suggestion';
 
+import { LOAD_CANDIDATE_REQUEST } from 'reducers/member';
+
 const SettingContainer = styled(Container.ColumnStartContainer)`
   max-width: 1200px;
   width: 100vw;
@@ -18,7 +20,6 @@ const SettingContainer = styled(Container.ColumnStartContainer)`
 const Title = styled.div`
   font-family: 'Pr-Bold';
   font-size: 1.7rem;
-  margin-bottom: 1.3rem;
 `;
 
 const Menu = styled.div`
@@ -31,8 +32,15 @@ const Menu = styled.div`
   border-bottom: ${(props) => (props.isClicked ? `1px solid ${COLOR.PRIMARY}` : null)};
 `;
 
-const MemberContainer = styled(Container.ColumnStartContainer)`
+const MemberContainer = styled(Container.ColumnMiddleContainer)`
   margin-top: 3rem;
+  width: 100%;
+`;
+
+const TitleIcon = styled.img`
+  width: 2.5rem;
+  height: auto;
+  margin-right: 1rem;
 `;
 
 const Setting = () => {
@@ -40,12 +48,17 @@ const Setting = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { project, loadProjectDone, destroyProjectDone } = useSelector((state) => state.project);
+  const { memberList, loadCandidateDone } = useSelector((state) => state.member);
 
   const [state, setState] = useState('멤버 지원승인');
 
   useEffect(() => {
     dispatch({
       type: LOAD_PROJECT_REQUEST,
+      id,
+    });
+    dispatch({
+      type: LOAD_CANDIDATE_REQUEST,
       id,
     });
   }, []);
@@ -74,13 +87,19 @@ const Setting = () => {
       alert('팀장만 접근할 수 있습니다.');
       window.location.replace('/');
     }
-  });
+  }, []);
 
   return (
     <SettingContainer>
       {loadProjectDone && (
         <>
-          <Title>{project.title}</Title>
+          <Container.AlignMiddleContainer style={{ marginBottom: '1rem' }}>
+            <TitleIcon
+              src={`${process.env.PUBLIC_URL}/images/write/titleIcon.png`}
+              alt="titleIcon"
+            />
+            <Title>{project.title}</Title>
+          </Container.AlignMiddleContainer>
           <div>프로젝트 관리페이지 입니다.</div>
           <Divider style={{ width: '100%' }} />
 
@@ -95,9 +114,15 @@ const Setting = () => {
             <Menu onClick={handleDelete}>글 삭제</Menu>
           </Container.AlignCenterContainer>
           <MemberContainer style={state !== '멤버 지원승인' ? { display: 'none' } : null}>
-            <Applicant />
-            <Divider style={{ width: '100%' }} />
-            <Applicant />
+            {loadCandidateDone &&
+              memberList.map((member, index) => {
+                return (
+                  <>
+                    <Applicant key={member.userId} project={project} user={member} />
+                    {index === memberList.length && <Divider style={{ width: '100%' }} />}
+                  </>
+                );
+              })}
           </MemberContainer>
           <MemberContainer style={state !== '추천멤버 조회' ? { display: 'none' } : null}>
             <Suggestion />

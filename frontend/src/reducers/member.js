@@ -1,6 +1,10 @@
 import produce from 'utils/produce.util';
 
 export const initialState = {
+  memberList: [],
+  loadCandidateLoading: false,
+  loadCandidateDone: false,
+  loadCandidateError: null,
   addMemberLoading: false,
   addMemberDone: false,
   addMemberError: null,
@@ -14,6 +18,10 @@ export const initialState = {
   rejectMemberDone: false,
   rejectMemberError: false,
 };
+
+export const LOAD_CANDIDATE_REQUEST = 'LOAD_CANDIDATE_REQUEST';
+export const LOAD_CANDIDATE_SUCCESS = 'LOAD_CANDIDATE_SUCCESS';
+export const LOAD_CANDIDATE_FAILURE = 'LOAD_CANDIDATE_FAILURE';
 
 export const ADD_MEMBER_REQUEST = 'ADD_MEMBER_REQUEST';
 export const ADD_MEMBER_SUCCESS = 'ADD_MEMBER_SUCCESS';
@@ -34,6 +42,21 @@ export const REJECT_MEMBER_FAILURE = 'REJECT_MEMBER_FAILURE';
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case LOAD_CANDIDATE_REQUEST:
+        draft.loadCandidateLoading = true;
+        draft.loadCandidateDone = false;
+        draft.loadCandidateError = null;
+        break;
+      case LOAD_CANDIDATE_SUCCESS:
+        console.log(action.data);
+        draft.memberList = action.data;
+        draft.loadCandidateLoading = false;
+        draft.loadCandidateDone = true;
+        break;
+      case LOAD_CANDIDATE_FAILURE:
+        draft.loadCandidateLoading = false;
+        draft.loadCandidateError = action.error;
+        break;
       case ADD_MEMBER_REQUEST:
         draft.addMemberLoading = true;
         draft.addMemberDone = false;

@@ -63,6 +63,7 @@ export const reducer = (state = initialState, action) =>
         tempuser = JSON.parse(localStorage.getItem('user'));
         tempuser.user = action.data.data;
         localStorage.setItem('user', JSON.stringify(tempuser));
+        draft.user = tempuser;
         break;
       case UPDATE_USER_FAILURE:
         draft.updateUserLoading = false;

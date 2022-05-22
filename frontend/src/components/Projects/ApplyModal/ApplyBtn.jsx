@@ -130,6 +130,9 @@ const ApplyBtn = ({ project }) => {
 
   useEffect(() => {
     switch (project.memberType) {
+      case 'REJECT':
+        setText('프로젝트에 참여하지 못했습니다.');
+        break;
       case 'CANDIDATE':
         setText('지원 취소하기');
         break;
@@ -149,6 +152,12 @@ const ApplyBtn = ({ project }) => {
   }, [project]);
 
   switch (project.memberType) {
+    case 'REJECT':
+      return (
+        <Btn.DisableBtn fluid disabled>
+          {text}
+        </Btn.DisableBtn>
+      );
     case 'CANDIDATE':
       return (
         <SupplyBtn onClick={handleSubmit} fluid>
