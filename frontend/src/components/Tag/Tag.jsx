@@ -12,8 +12,8 @@ const TagDiv = styled.div`
   display: inline-block;
 `;
 
-const Tag = ({ children }) => {
-  return <TagDiv> {children} </TagDiv>;
+const Tag = ({ techName }) => {
+  return <TagDiv> {techName} </TagDiv>;
 };
 
 export default Tag;

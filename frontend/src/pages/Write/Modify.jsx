@@ -1,4 +1,5 @@
 import React, { useEffect, useState, createRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Editor } from '@toast-ui/react-editor';
 import useInput from 'hooks/useInput';
@@ -22,7 +23,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
 import { Form, Icon, Grid, Search, Label } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
-import SubmitWrite from 'components/Write/SubmitWrite';
+import SubmitModify from 'components/Write/SubmitModify';
 
 import numOption from './numOption';
 import positionOption from './postionOption';
@@ -125,25 +126,29 @@ const Tag = styled(Label)`
 
 const resultRenderer = ({ stack }) => <div>{stack}</div>;
 
-const Write = () => {
+const Modify = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const { project } = location.state;
+
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const titleRef = createRef();
   const editorRef = createRef();
-  const [title, onChangeTitle] = useInput('');
-  const [content, setContent] = useState();
-  const [position, setPosition] = useState([{ positionName: '서버/백엔드', total: 1 }]);
-  const [purpose, setPurpose] = useState('');
-  const [region, setRegion] = useState('지역 미지정');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [field, setField] = useState('');
+  const [title, onChangeTitle] = useInput(project.title);
+  const [content, setContent] = useState(project.content);
+  const [position, setPosition] = useState(project.projectPositions);
+  const [purpose, setPurpose] = useState(project.purpose);
+  const [region, setRegion] = useState(project.region);
+  const [startDate, setStartDate] = useState(new Date(project.startDate));
+  const [endDate, setEndDate] = useState(new Date(project.endDate));
+  const [field, setField] = useState(project.field);
   const [tech, onChangeTech, setTech] = useInput('');
-  const [techlist, setTechlist] = useState([]);
-  const [leaderPosition, setLeaderPosition] = useState('');
+  const [techlist, setTechlist] = useState(project.techStack);
+  const [leaderPosition, setLeaderPosition] = useState(project.leaderPosition);
   const [projectData, setProjectData] = useState({});
 
   useEffect(() => {
+    editorRef.current.getInstance().setMarkdown(project.description);
     titleRef.current.focus();
   }, []);
 
@@ -244,7 +249,7 @@ const Write = () => {
   return (
     <WriteContainer>
       <Container.RowStartContainer>
-        <TitleIcon src="images/write/titleIcon.png" alt="titleIcon" />
+        <TitleIcon src={`${process.env.PUBLIC_URL}/images/write/titleIcon.png`} alt="titleIcon" />
         <Title
           placeholder="제목을 입력해주세요."
           onChange={onChangeTitle}
@@ -442,11 +447,11 @@ const Write = () => {
           onChange={onChangeEditorTextHandler}
         />
         <Container.AlignCenterContainer style={{ margin: '5rem 0' }}>
-          <SubmitWrite data={projectData} />
+          <SubmitModify id={project.id} data={projectData} url={project.thumbnail} />
         </Container.AlignCenterContainer>
       </Form>
     </WriteContainer>
   );
 };
 
-export default Write;
+export default Modify;

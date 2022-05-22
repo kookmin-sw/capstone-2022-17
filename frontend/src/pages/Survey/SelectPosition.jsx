@@ -14,17 +14,17 @@ const SelectPosition = () => {
   const [selected, onChangeSelected] = useCheckbox();
 
   const handleSubmit = () => {
-    const positionRate = [];
+    const positionScore = [];
     selected.forEach((check, index) => {
       if (check) {
-        positionRate.push({
+        positionScore.push({
           id: positions[index].id,
-          name: positions[index].name,
-          rate: 3,
+          positionName: positions[index].name,
+          score: 3,
         });
       }
     });
-    navigate('/survey/rate-position', { state: { selected, positionRate } });
+    navigate('/survey/rate-position', { state: { selected, positionScore } });
   };
 
   return (
@@ -37,7 +37,7 @@ const SelectPosition = () => {
         columns={3}
         style={{
           maxWidth: '40rem',
-          margin: '5rem 0',
+          margin: '3rem 0 2rem 0',
           background: '#fff',
           borderRadius: '2rem',
           padding: '1rem 2rem',

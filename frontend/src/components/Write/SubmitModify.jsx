@@ -7,7 +7,7 @@ import * as Container from 'components/common/Containers';
 import * as Btn from 'components/common/Btn';
 import COLOR from 'constant/color';
 import { ADD_IMAGE_REQUEST } from 'reducers/image';
-import { ADD_PROJECT_REQUEST } from 'reducers/project';
+import { UPDATE_PROJECT_REQUEST } from 'reducers/project';
 
 const SubmitBtn = styled(Btn.PrimaryBtn)`
   height: 2.5rem;
@@ -60,15 +60,13 @@ const BasicImg = styled.img`
   cursor: pointer;
 `;
 
-const SubmitWrite = ({ data }) => {
+const SubmitModify = ({ data, url, id }) => {
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const inputRef = useRef();
   const { image, addImageDone } = useSelector((state) => state.image);
-  const { addProjectDone, project } = useSelector((state) => state.project);
-  const [imageUrl, setImageUrl] = useState(
-    `${process.env.PUBLIC_URL}/images/write/placeholder.png`,
-  );
+  const { updateProjectDone } = useSelector((state) => state.project);
+  const [imageUrl, setImageUrl] = useState(url);
   const [mode, setMode] = useState(false);
 
   const handleImageUpload = (e) => {
@@ -88,16 +86,16 @@ const SubmitWrite = ({ data }) => {
   const handleSubmit = () => {
     data.thumbnail = imageUrl;
     dispatch({
-      type: ADD_PROJECT_REQUEST,
+      type: UPDATE_PROJECT_REQUEST,
       data,
     });
   };
 
   useEffect(() => {
-    if (addProjectDone) {
-      window.location.replace(`/project/${project.id}`);
+    if (updateProjectDone) {
+      window.location.replace(`/project/${id}`);
     }
-  }, [addProjectDone]);
+  }, [updateProjectDone]);
 
   useEffect(() => {
     if (addImageDone) {
@@ -180,4 +178,4 @@ const SubmitWrite = ({ data }) => {
   );
 };
 
-export default SubmitWrite;
+export default SubmitModify;

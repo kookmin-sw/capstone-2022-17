@@ -43,17 +43,17 @@ const Position = styled.div`
   margin-bottom: 0.5rem;
 `;
 
-const RatingCard = ({ position, setRate, rate }) => {
+const RatingCard = ({ position, setScore, score }) => {
   const [value, setValue] = useState(3);
 
   useEffect(() => {
-    const temp = rate;
-    rate.forEach((element, index) => {
+    const temp = score;
+    score.forEach((element, index) => {
       if (element.id === position.id) {
-        temp[index].rate = value;
+        temp[index].score = value;
       }
     });
-    setRate(temp);
+    setScore(temp);
   }, [value]);
 
   return (

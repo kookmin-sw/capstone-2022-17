@@ -29,3 +29,23 @@ export const SubBtn = styled(PrimaryBtn)`
     background: ${darken(0.1, COLOR.LIGHTGRAY)} !important;
   }
 `;
+
+export const BasicBtn = styled(SubBtn)`
+  background: white !important;
+  color: ${COLOR.LIGHTGRAY} !important;
+  border: 1px solid #cecece !important;
+
+  &:hover {
+    background: ${darken(0.05, '#fff')} !important;
+  }
+`;
+
+export const BasicPriBtn = styled(SubBtn)`
+  background: white !important;
+  color: ${COLOR.PRIMARY} !important;
+  border: 1px solid ${COLOR.PRIMARY} !important;
+
+  &:hover {
+    background: ${darken(0.05, COLOR.PRIMARY)} !important;
+  }
+`;

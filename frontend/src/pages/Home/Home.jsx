@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from 'components/Card/Card';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_MAINPROJECTLIST_REQUEST } from 'reducers/projectList';
 
 const Container = styled.div`
   display: flex;
@@ -20,7 +23,6 @@ const ContentContainer = styled.div`
 
 const Banner = styled.img`
   width: 100vw;
-  /* height: 45vh; */
   margin-bottom: 3rem;
   object-fit: cover;
   border-bottom: 1px solid #cecece;
@@ -76,6 +78,30 @@ const CardList = styled.div`
 `;
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.authentication);
+  const { mainProjectList, loadMainProjectListDone } = useSelector((state) => state.projectList);
+  const [topLatest, setTopLatest] = useState([]);
+  const [topScore, setTopScore] = useState([]);
+  const [recommend, setRecommend] = useState([]);
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_MAINPROJECTLIST_REQUEST,
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(mainProjectList);
+
+    if (loadMainProjectListDone) {
+      setTopLatest(mainProjectList.topLatest);
+      setTopScore(mainProjectList.topScore);
+      setRecommend(mainProjectList.recommend);
+    }
+  });
+
   return (
     <Container>
       <Banner src={`${process.env.PUBLIC_URL}/images/home/bannerImg.png`} />
@@ -84,15 +110,24 @@ const Home = () => {
           <Title>
             <TextBox>
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon1.png`} />
-              <Text> &nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
+              <Text>&nbsp; {user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
             </TextBox>
-            <PlusIcon name="plus" style={{ cursor: 'pointer' }} />
+            <PlusIcon
+              name="plus"
+              style={{ cursor: 'pointer' }}
+              onClick={() => navigate('/project-list')}
+            />
           </Title>
           <CardList>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {recommend.map((project) => {
+              return (
+                <Card
+                  project={project}
+                  key={project.id}
+                  onClick={() => navigate(`project/${project.id}`)}
+                />
+              );
+            })}
           </CardList>
         </Content1>
         <Content2Bg>
@@ -102,13 +137,18 @@ const Home = () => {
                 <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon2.png`} />
                 <Text>&nbsp; 요즘 뜨는 프로젝트</Text>
               </TextBox>
-              <PlusIcon name="plus" />
+              <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
             </Title>
             <CardList>
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+              {topScore.map((project) => {
+                return (
+                  <Card
+                    project={project}
+                    key={project.id}
+                    onClick={() => navigate(`project/${project.id}`)}
+                  />
+                );
+              })}
             </CardList>
           </Content2>
         </Content2Bg>
@@ -118,13 +158,18 @@ const Home = () => {
               <Img src={`${process.env.PUBLIC_URL}/images/home/mainIcon3.png`} />
               <Text>&nbsp; 최근 올라온 프로젝트</Text>
             </TextBox>
-            <PlusIcon name="plus" />
+            <PlusIcon name="plus" onClick={() => navigate('/project-list')} />
           </Title>
           <CardList>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+            {topLatest.map((project) => {
+              return (
+                <Card
+                  project={project}
+                  key={project.id}
+                  onClick={() => navigate(`project/${project.id}`)}
+                />
+              );
+            })}
           </CardList>
         </Content1>
       </ContentContainer>

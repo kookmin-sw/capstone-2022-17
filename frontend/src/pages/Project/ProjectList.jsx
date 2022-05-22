@@ -1,7 +1,7 @@
-import React from 'react';
-// , { useEffect, useState }
-// import { useNavigate } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOAD_PROJECTLIST_REQUEST } from 'reducers/projectList';
 
 import styled from 'styled-components';
 import { Grid } from 'semantic-ui-react';
@@ -16,8 +16,6 @@ import Sort from 'components/Projects/ProjectList/Sort';
 // import positionOption from '../Write/postionOption';
 // import fields from '../Write/fields';
 // import regionOption from '../Write/regionOption';
-
-// import { LOAD_PROJECTLIST_REQUEST } from 'reducers/projectList';
 
 const Container = styled.div`
   margin: -2.5rem auto 0rem auto;
@@ -121,23 +119,26 @@ const SortDiv = styled.div`
 // `;
 
 const ProjectList = () => {
-  //   const dispatch = useDispatch();
-  //   const navigate = useNavigate();
-  //   const { projectList, loadProjectListDone } = useSelector((state) => state.projectList);
-  //   const [content, setContent] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { projectList, loadProjectListDone } = useSelector((state) => state.projectList);
+  const [content, setContent] = useState([]);
 
-  //   useEffect(() => {
-  //     dispatch({
-  //       type: LOAD_PROJECTLIST_REQUEST,
-  //     });
-  //   }, []);
+  useEffect(() => {
+    dispatch({
+      type: LOAD_PROJECTLIST_REQUEST,
+      data: {},
+      page: 1,
+      size: 16,
+    });
+  }, []);
 
-  //   useEffect(() => {
-  //     console.log(projectList);
-  //     if (loadProjectListDone) {
-  //       setContent(projectList.content);
-  //     }
-  //   });
+  useEffect(() => {
+    console.log(projectList);
+    if (loadProjectListDone) {
+      setContent(projectList.content);
+    }
+  });
 
   return (
     <Container>
@@ -204,36 +205,15 @@ const ProjectList = () => {
         </SortDiv>
         <Grid>
           <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            {/* {content.map((project) => {
-            return ( */}
-            <Card
-            // project={project}
-            // key={project.id}
-            // onClick={() => navigate(`project/${project.id}`)}
-            />
-            {/* );
-          })} */}
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
-          </GridDiv.Column>
-          <GridDiv.Column mobile={8} tablet={6} computer={4}>
-            <Card />
+            {content.map((project) => {
+              return (
+                <Card
+                  project={project}
+                  key={project.id}
+                  onClick={() => navigate(`project/${project.id}`)}
+                />
+              );
+            })}
           </GridDiv.Column>
         </Grid>
         {/* <Paging /> */}

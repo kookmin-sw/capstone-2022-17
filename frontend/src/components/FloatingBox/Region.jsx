@@ -1,20 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div`
-  font-size: 1.7rem;
+const Name = styled.div`
+  font-size: 1rem;
   font-weight: bold;
-  font-family: 'Pr-Regular';
   color: #444444;
 
   /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
   @media all and (max-width: 767px) {
-    font-size: 1.5rem;
+    font-size: 0.8rem;
   }
 `;
 
-const Title = ({ title }) => {
-  return <Container>{title}</Container>;
+// 항목 이름
+const Region = ({ region }) => {
+  return <Name>{region}</Name>;
 };
 
-export default Title;
+export default Region;

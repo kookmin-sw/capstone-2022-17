@@ -17,6 +17,9 @@ import {
   RatePosition,
   TechStack,
   Write,
+  Profile,
+  Setting,
+  Modify,
 } from 'pages';
 
 const App = () => {
@@ -30,8 +33,11 @@ const App = () => {
             <Route path="/write" element={<Write />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path="/project/:id" element={<Project />} />
+            <Route path="/project/setting/:id" element={<Setting />} />
+            <Route path="/modify" element={<Modify />} />
             <Route path="/myproject" element={<MyProject />} />
-            <Route exact path="/project/:id" id="number" element={<Project />} />
             <Route path="/project-list" element={<ProjectList />} />
             <Route path="/survey/select-position" element={<SelectPosition />} />
             <Route path="/survey/rate-position" element={<RatePosition />} />

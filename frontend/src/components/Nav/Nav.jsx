@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
 import NavMenu from 'components/Nav/NavMenu';
+import NotiIcon from 'components/Nav/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
 import * as Btn from 'components/common/Btn';
 import SignBtn from 'components/Nav/SignBtn';
@@ -22,7 +23,7 @@ const NavContainer = styled.div`
 
 const NavContent = styled.div`
   width: 100%;
-  max-width: 1300px;
+  max-width: 1200px;
   height: 2.5rem;
   margin: 0 3rem;
   display: flex;
@@ -62,6 +63,7 @@ const Nav = () => {
               <Link to="write">
                 <Btn.PrimaryBtn>프로젝트 생성</Btn.PrimaryBtn>
               </Link>
+              <NotiIcon />
               <UserMenu />
             </>
           ) : (

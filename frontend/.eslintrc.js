@@ -30,7 +30,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'react/prop-types': 'off',
     'default-param-last': 'off',
-    'no-param-reassign': 'off',
+    'no-param-reassign': 'off', 
     'no-alert': 'off',
   },
 };

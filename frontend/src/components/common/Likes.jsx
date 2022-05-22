@@ -12,10 +12,10 @@ const LikesNum = styled.div`
 `;
 
 // 좋아요
-const Likes = ({ children }) => {
+const Likes = ({ likesNum }) => {
   return (
     <LikesNum>
-      <Icon name="heart outline" /> {children}
+      <Icon name="heart outline" /> {likesNum}
     </LikesNum>
   );
 };

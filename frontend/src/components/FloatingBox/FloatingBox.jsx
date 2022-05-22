@@ -1,12 +1,15 @@
-import CardHeadCount from 'components/FloatingBox/HeadCount';
+import HeadCount from 'components/FloatingBox/HeadCount';
 import Likes from 'components/common/Likes';
 import React from 'react';
 import styled from 'styled-components';
 import Position from 'components/Projects/Project/Position';
-import * as Btn from 'components/common/Btn';
+import ApplyBtn from 'components/Projects/ApplyModal/ApplyBtn';
 import ContentName from './ContentName';
-import Contents from './Contents';
+import Period from './Period';
+import Purpose from './Purpose';
+import Field from './Field';
 import Status from './Status';
+import Region from './Region';
 
 const Wrapper = styled.div`
   font-family: 'Pr-Regular';
@@ -54,6 +57,7 @@ const PositionBox = styled.div`
   display: flex;
   justify-content: space-between;
   padding-top: 0.4rem;
+  width: 100%;
 `;
 
 const ButtonBox = styled.div`
@@ -66,62 +70,45 @@ const LikesBtn = styled.div`
   cursor: pointer;
 `;
 
-const SupplyBtn = styled(Btn.PrimaryBtn)`
-  font-size: 1.2rem !important;
-  cursor: pointer;
-  border-radius: 3rem !important;
-  height: 3rem !important;
-  margin-top: 0.5rem !important;
-
-  /* 모바일 가로, 모바일 세로 (해상도 480px ~ 767px)*/
-  @media all and (max-width: 767px) {
-    font-size: 1rem !important;
-    height: 2.5rem !important;
-  }
-`;
-
-const FloatingBox = () => {
+const FloatingBox = ({ project }) => {
   return (
     <Wrapper>
       <StatusBox>
         <PositionBox>
           <ContentName>모집인원</ContentName>
-          <Status>모집중</Status>
+          {project.status === 'IN_PROGRESS' ? <Status>모집중</Status> : <Status>모집완료</Status>}
         </PositionBox>
-        <PositionBox>
-          <Position>웹프론트</Position>
-          <CardHeadCount>1/2</CardHeadCount>
-        </PositionBox>
-        <PositionBox>
-          <Position>디자인</Position>
-          <CardHeadCount>1/2</CardHeadCount>
-        </PositionBox>
-        <PositionBox>
-          <Position>기획</Position>
-          <CardHeadCount>1/2</CardHeadCount>
-        </PositionBox>
+
+        {project.projectPositions.map((position) => {
+          return (
+            <PositionBox>
+              <Position position={position.positionName} />
+              <HeadCount currentCnt={position.currentCnt} total={position.total} />
+            </PositionBox>
+          );
+        })}
       </StatusBox>
       <ContentBox>
         <ContentName>프로젝트 기간</ContentName>
-        <Contents>23.12.7 ~ 23.12.9</Contents>
+        <Period startDate={project.startDate} endDate={project.endDate} />
       </ContentBox>
       <ContentBox>
         <ContentName>분야</ContentName>
-        <Contents>미디어</Contents>
+        <Field field={project.field} />
       </ContentBox>
       <ContentBox>
         <ContentName>목적</ContentName>
-        <Contents>공모전</Contents>
+        <Purpose purpose={project.purpose} />
       </ContentBox>
       <ContentBox>
         <ContentName>지역</ContentName>
-        <Contents>서울</Contents>
+        <Region region={project.region} />
       </ContentBox>
       <ButtonBox>
         <LikesBtn>
-          <Likes>114</Likes>
+          <Likes likesNum={project.likes} />
         </LikesBtn>
-        <SupplyBtn fluid>지원하기</SupplyBtn>
+        <ApplyBtn project={project} />
       </ButtonBox>
     </Wrapper>
   );
