@@ -205,7 +205,7 @@ const ProjectList = () => {
       </TextBox>
       <RecoBox>
         <LeftRecoBox>
-          <LeftRecoCard project={project} />
+          <LeftRecoCard />
         </LeftRecoBox>
         <RightRecoBox>
           <RightRecoCard />

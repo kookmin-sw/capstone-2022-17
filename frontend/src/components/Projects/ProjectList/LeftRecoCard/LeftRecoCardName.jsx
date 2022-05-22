@@ -6,8 +6,8 @@ const ProjectName = styled.div`
   padding: 0.3rem 0.3rem 0 0.3rem;
 `;
 
-const RecoCardName = ({ children }) => {
-  return <ProjectName> {children} </ProjectName>;
+const RecoCardName = ({ cardName }) => {
+  return <ProjectName> {cardName} </ProjectName>;
 };
 
 export default RecoCardName;

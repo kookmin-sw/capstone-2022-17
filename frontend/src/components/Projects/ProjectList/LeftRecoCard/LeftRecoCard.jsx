@@ -33,21 +33,28 @@ const TagDiv = styled.div`
   padding: 0 1rem 0.5rem 1rem;
 `;
 
+const tempProject = {
+  thumbnail: 'https://minjj0905.github.io/img.jpg',
+  title: '테스트 프로젝트',
+  likes: '3',
+  description: 'kdkdkdk',
+  techStack: ['1', '2'],
+};
+
 const LeftRecoCard = () => {
   return (
     <Container>
-      <LeftRecoThumbnail />
+      <LeftRecoThumbnail img={tempProject.thumbnail} />
       <Title>
-        <RecoCardName>프로젝트 제목</RecoCardName>
-        <Likes>100</Likes>
+        <RecoCardName cardName={tempProject.title} />
+        <Likes likesNum={tempProject.likes} />
       </Title>
-      <RecoContent>
-        1. 모집 - 프론트엔드 (앱개발) 개발자 모집- 전기차 충전 인프라 효율성 극대화, 전기차 유저들이
-        충전 스트레스로부터 해방에 관심 있으신분 - 전기차 충전소 위치 및 정
-      </RecoContent>
+      <RecoContent content={tempProject.description} />
       <TagDiv>
-        <Tag>프론트엔드</Tag>
-        <Tag>프론트엔드</Tag>
+        {tempProject.techStack &&
+          tempProject.techStack.map((tech) => {
+            return <Tag techName={tech.stack} />;
+          })}
       </TagDiv>
     </Container>
   );

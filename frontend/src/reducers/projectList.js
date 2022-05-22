@@ -70,6 +70,9 @@ export const reducer = (state = initialState, action) =>
         draft.loadProjectListLoading = false;
         draft.loadProjectListDone = true;
         draft.projectList = action.data;
+        draft.totalPage = action.data.totalPages;
+        draft.currentPage = action.data.pageable.pageNumber + 1;
+        draft.totalElements = action.data.totalElements;
         break;
       case LOAD_PROJECTLIST_FAILURE:
         draft.loadProjectListLoading = false;
