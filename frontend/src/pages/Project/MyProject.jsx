@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import SideMenu from 'components/Projects/MyProject/SideMenu';
 import MyProjCard from 'components/Projects/MyProject/MyProjCard/MyProjCard';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Pagination } from 'semantic-ui-react';
 import { SIZE, LOAD_MYPROJECTLIST_REQUEST } from 'reducers/projectList';
 
 const Container = styled.div`
@@ -72,6 +72,15 @@ const MyProject = () => {
     });
   }, [status]);
 
+  const handlePaginationChange = (e, { activePage }) => {
+    dispatch({
+      type: LOAD_MYPROJECTLIST_REQUEST,
+      page: activePage,
+      size: SIZE,
+      status,
+    });
+  };
+
   return (
     <Container>
       <SideMenu status={status} setStatus={setStatus} />
@@ -88,6 +97,14 @@ const MyProject = () => {
               </GridDiv>
             );
           })}
+          <Pagination
+            activePage={myCurrentPage}
+            onPageChange={handlePaginationChange}
+            size="mini"
+            siblingRange={2}
+            totalPages={myTotalPage}
+            secondary
+          />
         </GridContainer>
       )}
     </Container>
