@@ -6,17 +6,19 @@ import { LOAD_PROJECTLIST_REQUEST } from 'reducers/projectList';
 import useInput from 'hooks/useInput';
 
 import styled from 'styled-components';
-import { Form, Grid, Input } from 'semantic-ui-react';
+import { Form, Icon, Grid, Search, Label, Input } from 'semantic-ui-react';
 
 import Card from 'components/Card/Card';
 import LeftRecoCard from 'components/Projects/ProjectList/LeftRecoCard/LeftRecoCard';
 import RightRecoCard from 'components/Projects/ProjectList/RightRecoCard/RightRecoCard';
 import Sort from 'components/Projects/ProjectList/Sort';
 
-import positionOption from 'pages/Write/postionOption';
-import regionOption from 'pages/Write/regionOption';
+import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
+import * as Ct from 'components/common/Containers';
 import fieldOption from './fieldOption';
 import purposeOption from './purposeOption';
+import positionOption from './postionOption';
+import regionOption from './regionOption';
 
 const Container = styled.div`
   min-width: 600px;
@@ -71,11 +73,11 @@ const FilterName = styled.div`
 const SelectDiv = styled.div`
   display: flex;
   margin: 3rem 0 1rem 0;
-  justify-content: center;
 `;
 
 const SelectMiniDiv = styled.div`
   margin: 0 1rem 1rem 1rem;
+  width: 100%;
 `;
 
 const Select = styled(Form.Select)`
@@ -93,6 +95,7 @@ const SearchDiv = styled.div`
 
 const SearchMiniDiv = styled.div`
   margin: 0 1rem 1rem 1rem;
+  width: 100%;
 `;
 
 const SortDiv = styled.div`
@@ -111,11 +114,26 @@ const StyledInput = styled(Input)`
   }
 `;
 
+const AutoComplete = styled(Search)`
+  .input > input {
+    border-radius: 0.3rem !important;
+    font-family: 'Pr-Regular' !important;
+    font-size: 0.9rem !important;
+  }
+`;
+
+const Tag = styled(Label)`
+  border-radius: 2rem !important;
+  margin-bottom: 0.4rem !important;
+`;
+
+const resultRenderer = ({ stack }) => <div>{stack}</div>;
+
 const ProjectList = () => {
   const [position, setPosition] = useState('전체');
   const [purpose, setPurpose] = useState('전체');
-  const [region, setRegion] = useState('지역 미지정');
-  const [field, setField] = useState('분야 선택');
+  const [region, setRegion] = useState('전체');
+  const [field, setField] = useState('전체');
   const [search, onChangeSearch] = useInput('');
   // const [filterData, setFilterData] = useState({});
 
@@ -124,6 +142,32 @@ const ProjectList = () => {
   const navigate = useNavigate();
   const { projectList, loadProjectListDone } = useSelector((state) => state.projectList);
   const [content, setContent] = useState([]);
+
+  const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
+  const [tech, onChangeTech, setTech] = useInput('');
+  const [techlist, setTechlist] = useState([]);
+
+  const handleResultSelect = (e, data) => {
+    if (!techlist.includes(data.result.stack)) {
+      setTechlist([...techlist, data.result.stack]);
+    } else {
+      alert('이미 입력된 기술스택입니다.');
+    }
+    setTech('');
+  };
+
+  const handleDeleteTag = (idx) => {
+    setTechlist(techlist.filter((value, index) => index !== idx));
+  };
+
+  useEffect(() => {
+    if (tech !== '') {
+      dispatch({
+        type: LOAD_TECHSTACK_REQUEST,
+        name: tech,
+      });
+    }
+  }, [tech]);
 
   useEffect(() => {
     dispatch({
@@ -170,6 +214,7 @@ const ProjectList = () => {
           <SelectMiniDiv>
             <FilterName>포지션</FilterName>
             <Select
+              fluid
               placeholder="포지션"
               options={positionOption}
               value={position}
@@ -179,6 +224,7 @@ const ProjectList = () => {
           <SelectMiniDiv>
             <FilterName>지역</FilterName>
             <Select
+              fluid
               placehodler="지역"
               options={regionOption}
               value={region}
@@ -188,6 +234,7 @@ const ProjectList = () => {
           <SelectMiniDiv>
             <FilterName>목적</FilterName>
             <Select
+              fluid
               placeholder="목적"
               options={purposeOption}
               value={purpose}
@@ -197,6 +244,7 @@ const ProjectList = () => {
           <SelectMiniDiv>
             <FilterName>분야</FilterName>
             <Select
+              fluid
               placeholder="분야"
               options={fieldOption}
               value={field}
@@ -207,11 +255,46 @@ const ProjectList = () => {
         <SearchDiv>
           <SearchMiniDiv>
             <FilterName>검색어 입력</FilterName>
-            <StyledInput placeholder="검색어 입력" onChange={onChangeSearch} value={search} />
+            <StyledInput fluid placeholder="검색어 입력" onChange={onChangeSearch} value={search} />
           </SearchMiniDiv>
-          기술스택 검색
+          {/* 기술스택 시작 */}
+          <SearchMiniDiv>
+            <FilterName>기술스택</FilterName>
+            <Ct.AlignMiddleContainer>
+              <AutoComplete
+                fluid
+                placeholder="기술스택 검색"
+                value={tech}
+                onSearchChange={onChangeTech}
+                results={techstacks}
+                onResultSelect={handleResultSelect}
+                loading={loadTechstacksLoading}
+                resultRenderer={resultRenderer}
+              />
+            </Ct.AlignMiddleContainer>
+            {/* 기술스택 끝 */}
+          </SearchMiniDiv>
+          <SearchMiniDiv>
+            <Select fluid style={{ visibility: 'hidden' }} />
+          </SearchMiniDiv>
+          <SearchMiniDiv>
+            <Select fluid style={{ visibility: 'hidden' }} />
+          </SearchMiniDiv>
+          /
         </SearchDiv>
       </SearchBox>
+      {/* 태그 시작 */}
+      <Ct.RowStartContainer style={{ margin: '-1rem 0 3rem 0', flexWrap: 'wrap' }}>
+        {techlist.map((stack, index) => {
+          return (
+            <Tag key={stack}>
+              {stack}
+              <Icon name="delete" onClick={() => handleDeleteTag(index)} />
+            </Tag>
+          );
+        })}
+      </Ct.RowStartContainer>
+      {/* 태그 끝 */}
       <SortDiv>
         <Sort>최신순</Sort>
         <Sort>인기순</Sort>

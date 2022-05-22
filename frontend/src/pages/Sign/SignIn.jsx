@@ -20,6 +20,7 @@ const Field = styled(Form.Field)`
   input {
     height: 2.3rem;
     font-size: 0.85rem !important;
+    font-
   }
   input[type='email'] {
     font-family: 'Pr-regular' !important;
