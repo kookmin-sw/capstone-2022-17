@@ -1,6 +1,6 @@
 /* eslint-disable eqeqeq */
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_IMAGE_REQUEST } from 'reducers/image';
 import { Divider, Form, TextArea, Label, Icon, Search } from 'semantic-ui-react';
@@ -143,6 +143,7 @@ const resultRenderer = ({ stack }) => <div>{stack}</div>;
 // ];
 
 const Profile = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { id } = useParams();
   const [edit, setEdit] = useState(false);
@@ -160,6 +161,8 @@ const Profile = () => {
   const [techlist, setTechlist] = useState([]);
   const [tech, onChangeTech, setTech] = useInput('');
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
+
+  const [position, setPosition] = useState([]);
 
   // const [education, setEducation] = useState(tempEducation);
 
@@ -195,6 +198,7 @@ const Profile = () => {
         github,
         instaId,
         userTechList: techlist,
+        userPositionSet: position,
       },
     });
     setEdit(false);
@@ -213,6 +217,7 @@ const Profile = () => {
     setGithub(userData.github);
     setInstaId(userData.instaId);
     setTechlist(userData.userTechList);
+    setPosition(userData.userPositionSet);
     setEdit(false);
   };
 
@@ -250,6 +255,7 @@ const Profile = () => {
       setGithub(userData.github);
       setInstaId(userData.instaId);
       setTechlist(userData.userTechList);
+      setPosition(userData.userPositionSet);
     }
   }, [loadUserDone]);
 
@@ -284,6 +290,11 @@ const Profile = () => {
                   <>
                     <Name>{nickname}</Name>
                     <Intro>{introduce}</Intro>
+                    <Container.AlignMiddleContainer>
+                      {position.map((pos) => {
+                        return <Tag key={pos.positionName}>{pos.positionName}</Tag>;
+                      })}
+                    </Container.AlignMiddleContainer>
                   </>
                 ) : (
                   <div style={{ minWidth: '20rem' }}>
@@ -361,7 +372,11 @@ const Profile = () => {
                 );
               })}
             </Container.RowStartContainer>
-            {edit && <Btn.PrimaryBtn type="button">포지션 추가하러 가기</Btn.PrimaryBtn>}
+            {edit && (
+              <Btn.PrimaryBtn type="button" onClick={() => navigate('/profile/select-position')}>
+                포지션 수정하러 가기
+              </Btn.PrimaryBtn>
+            )}
             {/* {education.map((edu, index) => {
             if (edit) {
               return (

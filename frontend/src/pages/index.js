@@ -10,5 +10,7 @@ export { default as TechStack } from 'pages/Survey/TechStack';
 export { default as Write } from 'pages/Write/Write';
 export { default as Modify } from 'pages/Write/Modify';
 export { default as Profile } from 'pages/Profile/Profile';
+export { default as ProfileSelectPosition } from 'pages/Profile/ProfileSelectPosition';
+export { default as ProfileRatePosition } from 'pages/Profile/ProfileRatePosition';
 export { default as Setting } from 'pages/Project/Setting';
 export { default as Account } from 'pages/Account/Account';
