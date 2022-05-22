@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { LOAD_PROJECTLIST_REQUEST } from 'reducers/projectList';
+import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
+import { LOAD_PROJECTLIST_REQUEST, SIZE } from 'reducers/projectList';
 
 import useInput from 'hooks/useInput';
 
@@ -13,7 +14,6 @@ import LeftRecoCard from 'components/Projects/ProjectList/LeftRecoCard/LeftRecoC
 import RightRecoCard from 'components/Projects/ProjectList/RightRecoCard/RightRecoCard';
 import Sort from 'components/Projects/ProjectList/Sort';
 
-import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
 import * as Ct from 'components/common/Containers';
 import fieldOption from './fieldOption';
 import purposeOption from './purposeOption';
@@ -172,9 +172,17 @@ const ProjectList = () => {
   useEffect(() => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
-      data: {},
+      data: {
+        field: [field],
+        positions: [position],
+        purpose: [purpose],
+        region,
+        status: 'PROGRESS',
+        techStacks: techlist,
+        title: search,
+      },
       page: 1,
-      size: 16,
+      size: SIZE,
     });
   }, []);
 
@@ -197,7 +205,7 @@ const ProjectList = () => {
       </TextBox>
       <RecoBox>
         <LeftRecoBox>
-          <LeftRecoCard />
+          <LeftRecoCard project={project} />
         </LeftRecoBox>
         <RightRecoBox>
           <RightRecoCard />
@@ -280,7 +288,6 @@ const ProjectList = () => {
           <SearchMiniDiv>
             <Select fluid style={{ visibility: 'hidden' }} />
           </SearchMiniDiv>
-          /
         </SearchDiv>
       </SearchBox>
       {/* 태그 시작 */}

@@ -14,6 +14,7 @@ export const initialState = {
   loadProjectListError: false,
   currentPage: 1,
   totalPage: null,
+  totalElements: null,
 
   // 내 프로젝트 페이지 - 프로젝트 불러오기
   myProjectList: [],
