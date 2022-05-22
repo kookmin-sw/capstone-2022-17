@@ -9,6 +9,9 @@ import {
   LOAD_PROJECTLIST_REQUEST,
   LOAD_PROJECTLIST_SUCCESS,
   LOAD_PROJECTLIST_FAILURE,
+  LOAD_MYPROJECTLIST_REQUEST,
+  LOAD_MYPROJECTLIST_SUCCESS,
+  LOAD_MYPROJECTLIST_FAILURE,
 } from 'reducers/projectList';
 
 import authHeader from './auth-header';
@@ -60,7 +63,42 @@ function* watchProjectListLoad() {
   yield takeLatest(LOAD_PROJECTLIST_REQUEST, projectListLoad);
 }
 
+// 내 프로젝트 페이지 - 프로젝트 불러오기
+const myProjectListLoadAPI = (page, size, status) =>
+  axios.get(`/myproject/?page=${page}&size=${size}&type=${status}`, {
+    headers: authHeader(),
+  });
+
+function* myProjectListLoad(action) {
+  try {
+    const result = yield call(
+      myProjectListLoadAPI,
+      action.page,
+      action.size,
+      action.status,
+      action.data,
+    );
+    yield put({
+      type: LOAD_MYPROJECTLIST_SUCCESS,
+      data: camelize(result.data.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_MYPROJECTLIST_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMyProjectListLoad() {
+  yield takeLatest(LOAD_MYPROJECTLIST_REQUEST, myProjectListLoad);
+}
+
 export default function* projectList() {
-  yield all([fork(watchMainProjectListLoad)]);
-  yield all([fork(watchProjectListLoad)]);
+  yield all([
+    fork(watchMainProjectListLoad),
+    fork(watchProjectListLoad),
+    fork(watchMyProjectListLoad),
+  ]);
 }
