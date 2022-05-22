@@ -28,6 +28,7 @@ public class ResponseMessage {
     public static final String PORTFOLIO_CREATE_SUCCESS = "포트폴리오 생성 성공";
     public static final String NOTIFY_GET_SUCCESS = "알림 정보 가져오기 성공";
     public static final String NOTIFY_GET_FAIL = "가져올 알림 정보가 없음";
+    public static final String NOTIFY_CHECK_SUCCESS = "알림 읽음 처리 완료";
     public static final String MYPROJECT_DONE_GET_SUCCESS = "완료된 내 프로젝트 가져오기 성공";
     public static final String MYPROJECT_IN_PROGRESS_GET_SUCCESS = "진행중인 내 프로젝트 가져오기 성공";
     public static final String MYPROJECT_LIKES_GET_SUCCESS = "좋아요한 내 프로젝트 가져오기 성공";
