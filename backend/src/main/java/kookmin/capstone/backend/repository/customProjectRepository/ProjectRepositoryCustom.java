@@ -3,6 +3,8 @@ package kookmin.capstone.backend.repository.customProjectRepository;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.userDTO.UserDTO;
+import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -17,4 +19,6 @@ public interface ProjectRepositoryCustom {
     List<ProjectDTO> getTopByCreated(Long userId);
 
     Page<ProjectDTO> progress(Pageable pageable, Long userId);
+
+    List<UserResDTO> getCandidateUser(Long projectId, Long userId);
 }

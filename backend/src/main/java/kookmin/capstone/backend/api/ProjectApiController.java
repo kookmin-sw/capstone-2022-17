@@ -6,6 +6,7 @@ import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
@@ -141,6 +142,13 @@ public class ProjectApiController {
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS));
     }
 
+    @GetMapping("/v1/project/join")
+    @ApiOperation(value = "프로젝트 지원 현황 조회 API")
+    public ResponseEntity getStatus(@RequestParam Long projectId, HttpServletRequest request) {
+        Long userId = jwtTokenService.get(request, "id", Long.class);
+        List<UserResDTO> projectApply = projectService.getProjectApply(projectId, userId);
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_APPLY_GET_SUCCESS, projectApply));
+    }
 
     @Data @AllArgsConstructor
     static class CreatePojectResponse {

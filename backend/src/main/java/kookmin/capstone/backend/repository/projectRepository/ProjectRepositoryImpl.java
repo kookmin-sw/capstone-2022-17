@@ -7,8 +7,12 @@ import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.member.QMember;
 import kookmin.capstone.backend.domain.project.*;
 import kookmin.capstone.backend.domain.user.QUser;
+import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.userDTO.QUserResDTO;
+import kookmin.capstone.backend.dto.userDTO.UserDTO;
+import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.repository.customProjectRepository.ProjectRepositoryCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 import static kookmin.capstone.backend.domain.QProjectTech.projectTech;
 import static kookmin.capstone.backend.domain.member.QMember.member;
 import static kookmin.capstone.backend.domain.project.QProject.project;
@@ -65,6 +71,32 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                 collect(Collectors.toCollection(ArrayList::new));
 
         return new PageImpl(projectDTOList, pageable, count);
+    }
+
+    @Override
+    public List<UserResDTO> getCandidateUser(Long projectId, Long userId) {
+        List<User> userList = queryFactory
+                .select(user)
+                .from(user)
+                .rightJoin(user.members, member)
+                .fetchJoin()
+                .leftJoin(member.project, project)
+                .fetchJoin()
+                .distinct()
+                .where(member.memberType.eq(MemberType.CANDIDATE),
+                        member.project.id.eq(projectId))
+                .fetch();
+        ArrayList<UserResDTO> userResList = userList.stream().map(user -> UserResDTO.entityToDto(user)).collect(Collectors.toCollection(ArrayList::new));
+        for (int i = 0; i < userList.size(); i++) {
+            int finalI = i;
+            userList.get(i).getMembers().stream().forEach(member -> {
+                if (member.getProject().getId() == projectId) {
+                    userResList.get(finalI).setPosition(member.getPosition().getPositionName());
+                }
+            });
+        }
+
+        return userResList;
     }
 
     @Override

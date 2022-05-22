@@ -14,6 +14,7 @@ import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
@@ -199,6 +200,10 @@ public class ProjectService {
         mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
         mainProject.put("recommend", projectRepository.getTopByCreated(userId));
         return mainProject;
+    }
+
+    public List<UserResDTO> getProjectApply(Long projectId, Long userId) {
+        return projectRepository.getCandidateUser(projectId, userId);
     }
 
     public Project dtoToToEntity(ProjectRequestDTO dto) {
