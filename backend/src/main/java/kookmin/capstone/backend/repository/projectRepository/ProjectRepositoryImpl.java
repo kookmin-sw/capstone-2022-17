@@ -3,6 +3,7 @@ package kookmin.capstone.backend.repository.projectRepository;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kookmin.capstone.backend.domain.QProjectTech;
+import kookmin.capstone.backend.domain.member.Member;
 import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.member.QMember;
 import kookmin.capstone.backend.domain.project.*;
@@ -70,6 +71,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
                 collect(Collectors.toCollection(ArrayList::new));
 
+        for (int i = 0; i < content.size(); i++) {
+            for (Member member : content.get(i).getMembers()) {
+                if (member.getUser().getId() == userId) {
+                    projectDTOList.get(i).setMyPosition(member.getPosition().getPositionName());
+                }
+            }
+        }
+
         return new PageImpl(projectDTOList, pageable, count);
     }
 
@@ -100,6 +109,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
                 collect(Collectors.toCollection(ArrayList::new));
 
+        for (int i = 0; i < content.size(); i++) {
+            for (Member member : content.get(i).getMembers()) {
+                if (member.getUser().getId() == userId) {
+                    projectDTOList.get(i).setMyPosition(member.getPosition().getPositionName());
+                }
+            }
+        }
+
         return new PageImpl(projectDTOList, pageable, count);
     }
 
@@ -128,6 +145,14 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
 
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
                 collect(Collectors.toCollection(ArrayList::new));
+
+        for (int i = 0; i < content.size(); i++) {
+            for (Member member : content.get(i).getMembers()) {
+                if (member.getUser().getId() == userId) {
+                    projectDTOList.get(i).setMyPosition(member.getPosition().getPositionName());
+                }
+            }
+        }
 
         return new PageImpl(projectDTOList, pageable, count);
     }
