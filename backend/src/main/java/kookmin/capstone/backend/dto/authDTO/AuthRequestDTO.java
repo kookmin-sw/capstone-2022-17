@@ -31,6 +31,7 @@ public class AuthRequestDTO {
 
     public static AuthRequestDTO entityToDto(User user, String accessToken) {
         return AuthRequestDTO.builder().
+                accessToken(accessToken).
 //                id(user.getId()).
 //                accessToken(accessToken).
 //                nickname(user.getNickname()).
