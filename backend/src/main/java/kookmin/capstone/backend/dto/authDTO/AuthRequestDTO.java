@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor @AllArgsConstructor
 public class AuthRequestDTO {
     private String accessToken;
-    private UserDTO user;
+    public UserDTO user;
 
 
     public static AuthRequestDTO entityToDto(User user, String accessToken) {
@@ -36,8 +36,8 @@ public class AuthRequestDTO {
     }
 
     @Data @Builder
-    static class UserDTO {
-        private Long id;
+    public static class UserDTO {
+        public Long id;
         private String nickname;
         private String avatar;
         private String instaId;
