@@ -113,7 +113,22 @@ public class ProjectService {
         }
 
         dto.getTechStack().stream().forEach(stack -> project.addTechStack(new ProjectTech(stack)));
-
+//        dto.getProjectPositions().stream().forEach(positions -> if() {
+//
+//        });
+        for (ProjectPositionDTO projectPosition : dto.getProjectPositions()) {
+            if (!position.contains(projectPosition.getPositionName())) {
+                project.addPosition(
+                        ProjectPosition.builder().
+                                currentCnt(projectPosition.getCurrentCnt()).
+                                total(projectPosition.getTotal()).
+                                position(Position.builder().
+                                        positionName(projectPosition.getPositionName()).
+                                        build()).
+                                build()
+                );
+            }
+        }
         if(dto.getStatus() == null) {
             dto.setStatus(project.getStatus());
         }
@@ -122,7 +137,7 @@ public class ProjectService {
         project.changeStartDate(dto.getStartDate());
         project.changeEndDate(dto.getEndDate());
 
-//        fastApiProjectService.updateProject(project);
+        fastApiProjectService.updateProject(project);
 
         return ProjectRequestDTO.entityToDto(project);
     }

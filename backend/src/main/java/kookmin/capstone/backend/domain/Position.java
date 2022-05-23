@@ -25,6 +25,7 @@ public class Position {
 
     public void registProjectPosition(ProjectPosition projectPosition) {
         this.projectPosition = projectPosition;
+
     }
 
 }
