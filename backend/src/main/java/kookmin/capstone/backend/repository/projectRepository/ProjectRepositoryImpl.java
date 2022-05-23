@@ -216,7 +216,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
         List<Project> content = queryFactory
                 .select(project)
                 .from(project)
-                .rightJoin(project.techStack, techStack)
+                .leftJoin(project.techStack, techStack)
                 .fetchJoin()
 //                .leftJoin(project.user, user)
 //                .fetchJoin()
