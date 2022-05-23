@@ -1,4 +1,4 @@
-import { all, fork, put, call, takeLatest } from 'redux-saga/effects';
+import { all, fork, put, call, takeLatest, throttle } from 'redux-saga/effects';
 import axios from 'axios';
 import camelize from 'camelize';
 
@@ -60,7 +60,7 @@ function* projectListLoad(action) {
 }
 
 function* watchProjectListLoad() {
-  yield takeLatest(LOAD_PROJECTLIST_REQUEST, projectListLoad);
+  yield throttle(500, LOAD_PROJECTLIST_REQUEST, projectListLoad);
 }
 
 // 내 프로젝트 페이지 - 프로젝트 불러오기
