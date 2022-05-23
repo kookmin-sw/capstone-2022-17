@@ -25,7 +25,7 @@ import regionOption from './regionOption';
 const Container = styled.div`
   min-width: 600px;
   max-width: 1200px;
-  margin: 2rem auto 5rem auto;
+  margin: 2rem auto 20rem auto;
 `;
 
 const TextBox = styled.div`
@@ -176,14 +176,9 @@ const ProjectList = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    projectList,
-    loadProjectListDone,
-    loadProjectListLoading,
-    currentPage,
-    totalPage,
-    totalElements,
-  } = useSelector((state) => state.projectList);
+  const { projectList, loadProjectListLoading, currentPage, totalPage } = useSelector(
+    (state) => state.projectList,
+  );
 
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const [tech, onChangeTech, setTech] = useInput('');
@@ -223,7 +218,7 @@ const ProjectList = () => {
   useEffect(() => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
-      page: currentPage,
+      page: 1,
       size: SIZE,
       data: {
         field: field === '전체' ? null : [field],
@@ -236,7 +231,7 @@ const ProjectList = () => {
         order,
       },
     });
-  }, [currentPage, field, position, purpose, region, techlist, search, order]);
+  }, [field, position, purpose, region, techlist, search, order]);
 
   useEffect(() => {
     if (tech !== '') {
@@ -258,16 +253,6 @@ const ProjectList = () => {
       size: SIZE,
     });
   }, []);
-
-  useEffect(() => {
-    if (loadProjectListDone) {
-      console.log(projectList);
-    }
-  }, [loadProjectListDone]);
-
-  useEffect(() => {
-    console.log(position, region, purpose, field);
-  }, [position, region, purpose, field]);
 
   return (
     <Container style={!user ? { marginTop: '0' } : null}>
@@ -399,7 +384,7 @@ const ProjectList = () => {
         })}
       </Ct.RowStartContainer>
       {/* 태그 끝 */}
-      <Grid className={loadProjectListLoading ? 'loading' : null}>
+      <Grid className={loadProjectListLoading ? 'loading' : null} style={{ width: '1200px' }}>
         {projectList?.map((project) => {
           return (
             <GridDiv.Column mobile={8} tablet={6} computer={4}>
@@ -412,9 +397,10 @@ const ProjectList = () => {
             </GridDiv.Column>
           );
         })}
+        {projectList?.length === 0 && <Text style={{ margin: '3rem' }}>검색 결과가 없습니다.</Text>}
       </Grid>
-      {totalElements > SIZE && (
-        <CardContainer>
+      <CardContainer>
+        {projectList?.length !== 0 && (
           <Pagination
             activePage={currentPage}
             onPageChange={handlePaginationChange}
@@ -423,8 +409,8 @@ const ProjectList = () => {
             totalPages={totalPage}
             secondary
           />
-        </CardContainer>
-      )}
+        )}
+      </CardContainer>
     </Container>
   );
 };
