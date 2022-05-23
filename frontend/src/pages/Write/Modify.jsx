@@ -136,7 +136,7 @@ const Modify = () => {
   const editorRef = createRef();
   const [title, onChangeTitle] = useInput(project.title);
   const [content, setContent] = useState(project.content);
-  const [position, setPosition] = useState(project.projectPositions);
+  const [position, setPosition] = useState([]);
   const [purpose, setPurpose] = useState(project.purpose);
   const [region, setRegion] = useState(project.region);
   const [startDate, setStartDate] = useState(new Date(project.startDate));
@@ -150,6 +150,11 @@ const Modify = () => {
   useEffect(() => {
     editorRef.current.getInstance().setMarkdown(project.description);
     titleRef.current.focus();
+    const temp = [];
+    project.projectPositions.forEach((pos) => {
+      temp.push({ positionName: pos.positionName, total: pos.total });
+    });
+    setPosition(temp);
   }, []);
 
   useEffect(() => {

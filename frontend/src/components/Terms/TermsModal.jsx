@@ -4,17 +4,17 @@ import { Modal } from 'semantic-ui-react';
 import { lighten } from 'polished';
 import { Viewer } from '@toast-ui/react-editor';
 import './toastui-editor.css';
-
+import COLOR from 'constant/color';
 import Privacy from './Privacy';
 
 export const Label = styled.span`
   cursor: pointer;
   font-family: 'Pr-Medium' !important;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.color.primary};
 
   &:hover {
-    color: ${lighten(0.1, '#797FD4')};
+    color: ${lighten(0.1, COLOR.PRIMARY)};
   }
 `;
 
@@ -28,7 +28,7 @@ function TermsModal() {
       open={open}
       trigger={<Label>개인정보 처리방침</Label>}
     >
-      <Modal.Header style={{ fontFamily: 'NS-EB' }}>개인정보 처리방침</Modal.Header>
+      <Modal.Header style={{ fontFamily: 'Pr-Black' }}>개인정보 처리방침</Modal.Header>
       <Modal.Content scrolling>
         <Modal.Description>
           <Viewer initialValue={Privacy} />

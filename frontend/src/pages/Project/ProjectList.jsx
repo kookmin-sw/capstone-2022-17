@@ -265,7 +265,7 @@ const ProjectList = () => {
       </RecommandContainer>
       <TextBox>
         <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon2.png`} />
-        <Text>&nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
+        <Text>&nbsp; {user && `${user.user.nickname}님!`} 이런 프로젝트는 어떠세요?</Text>
       </TextBox>
       <SearchBox>
         <SelectDiv>
