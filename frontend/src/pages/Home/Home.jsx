@@ -124,7 +124,7 @@ const Home = () => {
                   <Card
                     project={project}
                     key={project.id}
-                    onClick={() => navigate(`project/${project.id}`)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   />
                 );
               })}
@@ -146,7 +146,7 @@ const Home = () => {
                   <Card
                     project={project}
                     key={project.id}
-                    onClick={() => navigate(`project/${project.id}`)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   />
                 );
               })}
@@ -168,7 +168,7 @@ const Home = () => {
                   <Card
                     project={project}
                     key={project.id}
-                    onClick={() => navigate(`project/${project.id}`)}
+                    onClick={() => navigate(`/project/${project.id}`)}
                   />
                 );
               })}

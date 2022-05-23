@@ -68,7 +68,6 @@ const ButtonBox = styled.div`
 
 const LikesBtn = styled.div`
   font-size: 1rem !important;
-  cursor: pointer;
 `;
 
 const FloatingBox = ({ project }) => {

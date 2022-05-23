@@ -403,7 +403,7 @@ const ProjectList = () => {
                 <Card
                   project={project}
                   key={project.id}
-                  onClick={() => navigate(`project/${project.id}`)}
+                  onClick={() => navigate(`/project/${project.id}`)}
                 />
               </GridDiv.Column>
             );
