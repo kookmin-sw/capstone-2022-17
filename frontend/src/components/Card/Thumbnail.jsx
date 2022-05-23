@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   background: white;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 `;
 
 const Img = styled.img`
