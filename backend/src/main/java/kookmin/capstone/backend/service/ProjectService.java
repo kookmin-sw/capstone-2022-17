@@ -151,9 +151,17 @@ public class ProjectService {
     public void addProjectPostionCnt(Position position) throws MemberException {
         ProjectPosition findProjectPosition = projectPositionRepository.findByPosition(position);
         if (findProjectPosition.getCurrentCnt() < findProjectPosition.getTotal()) {
-            findProjectPosition.addCnt();
+            findProjectPosition.increaseCnt();
         } else {
             throw new MemberAddException("포지션 정원이 초과 되었습니다.");
+        }
+    }
+
+    @Transactional
+    public void subProjectPostionCnt(Position position){
+        ProjectPosition findProjectPosition = projectPositionRepository.findByPosition(position);
+        if (findProjectPosition.getCurrentCnt() > 0) {
+            findProjectPosition.decreaseCnt();
         }
     }
 
