@@ -44,12 +44,12 @@ public class MemberService {
 
 
     @Transactional
-    public void addProjectLeader(Long userId, Project project, String leaderPositon) throws MemberException {
+    public void addProjectLeader(Long userId, Project project, String leaderPosition) throws MemberException {
         User findUser = userService.findUserById(userId);
 
         Position findPosition = null;
         for (ProjectPosition projectPosition : project.getPositions()) {
-            if (projectPosition.getPosition().getPositionName().equals(leaderPositon)) {
+            if (projectPosition.getPosition().getPositionName().equals(leaderPosition)) {
                 findPosition = projectPosition.getPosition();
                 break;
             }
@@ -93,7 +93,6 @@ public class MemberService {
                 build();
         member.changeMember(findUser, findProject);
         if (member.getMemberType() == MemberType.INVITED) {
-//            member.notifyChanged(Notification.builder().checked(false).build());
             Notification notify = Notification.builder().checked(false).build();
             notify.setMember(member);
             notificationRepositiory.save(notify);
