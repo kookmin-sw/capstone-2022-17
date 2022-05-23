@@ -12,8 +12,9 @@ public class ProjectSearchCond {
     List<String> positions;
     List<String> techStacks;
     List<String> field;
-    List<String> purpose;;
+    List<String> purpose;
     String region;
     String status;
     String title;
+    String order;
 }

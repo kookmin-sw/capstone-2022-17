@@ -1,5 +1,8 @@
 package kookmin.capstone.backend.repository.projectRepository;
 
+import com.querydsl.core.types.NullExpression;
+import com.querydsl.core.types.Order;
+import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import kookmin.capstone.backend.domain.QProjectTech;
@@ -207,8 +210,10 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                         techContain(condition.getTechStacks()),
                         regionEq(condition.getRegion()),
                         purposeEq(condition.getPurpose()),
-                        positionContain(condition.getPositions())
+                        positionContain(condition.getPositions()),
+                        isProgress(condition.getStatus())
                 )
+                .orderBy(projectSort(pageable, condition.getOrder()))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -221,7 +226,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                         techContain(condition.getTechStacks()),
                         regionEq(condition.getRegion()),
                         purposeEq(condition.getPurpose()),
-                        positionContain(condition.getPositions())
+                        positionContain(condition.getPositions()),
+                        isProgress(condition.getStatus())
                 )
                 .fetchOne();
         List<ProjectDTO> projectDTOList = content.stream().map(e -> ProjectDTO.entityToDto(e, userId)).
@@ -242,7 +248,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     private BooleanExpression purposeEq(List<String> purpose) {
-        return purpose == null ? null : project.field.in(purpose);
+        return purpose == null ? null : project.purpose.in(purpose);
     }
 
     private BooleanExpression positionContain(List<String> positions) {
@@ -254,6 +260,22 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     private BooleanExpression techContain(List<String> techStacks) {
         return techStacks == null ? null :
                 project.techStack.any().stack.in(techStacks);
+    }
+
+    private BooleanExpression isProgress(String status) {
+        return isEmpty(status) ? null : project.status.eq(ProjectStatus.IN_PROGRESS);
+    }
+
+    private OrderSpecifier<?> projectSort(Pageable page, String order) {
+        if(!isEmpty(order)) {
+            switch(order) {
+                case "score":
+                    return new OrderSpecifier(Order.DESC, project.score);
+                case "latest":
+                    return new OrderSpecifier(Order.DESC, project.createdAt);
+            }
+        }
+        return new OrderSpecifier(Order.ASC, NullExpression.DEFAULT, OrderSpecifier.NullHandling.Default);
     }
 
     @Override
