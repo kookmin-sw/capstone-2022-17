@@ -11,6 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: -3.5rem;
+  margin-bottom: ${(props) => !props.isSign && '5rem'};
 `;
 
 const ContentContainer = styled.div`
@@ -102,7 +103,7 @@ const Home = () => {
   });
 
   return (
-    <Container>
+    <Container isSign={user}>
       <Banner src={`${process.env.PUBLIC_URL}/images/home/bannerImg.png`} />
       <ContentContainer>
         {user && (
@@ -147,7 +148,7 @@ const Home = () => {
                     project={project}
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
-                    isTwo
+                    isTwo={user}
                   />
                 );
               })}
@@ -170,6 +171,7 @@ const Home = () => {
                     project={project}
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
+                    isTwo={!user}
                   />
                 );
               })}
