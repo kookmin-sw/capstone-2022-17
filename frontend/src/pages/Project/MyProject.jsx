@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
   width: 100vw;
   max-width: 1200px;
-  margin: 2rem auto 5rem auto;
+  margin: 2rem auto 10rem auto;
 `;
 
 const CardContainer = styled.div`

@@ -25,7 +25,7 @@ import regionOption from './regionOption';
 const Container = styled.div`
   min-width: 600px;
   max-width: 1200px;
-  margin: 2rem auto 20rem auto;
+  margin: 2rem auto 10rem auto;
 `;
 
 const TextBox = styled.div`
