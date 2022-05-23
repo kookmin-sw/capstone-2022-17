@@ -38,7 +38,7 @@ const tempProject = {
   title: '테스트 프로젝트',
   likes: '3',
   description: 'kdkdkdk',
-  techStack: ['1', '2'],
+  techStack: [{ stack: '11111' }, { stack: '22222222' }],
 };
 
 const LeftRecoCard = () => {
@@ -47,7 +47,7 @@ const LeftRecoCard = () => {
       <LeftRecoThumbnail img={tempProject.thumbnail} />
       <Title>
         <RecoCardName cardName={tempProject.title} />
-        <Likes likesNum={tempProject.likes} />
+        <Likes project={tempProject} />
       </Title>
       <RecoContent content={tempProject.description} />
       <TagDiv>

@@ -36,16 +36,16 @@ const LikesViews = styled.div`
 const Card = ({ project, onClick }) => {
   return (
     <Container onClick={onClick}>
-      <Thumbnail img={project.thumbnail} />
+      <Thumbnail img={project?.thumbnail} />
       <Content>
-        {project.techStack &&
-          project.techStack.map((tech) => {
+        {project?.techStack &&
+          project?.techStack.map((tech) => {
             return <Tag techName={tech.stack} />;
           })}
-        <CardName cardName={project.title} />
+        <CardName cardName={project?.title} />
         <LikesViews>
-          <Likes likesNum={project.likes} />
-          <Views viewsNum={project.views} />
+          <Likes project={project} />
+          <Views viewsNum={project?.views} />
         </LikesViews>
       </Content>
     </Container>

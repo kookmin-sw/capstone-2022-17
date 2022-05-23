@@ -7,7 +7,7 @@ const Img = styled.img`
   width: 40rem;
   object-fit: cover;
   border-radius: 1rem;
-  height: 13rem;
+  height: 15rem;
 `;
 
 const LeftRecoThumbnail = ({ img }) => {

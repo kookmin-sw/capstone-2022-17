@@ -108,7 +108,7 @@ const FloatingBox = ({ project }) => {
       </ContentBox>
       <ButtonBox>
         <LikesBtn>
-          <Likes likesNum={project.likes} />
+          <Likes project={project} />
         </LikesBtn>
         {user && <ApplyBtn project={project} />}
       </ButtonBox>

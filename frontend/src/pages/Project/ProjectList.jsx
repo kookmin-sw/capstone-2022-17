@@ -7,7 +7,7 @@ import { LOAD_PROJECTLIST_REQUEST, SIZE } from 'reducers/projectList';
 import useInput from 'hooks/useInput';
 
 import styled from 'styled-components';
-import { Form, Icon, Grid, Search, Label, Input } from 'semantic-ui-react';
+import { Form, Icon, Grid, Search, Label, Input, Pagination } from 'semantic-ui-react';
 
 import Card from 'components/Card/Card';
 import LeftRecoCard from 'components/Projects/ProjectList/LeftRecoCard/LeftRecoCard';
@@ -127,6 +127,11 @@ const Tag = styled(Label)`
   margin-bottom: 0.4rem !important;
 `;
 
+const CardContainer = styled.div`
+  text-align: center;
+  margin: 2rem 0;
+`;
+
 const resultRenderer = ({ stack }) => <div>{stack}</div>;
 
 const ProjectList = () => {
@@ -135,13 +140,14 @@ const ProjectList = () => {
   const [region, setRegion] = useState('전체');
   const [field, setField] = useState('전체');
   const [search, onChangeSearch] = useInput('');
-  // const [filterData, setFilterData] = useState({});
+  const [order, setOrder] = useState('latest');
 
-  // const { user } = useSelector((state) => state.authentication);
+  const { user } = useSelector((state) => state.authentication);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projectList, loadProjectListDone } = useSelector((state) => state.projectList);
-  const [content, setContent] = useState([]);
+  const { projectList, loadProjectListDone, currentPage, totalPage, totalElements } = useSelector(
+    (state) => state.projectList,
+  );
 
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const [tech, onChangeTech, setTech] = useInput('');
@@ -160,6 +166,42 @@ const ProjectList = () => {
     setTechlist(techlist.filter((value, index) => index !== idx));
   };
 
+  const handlePaginationChange = (e, { activePage }) => {
+    dispatch({
+      type: LOAD_PROJECTLIST_REQUEST,
+      page: activePage,
+      size: SIZE,
+      data: {
+        field: field === '전체' ? null : [field],
+        positions: position === '전체' ? null : [position],
+        purpose: purpose === '전체' ? null : [purpose],
+        region: region === '전체' ? null : [region],
+        status: 'PROGRESS',
+        techStacks: techlist,
+        title: search,
+        order,
+      },
+    });
+  };
+
+  useEffect(() => {
+    dispatch({
+      type: LOAD_PROJECTLIST_REQUEST,
+      page: currentPage,
+      size: SIZE,
+      data: {
+        field: field === '전체' ? null : [field],
+        positions: position === '전체' ? null : [position],
+        purpose: purpose === '전체' ? null : [purpose],
+        region: region === '전체' ? null : [region],
+        status: 'PROGRESS',
+        techStacks: techlist,
+        title: search,
+        order,
+      },
+    });
+  }, [currentPage, field, position, purpose, region, techlist, search, order]);
+
   useEffect(() => {
     if (tech !== '') {
       dispatch({
@@ -173,13 +215,8 @@ const ProjectList = () => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
       data: {
-        field: [field],
-        positions: [position],
-        purpose: [purpose],
-        region,
         status: 'PROGRESS',
-        techStacks: techlist,
-        title: search,
+        order: 'latest',
       },
       page: 1,
       size: SIZE,
@@ -189,7 +226,6 @@ const ProjectList = () => {
   useEffect(() => {
     if (loadProjectListDone) {
       console.log(projectList);
-      setContent([]);
     }
   }, [loadProjectListDone]);
 
@@ -201,7 +237,7 @@ const ProjectList = () => {
     <Container>
       <TextBox>
         <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon1.png`} />
-        <Text>&nbsp; 구예진님에게 어울리는 프로젝트</Text>
+        <Text>&nbsp; {user?.user.nickname}님에게 어울리는 프로젝트</Text>
       </TextBox>
       <RecoBox>
         <LeftRecoBox>
@@ -215,7 +251,7 @@ const ProjectList = () => {
       </RecoBox>
       <TextBox>
         <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon2.png`} />
-        <Text>&nbsp; 구예진님! 이런 프로젝트는 어떠세요?</Text>
+        <Text>&nbsp; {user?.user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
       </TextBox>
       <SearchBox>
         <SelectDiv>
@@ -285,8 +321,15 @@ const ProjectList = () => {
           <SearchMiniDiv>
             <Select fluid style={{ visibility: 'hidden' }} />
           </SearchMiniDiv>
-          <SearchMiniDiv>
-            <Select fluid style={{ visibility: 'hidden' }} />
+          <SearchMiniDiv style={{ display: 'flex', flexDirection: 'column-reverse' }}>
+            <SortDiv>
+              <Sort order={order === 'latest'} onClick={() => setOrder('latest')}>
+                최신순
+              </Sort>
+              <Sort order={order === 'score'} onClick={() => setOrder('score')}>
+                인기순
+              </Sort>
+            </SortDiv>
           </SearchMiniDiv>
         </SearchDiv>
       </SearchBox>
@@ -302,23 +345,34 @@ const ProjectList = () => {
         })}
       </Ct.RowStartContainer>
       {/* 태그 끝 */}
-      <SortDiv>
-        <Sort>최신순</Sort>
-        <Sort>인기순</Sort>
-      </SortDiv>
-      <Grid>
-        <GridDiv.Column mobile={8} tablet={6} computer={4}>
-          {content.map((project) => {
+
+      {loadProjectListDone && (
+        <Grid>
+          {projectList?.map((project) => {
             return (
-              <Card
-                project={project}
-                key={project.id}
-                onClick={() => navigate(`project/${project.id}`)}
-              />
+              <GridDiv.Column mobile={8} tablet={6} computer={4}>
+                <Card
+                  project={project}
+                  key={project.id}
+                  onClick={() => navigate(`project/${project.id}`)}
+                />
+              </GridDiv.Column>
             );
           })}
-        </GridDiv.Column>
-      </Grid>
+        </Grid>
+      )}
+      {totalElements > SIZE && (
+        <CardContainer>
+          <Pagination
+            activePage={currentPage}
+            onPageChange={handlePaginationChange}
+            size="mini"
+            siblingRange={2}
+            totalPages={totalPage}
+            secondary
+          />
+        </CardContainer>
+      )}
     </Container>
   );
 };

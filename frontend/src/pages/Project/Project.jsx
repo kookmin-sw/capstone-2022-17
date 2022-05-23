@@ -90,7 +90,7 @@ const Project = () => {
             <InfoBox>
               <Leader leaderNickName={project.leaderNickName} userId={project.userId} />
               <IconBox>
-                <Likes likesNum={project.likes} />
+                <Likes project={project} />
                 <Views viewsNum={project.views} />
               </IconBox>
             </InfoBox>

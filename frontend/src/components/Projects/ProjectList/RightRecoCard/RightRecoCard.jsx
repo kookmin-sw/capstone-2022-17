@@ -39,6 +39,8 @@ const TagDiv = styled.div`
   padding: 0rem 0 0rem 1rem;
 `;
 
+const project = null;
+
 const RightRecoCard = () => {
   return (
     <Container>
@@ -46,7 +48,7 @@ const RightRecoCard = () => {
       <Content>
         <Title>
           <RightRecoCardName>프로젝트 제목</RightRecoCardName>
-          <Likes>100</Likes>
+          <Likes project={project} />
         </Title>
         <RightRecoContent>
           {' '}

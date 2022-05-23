@@ -69,7 +69,7 @@ export const reducer = (state = initialState, action) =>
       case LOAD_PROJECTLIST_SUCCESS:
         draft.loadProjectListLoading = false;
         draft.loadProjectListDone = true;
-        draft.projectList = action.data;
+        draft.projectList = action.data.content;
         draft.totalPage = action.data.totalPages;
         draft.currentPage = action.data.pageable.pageNumber + 1;
         draft.totalElements = action.data.totalElements;

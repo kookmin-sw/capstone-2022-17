@@ -14,6 +14,12 @@ export const initialState = {
   updateProjectLoading: false,
   updateProjectDone: false,
   updateProjectError: null,
+  likeProjectLoading: false,
+  likeProjectDone: false,
+  likeProjectError: null,
+  destroyLikeProjectLoading: false,
+  destroyLikeProjectDone: false,
+  destroyLikeProjectError: null,
 };
 
 export const ADD_PROJECT_REQUEST = 'ADD_PROJECT_REQUEST';
@@ -31,6 +37,14 @@ export const DESTROY_PROJECT_FAILURE = 'DESTROY_PROJECT_FAILURE';
 export const UPDATE_PROJECT_REQUEST = 'UPDATE_PROJECT_REQUEST';
 export const UPDATE_PROJECT_SUCCESS = 'UPDATE_PROJECT_SUCCESS';
 export const UPDATE_PROJECT_FAILURE = 'UPDATE_PROJECT_FAILURE';
+
+export const LIKE_PROJECT_REQUEST = 'LIKE_PROJECT_REQUEST';
+export const LIKE_PROJECT_SUCCESS = 'LIKE_PROJECT_SUCCESS';
+export const LIKE_PROJECT_FAILURE = 'LIKE_PROJECT_FAILURE';
+
+export const DESTROY_LIKE_PROJECT_REQUEST = 'DESTROY_LIKE_PROJECT_REQUEST';
+export const DESTROY_LIKE_PROJECT_SUCCESS = 'DESTROY_LIKE_PROJECT_SUCCESS';
+export const DESTROY_LIKE_PROJECT_FAILURE = 'DESTROY_LIKE_PROJECT_FAILURE';
 
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
@@ -88,6 +102,32 @@ export const reducer = (state = initialState, action) =>
       case UPDATE_PROJECT_FAILURE:
         draft.updateProjectLoading = false;
         draft.updateProjectError = action.error;
+        break;
+      case LIKE_PROJECT_REQUEST:
+        draft.likeProjectLoading = true;
+        draft.likeProjectDone = false;
+        draft.likeProjectError = null;
+        break;
+      case LIKE_PROJECT_SUCCESS:
+        draft.likeProjectLoading = false;
+        draft.likeProjectDone = true;
+        break;
+      case LIKE_PROJECT_FAILURE:
+        draft.likeProjectLoading = false;
+        draft.likeProjectError = action.error;
+        break;
+      case DESTROY_LIKE_PROJECT_REQUEST:
+        draft.destroyLikeProjectLoading = true;
+        draft.destroyLikeProjectDone = false;
+        draft.destroyLikeProjectError = null;
+        break;
+      case DESTROY_LIKE_PROJECT_SUCCESS:
+        draft.destroyLikeProjectLoading = false;
+        draft.destroyLikeProjectDone = true;
+        break;
+      case DESTROY_LIKE_PROJECT_FAILURE:
+        draft.destroyLikeProjectLoading = false;
+        draft.destroyLikeProjectError = action.error;
         break;
       default:
         break;
