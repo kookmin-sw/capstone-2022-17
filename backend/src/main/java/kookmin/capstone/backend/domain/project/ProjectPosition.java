@@ -47,4 +47,9 @@ public class ProjectPosition {
         iter.remove();
         this.position = null;
     }
+
+    public void addPosition(Position position) {
+        this.position = position;
+        position.registProjectPosition(this);
+    }
 }
