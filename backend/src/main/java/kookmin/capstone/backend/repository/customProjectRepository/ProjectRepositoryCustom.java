@@ -25,4 +25,6 @@ public interface ProjectRepositoryCustom {
     Page<ProjectDTO> done(Pageable pageable, Long userId);
 
     List<UserResDTO> getCandidateUser(Long projectId, Long userId);
+
+    List<String> participated(Long userId);
 }
