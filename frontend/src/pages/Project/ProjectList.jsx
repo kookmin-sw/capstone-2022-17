@@ -176,9 +176,14 @@ const ProjectList = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projectList, loadProjectListDone, currentPage, totalPage, totalElements } = useSelector(
-    (state) => state.projectList,
-  );
+  const {
+    projectList,
+    loadProjectListDone,
+    loadProjectListLoading,
+    currentPage,
+    totalPage,
+    totalElements,
+  } = useSelector((state) => state.projectList);
 
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const [tech, onChangeTech, setTech] = useInput('');
@@ -394,22 +399,20 @@ const ProjectList = () => {
         })}
       </Ct.RowStartContainer>
       {/* 태그 끝 */}
-
-      {loadProjectListDone && (
-        <Grid>
-          {projectList?.map((project) => {
-            return (
-              <GridDiv.Column mobile={8} tablet={6} computer={4}>
-                <Card
-                  project={project}
-                  key={project.id}
-                  onClick={() => navigate(`/project/${project.id}`)}
-                />
-              </GridDiv.Column>
-            );
-          })}
-        </Grid>
-      )}
+      <Grid className={loadProjectListLoading ? 'loading' : null}>
+        {projectList?.map((project) => {
+          return (
+            <GridDiv.Column mobile={8} tablet={6} computer={4}>
+              <Card
+                loading={loadProjectListLoading}
+                project={project}
+                key={project.id}
+                onClick={() => navigate(`/project/${project.id}`)}
+              />
+            </GridDiv.Column>
+          );
+        })}
+      </Grid>
       {totalElements > SIZE && (
         <CardContainer>
           <Pagination
