@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface PositionRepository extends JpaRepository<Position, Long> {
 
     Optional<Position> findById(Long id);
+
+    void deleteById(Long id);
 }

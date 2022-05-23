@@ -6,18 +6,15 @@ import kookmin.capstone.backend.dto.authDTO.AuthRequestDTO;
 import kookmin.capstone.backend.dto.authDTO.response.*;
 import kookmin.capstone.backend.dto.authDTO.LoginDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
-import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.exception.authException.ExistNicknameException;
 import kookmin.capstone.backend.exception.authException.ExistUserException;
 import kookmin.capstone.backend.exception.authException.PasswordException;
-import kookmin.capstone.backend.service.FastApiService;
+import kookmin.capstone.backend.service.FastApiUserService;
 import kookmin.capstone.backend.service.jwt.JwtTokenService;
-import kookmin.capstone.backend.repository.UserRepository;
 import kookmin.capstone.backend.service.UserService;
 import lombok.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +35,6 @@ public class AuthApiController {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenService jwtTokenService;
     private final UserService userService;
-    private final FastApiService fastApiService;
 
     // 회원가입
     @PostMapping("/join")
@@ -71,7 +67,6 @@ public class AuthApiController {
             return ResponseEntity.badRequest().body(new ErrorResponse("404", "Validation failure", e.getMessage()));
         }
         AuthRequestDTO user = userService.join(signupDTO);
-        fastApiService.createUser(user);
         return ResponseEntity.ok(user);
     }
 

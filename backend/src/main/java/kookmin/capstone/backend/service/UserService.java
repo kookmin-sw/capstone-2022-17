@@ -35,6 +35,8 @@ public class UserService {
     private final UserTechRepository userTechRepository;
     private final UserPositionRepository userPositionRepository;
     private final JwtTokenService jwtTokenService;
+    private final FastApiUserService fastApiUserService;
+
 
     @Transactional
     public AuthRequestDTO join(SignupDTO signupDTO) {
@@ -45,7 +47,9 @@ public class UserService {
                 .roles(Collections.singletonList("ROLE_USER")) // 최초 가입시 USER 로 설정
                 .build());
         String token = jwtTokenService.createToken(user.getEmail(), user.getId(), user.getRoles());
-        return AuthRequestDTO.entityToDto(user, token);
+        AuthRequestDTO authRequestDTO = AuthRequestDTO.entityToDto(user, token);
+        fastApiUserService.createUser(authRequestDTO);
+        return authRequestDTO;
     }
 
     @Transactional

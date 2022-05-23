@@ -1,29 +1,23 @@
 package kookmin.capstone.backend.service;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import kookmin.capstone.backend.domain.user.User;
-import kookmin.capstone.backend.domain.user.UserPosition;
 import kookmin.capstone.backend.dto.authDTO.AuthRequestDTO;
 import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.digester.ArrayStack;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StopWatch;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import javax.persistence.*;
 import java.time.Duration;
 import java.util.*;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class FastApiService {
+public class FastApiUserService {
 
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(1);
 
@@ -63,7 +57,6 @@ public class FastApiService {
     }
 
     public void createUser(AuthRequestDTO user) {
-
 
         UserRes userRes = UserRes.builder().
                 user_id(user.getUser().getId().toString()).
@@ -111,6 +104,8 @@ public class FastApiService {
                 .retrieve()
                 .bodyToMono(UserRes.class).block(REQUEST_TIMEOUT);
     }
+
+
 
     @Data @Builder
     @ToString @NoArgsConstructor

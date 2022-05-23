@@ -1,12 +1,14 @@
 package kookmin.capstone.backend.domain.project;
 
 import kookmin.capstone.backend.domain.Position;
+import kookmin.capstone.backend.domain.user.UserTech;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Iterator;
 
 @Entity
 @Getter @Builder
@@ -21,7 +23,7 @@ public class ProjectPosition {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "projectPosition")
     private Position position;
 
@@ -39,5 +41,10 @@ public class ProjectPosition {
 
     public void decreaseCnt() {
         this.currentCnt--;
+    }
+
+    public void deleteTech(Iterator<ProjectPosition> iter) {
+        iter.remove();
+        this.position = null;
     }
 }
