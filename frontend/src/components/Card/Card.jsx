@@ -10,7 +10,7 @@ const Container = styled.div`
   font-family: 'Pr-Regular';
   color: #888888;
 
-  background-color: white;
+  background-color: #f8f9fa;
 
   width: 14rem;
   border-radius: 1rem;
