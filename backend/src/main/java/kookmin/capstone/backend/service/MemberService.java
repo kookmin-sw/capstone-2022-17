@@ -36,6 +36,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final UserService userService;
     private final ProjectService projectService;
+    private final FastApiUserService fastApiUserService;
     private final NotificationRepositiory notificationRepositiory;
 
     public Member findMember(Long projectId, Long userId) {
@@ -62,6 +63,7 @@ public class MemberService {
                 position(findPosition).
                 build();
         Member savedMember = memberRepository.save(member);
+        fastApiUserService.updateUserProject(userId);
         projectService.addProjectPostionCnt(savedMember.getPosition());
 
     }
@@ -111,6 +113,7 @@ public class MemberService {
             projectService.addProjectPostionCnt(findMember.getPosition());
         }
         findMember.updateMember(MemberType.MEMBER);
+        fastApiUserService.updateUserProject(findMember.getUser().getId());
         //TODO 승인 알림 처리
 //        findMember.notifyChanged(Notification.builder().checked(false).build());
         MemberResDTO memberResDTO = MemberResDTO.builder().
