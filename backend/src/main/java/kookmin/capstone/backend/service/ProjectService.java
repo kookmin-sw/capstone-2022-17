@@ -264,7 +264,7 @@ public class ProjectService {
         Map<String, List<ProjectDTO>> mainProject = new HashMap<String, List<ProjectDTO>>();
         mainProject.put("topScore", projectRepository.getTopByScore(userId));
         mainProject.put("topLatest", projectRepository.getTopByCreated(userId));
-        List<ProjectDTO> recommend = projectRepository.findRecommend(fastApiUserService.getRecommandProject(userId, 4))
+        List<ProjectDTO> recommend = projectRepository.findRecommend(fastApiUserService.getRecommendProject(userId, 4))
                 .stream().map(e -> ProjectDTO.entityToDto(e, userId)).collect(Collectors.toCollection(ArrayList::new));
         mainProject.put("recommend", recommend);
         return mainProject;
