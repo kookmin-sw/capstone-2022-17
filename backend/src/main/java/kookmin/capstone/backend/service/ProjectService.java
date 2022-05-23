@@ -9,6 +9,7 @@ import kookmin.capstone.backend.domain.project.ProjectLike;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.domain.user.UserTech;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
@@ -20,15 +21,20 @@ import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.repository.MemberRepository;
+import kookmin.capstone.backend.repository.PositionRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectLikeRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectPositionRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectRepository;
 import kookmin.capstone.backend.repository.projectRepository.ProjectTechRepository;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -36,17 +42,21 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.thymeleaf.util.StringUtils.isEmpty;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProjectService {
 
     private final UserService userService;
+    private final FastApiProjectService fastApiProjectService;
 
     private final ProjectRepository projectRepository;
     private final ProjectTechRepository projectTechRepository;
     private final ProjectPositionRepository projectPositionRepository;
     private final ProjectLikeRepository projectLikeRepository;
+    private final PositionRepository positionRepository;
 
     private final MemberRepository memberRepository;
 
@@ -67,6 +77,7 @@ public class ProjectService {
         Project project = dtoToToEntity(dto);
         project.initScore();
         Project saveProject = projectRepository.save(project);
+        fastApiProjectService.createProject(project);
 
         return saveProject;
     }
@@ -81,18 +92,37 @@ public class ProjectService {
         for (ProjectTech projectTech : result) {
             if (!dto.getTechStack().contains(projectTech.getStack())) {
                 projectTechRepository.deleteById(projectTech.getId());
+                project.getTechStack().remove(projectTech);
             } else {
                 dto.getTechStack().remove(projectTech.getStack());
             }
         }
 
+        List<String> position = dto.getProjectPositions().stream().map(e -> e.getPositionName()).collect(Collectors.toCollection(ArrayList::new));
+        List<ProjectPosition> savedPosition = project.getPositions();
+        Iterator<ProjectPosition> iter = savedPosition.iterator();
+        while(iter.hasNext()) {
+            ProjectPosition projectPosition = iter.next();
+            if (!position.contains(projectPosition.getPosition().getPositionName())) {
+                projectPosition.deleteTech(iter);
+//                positionRepository.deleteById(positionDTO.getId());
+                projectPositionRepository.deleteById(projectPosition.getId());
+            } else {
+                position.remove(projectPosition.getPosition());
+            }
+        }
+
         dto.getTechStack().stream().forEach(stack -> project.addTechStack(new ProjectTech(stack)));
 
-
+        if(dto.getStatus() == null) {
+            dto.setStatus(project.getStatus());
+        }
         project.chageProject(dto.getDescription(), dto.getThumbnail(), dto.getStatus(),
                 dto.getTitle(), dto.getPurpose(), dto.getField(), dto.getRegion());
         project.changeStartDate(dto.getStartDate());
         project.changeEndDate(dto.getEndDate());
+
+//        fastApiProjectService.updateProject(project);
 
         return ProjectRequestDTO.entityToDto(project);
     }
