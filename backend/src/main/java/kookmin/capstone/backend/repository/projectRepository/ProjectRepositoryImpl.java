@@ -202,8 +202,8 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
                 .from(project)
                 .rightJoin(project.techStack, techStack)
                 .fetchJoin()
-                .leftJoin(project.user, user)
-                .fetchJoin()
+//                .leftJoin(project.user, user)
+//                .fetchJoin()
                 .distinct()
                 .where(titleContain(condition.getTitle()),
                         fieldEq(condition.getField()),
