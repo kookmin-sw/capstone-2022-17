@@ -193,6 +193,22 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     @Override
+    public List<String> participated(Long userId) {
+        List<Project> content = queryFactory
+                .select(project)
+                .from(project)
+                .rightJoin(project.members, member)
+                .fetchJoin()
+                .distinct()
+                .where(member.memberType.eq(MemberType.MEMBER).
+                                or(member.memberType.eq(MemberType.LEADER)),
+                        member.user.id.eq(userId))
+                .fetch();
+
+        return content.stream().map(e -> e.getId().toString()).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    @Override
     public Page<ProjectDTO> search(ProjectSearchCond condition, Pageable pageable, Long userId) {
         QProjectTech techStack = projectTech;
         QProject project = QProject.project;

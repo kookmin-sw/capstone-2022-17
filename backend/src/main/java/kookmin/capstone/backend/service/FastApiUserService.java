@@ -3,6 +3,7 @@ package kookmin.capstone.backend.service;
 import kookmin.capstone.backend.dto.authDTO.AuthRequestDTO;
 import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
+import kookmin.capstone.backend.repository.projectRepository.ProjectRepository;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -22,6 +23,8 @@ public class FastApiUserService {
     private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(1);
 
     private final WebClient fastApiClient = WebClient.create("http://54.87.37.39/user");
+
+    private final ProjectRepository projectRepository;
 
     public String getMemberName(Long user_id) {
         Flux<UserRes> user = fastApiClient.get()
@@ -98,6 +101,22 @@ public class FastApiUserService {
                 build();
 
         UserRes block = fastApiClient.post()
+                .uri("/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(userRes), UserRes.class)
+                .retrieve()
+                .bodyToMono(UserRes.class).block(REQUEST_TIMEOUT);
+    }
+
+    public void updateUserProject(Long userId) {
+        List<String> participated = projectRepository.participated(userId);
+
+        UserRes userRes = UserRes.builder().
+                user_id(userId.toString()).
+                previous_project(participated).
+                build();
+
+        UserRes block = fastApiClient.patch()
                 .uri("/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(userRes), UserRes.class)
