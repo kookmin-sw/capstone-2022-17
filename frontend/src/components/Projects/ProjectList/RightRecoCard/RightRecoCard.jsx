@@ -9,7 +9,7 @@ import RightRecoCardName from './RightRecoCardName';
 const Container = styled.div`
   display: flex;
   font-family: 'Pr-Regular';
-  background-color: white;
+  background-color: #f8f9fa;
 
   width: 30rem;
   border-radius: 1rem;

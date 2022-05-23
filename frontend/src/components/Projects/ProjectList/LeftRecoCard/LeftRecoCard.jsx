@@ -9,7 +9,7 @@ import LeftRecoThumbnail from './LeftRecoThumbnail';
 const Container = styled.div`
   font-family: 'Pr-Regular';
 
-  background-color: white;
+  background-color: #f8f9fa;
 
   width: 40rem;
   border-radius: 1rem;
