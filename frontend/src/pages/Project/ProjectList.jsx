@@ -53,7 +53,6 @@ const RecoBox = styled.div`
 const LeftRecoBox = styled.div`
   display: flex;
   margin: 0 1rem 1rem auto;
-  border-bottom: 1px solid #d5d5d5;
 `;
 
 const RightRecoBox = styled.div`

@@ -114,15 +114,18 @@ const Setting = () => {
             <Menu onClick={handleDelete}>글 삭제</Menu>
           </Container.AlignCenterContainer>
           <MemberContainer style={state !== '멤버 지원승인' ? { display: 'none' } : null}>
-            {loadCandidateDone &&
-              memberList.map((member, index) => {
+            {loadCandidateDone && memberList?.length === 0 ? (
+              <Title>지원자가 없습니다</Title>
+            ) : (
+              memberList?.map((member, index) => {
                 return (
                   <>
                     <Applicant key={member.userId} project={project} user={member} />
                     {index === memberList.length && <Divider style={{ width: '100%' }} />}
                   </>
                 );
-              })}
+              })
+            )}
           </MemberContainer>
           <MemberContainer style={state !== '추천멤버 조회' ? { display: 'none' } : null}>
             <Suggestion />

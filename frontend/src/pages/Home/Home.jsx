@@ -147,6 +147,7 @@ const Home = () => {
                     project={project}
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
+                    isTwo
                   />
                 );
               })}

@@ -47,8 +47,14 @@ const GridDiv = styled(Grid.Column)`
 
 const MyProject = () => {
   const dispatch = useDispatch();
-  const { myCurrentPage, myTotalPage, myProjectList, myTotalElements, loadMyProjectListDone } =
-    useSelector((state) => state.projectList);
+  const {
+    myCurrentPage,
+    myTotalPage,
+    myProjectList,
+    myTotalElements,
+    loadMyProjectListDone,
+    loadMyProjectListLoading,
+  } = useSelector((state) => state.projectList);
   const [status, setStatus] = useState('PROGRESS');
 
   useEffect(() => {
@@ -95,7 +101,7 @@ const MyProject = () => {
         </TextContainer>
       ) : (
         <Ct.ColumnMiddleContainer>
-          <GridContainer>
+          <GridContainer className={loadMyProjectListLoading ? 'loading' : null}>
             {myProjectList.map((project) => {
               return (
                 <GridDiv tablet={6} computer={4}>
