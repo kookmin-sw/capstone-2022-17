@@ -14,6 +14,9 @@ import {
   UPDATE_USERTECH_REQUEST,
   UPDATE_USERTECH_SUCCESS,
   UPDATE_USERTECH_FAILURE,
+  RECOMMEND_USER_REQUEST,
+  RECOMMEND_USER_SUCCESS,
+  RECOMMEND_USER_FAILURE,
 } from 'reducers/user';
 import authHeader from './auth-header';
 
@@ -106,11 +109,35 @@ function* watchUserUpdate() {
   yield takeLatest(UPDATE_USER_REQUEST, UpdateUser);
 }
 
+const recommendUserAPI = (id) =>
+  axios.get(`/user/recommend?projectId=${id}`, { headers: authHeader() });
+
+function* recommendUser(action) {
+  try {
+    const result = yield call(recommendUserAPI, action.id);
+    yield put({
+      type: RECOMMEND_USER_SUCCESS,
+      data: result.data.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: RECOMMEND_USER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchRecommendUser() {
+  yield takeLatest(RECOMMEND_USER_REQUEST, recommendUser);
+}
+
 export default function* user() {
   yield all([
     fork(watchUserPositionUpdate),
     fork(watchUserTechUpdate),
     fork(watchUserLoad),
     fork(watchUserUpdate),
+    fork(watchRecommendUser),
   ]);
 }

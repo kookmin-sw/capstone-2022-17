@@ -7,9 +7,10 @@ import { DESTROY_PROJECT_REQUEST, LOAD_PROJECT_REQUEST } from 'reducers/project'
 import * as Container from 'components/common/Containers';
 import COLOR from 'constant/color';
 import Applicant from 'components/Setting/Applicant';
-import Suggestion from 'components/Setting/Suggestion';
+// import Suggestion from 'components/Setting/Suggestion';
 
 import { LOAD_CANDIDATE_REQUEST } from 'reducers/member';
+import { RECOMMEND_USER_REQUEST } from 'reducers/user';
 
 const SettingContainer = styled(Container.ColumnStartContainer)`
   max-width: 1200px;
@@ -59,6 +60,10 @@ const Setting = () => {
     });
     dispatch({
       type: LOAD_CANDIDATE_REQUEST,
+      id,
+    });
+    dispatch({
+      type: RECOMMEND_USER_REQUEST,
       id,
     });
   }, []);
@@ -128,11 +133,7 @@ const Setting = () => {
             )}
           </MemberContainer>
           <MemberContainer style={state !== '추천멤버 조회' ? { display: 'none' } : null}>
-            <Suggestion />
-            <Divider style={{ width: '100%' }} />
-            <Suggestion />
-            <Divider style={{ width: '100%' }} />
-            <Suggestion />
+            {/* <Suggestion /> */}
           </MemberContainer>
         </>
       )}
