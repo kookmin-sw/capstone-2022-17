@@ -86,7 +86,7 @@ public class FastApiUserService {
                 user_id(userDTO.getId().toString()).
                 position_score(position_score).
                 build();
-        UserRes block = fastApiClient.post()
+        UserRes block = fastApiClient.patch()
                 .uri("/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(userRes), UserRes.class)
@@ -102,7 +102,7 @@ public class FastApiUserService {
                 tech_stack(userTechList).
                 build();
 
-        UserRes block = fastApiClient.post()
+        UserRes block = fastApiClient.patch()
                 .uri("/update")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(userRes), UserRes.class)
@@ -126,7 +126,7 @@ public class FastApiUserService {
                 .bodyToMono(UserRes.class).block(REQUEST_TIMEOUT);
     }
 
-    public List<Long> getRecommandProject(Long userId, int num) {
+    public List<Long> getRecommendProject(Long userId, int num) {
         String[] block = fastApiClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/recommend")

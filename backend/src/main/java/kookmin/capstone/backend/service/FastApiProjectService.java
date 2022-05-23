@@ -2,8 +2,6 @@ package kookmin.capstone.backend.service;
 
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
-import kookmin.capstone.backend.dto.authDTO.AuthRequestDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -14,6 +12,7 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -89,6 +88,19 @@ public class FastApiProjectService {
         log.info("project_id: " + block.project_id);
     }
 
+    public List<Long> getRecommendUser(Long projectId, int num) {
+        String[] block = fastApiClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/recommend")
+                                .queryParam("pid", projectId)
+                                .queryParam("num", num)
+                                .build())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(String[].class).block(REQUEST_TIMEOUT);
+
+        return Stream.of(block).map(e -> Long.parseLong(e)).collect(Collectors.toCollection(ArrayList::new));
+    }
 
 
     @Data

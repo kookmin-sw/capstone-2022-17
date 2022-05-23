@@ -27,6 +27,6 @@ public class TempController {
 
     @GetMapping("/fastApi/project")
     public void project(@RequestParam Long userId, @RequestParam int num) {
-        fastApiUserService.getRecommandProject(userId, num);
+        fastApiUserService.getRecommendProject(userId, num);
     }
 }

@@ -35,8 +35,9 @@ public class UserService {
     private final UserTechRepository userTechRepository;
     private final UserPositionRepository userPositionRepository;
     private final JwtTokenService jwtTokenService;
-    private final FastApiUserService fastApiUserService;
 
+    private final FastApiUserService fastApiUserService;
+    private final FastApiProjectService fastApiProjectService;
 
     @Transactional
     public AuthRequestDTO join(SignupDTO signupDTO) {
@@ -143,5 +144,10 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    public List<UserDTO> findRecommendUser(Long projectId) {
+        List<Long> userIds = fastApiProjectService.getRecommendUser(projectId, 4);
+        return userRepository.findRecommend(userIds).stream().map(e -> UserDTO.entityToDto(e))
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
 
 }

@@ -69,6 +69,11 @@ public class UserApiController {
         UserDTO userDTO = userService.updateUserPosition(userPositionList, userId);
         fastApiUserService.updateUserPosition(userDTO);
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_POSITION_ADD_SUCCESS, userDTO));
-//        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.USER_TECH_ADD_SUCESS));
+    }
+
+    @GetMapping("/v1/user/recommend")
+    @ApiOperation(value = "추천 유저 API")
+    public ResponseEntity recommendUser(@RequestParam Long projectId) {
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.GET_RECOMMEND_USER_SUCCESS, userService.findRecommendUser(projectId)));
     }
 }
