@@ -14,3 +14,4 @@ export { default as ProfileSelectPosition } from 'pages/Profile/ProfileSelectPos
 export { default as ProfileRatePosition } from 'pages/Profile/ProfileRatePosition';
 export { default as Setting } from 'pages/Project/Setting';
 export { default as Account } from 'pages/Account/Account';
+export { default as Error } from 'pages/Error/Error';
