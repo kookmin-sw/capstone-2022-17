@@ -14,6 +14,8 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -124,7 +126,18 @@ public class FastApiUserService {
                 .bodyToMono(UserRes.class).block(REQUEST_TIMEOUT);
     }
 
-
+    public List<Long> getRecommandProject(Long userId, int num) {
+        String[] block = fastApiClient.get()
+                .uri(uriBuilder ->
+                        uriBuilder.path("/recommend")
+                                .queryParam("uid", userId)
+                                .queryParam("num", num).
+                                build())
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(String[].class).block(REQUEST_TIMEOUT);
+        return Stream.of(block).map(e -> Long.parseLong(e)).collect(Collectors.toCollection(ArrayList::new));
+    }
 
     @Data @Builder
     @ToString @NoArgsConstructor
