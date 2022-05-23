@@ -7,6 +7,7 @@ import kookmin.capstone.backend.domain.member.MemberType;
 import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import kookmin.capstone.backend.domain.user.User;
+import kookmin.capstone.backend.domain.user.UserTech;
 import kookmin.capstone.backend.dto.memberDTO.DeleteMemberDTO;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
 import kookmin.capstone.backend.exception.memberException.DuplicateMemberException;
@@ -18,10 +19,13 @@ import kookmin.capstone.backend.response.MemberResDTO;
 import kookmin.capstone.backend.response.ResponseMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Iterator;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -138,7 +142,20 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(Long projectId, Long userId) {
-        memberRepository.deleteMember(projectId, userId);
+        Project findProject = projectService.findProjectById(projectId);
+        List<Member> members = findProject.getMembers();
+        Iterator<Member> iter = members.iterator();
+        Position position = null;
+        while(iter.hasNext()) {
+            Member member = iter.next();
+            position = member.getPosition();
+            if (member.getUser().getId() == userId) {
+                iter.remove();
+                memberRepository.deleteMember(projectId, userId);
+                break;
+            }
+        }
+        projectService.subProjectPostionCnt(position);
     }
 
     @Transactional

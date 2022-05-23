@@ -33,7 +33,11 @@ public class ProjectPosition {
         this.project = project;
     }
 
-    public void addCnt() {
+    public void increaseCnt() {
         this.currentCnt++;
+    }
+
+    public void decreaseCnt() {
+        this.currentCnt--;
     }
 }
