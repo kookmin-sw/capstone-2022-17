@@ -234,7 +234,7 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     private BooleanExpression fieldEq(List<String> field) {
-        return field.size() == 0 ? null : project.field.in(field);
+        return field == null ? null : project.field.in(field);
     }
 
     private BooleanExpression regionEq(String region) {
@@ -242,16 +242,17 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     private BooleanExpression purposeEq(List<String> purpose) {
-        return purpose.size() == 0 ? null : project.field.in(purpose);
+        return purpose == null ? null : project.field.in(purpose);
     }
 
     private BooleanExpression positionContain(List<String> positions) {
-        return positions.size() == 0 ? null :
+
+        return positions == null ? null :
                 project.positions.any().position.positionName.in(positions);
     }
 
     private BooleanExpression techContain(List<String> techStacks) {
-        return techStacks.size() == 0 ? null :
+        return techStacks == null ? null :
                 project.techStack.any().stack.in(techStacks);
     }
 

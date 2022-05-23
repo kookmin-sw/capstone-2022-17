@@ -9,10 +9,10 @@ import java.util.List;
 @Data
 public class ProjectSearchCond {
 
-    List<String> positions = new ArrayList<>();;
-    List<String> techStacks = new ArrayList<>();
-    List<String> field = new ArrayList<>();
-    List<String> purpose = new ArrayList<>();;
+    List<String> positions;
+    List<String> techStacks;
+    List<String> field;
+    List<String> purpose;;
     String region;
     String status;
     String title;
