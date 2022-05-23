@@ -49,3 +49,11 @@ export const BasicPriBtn = styled(SubBtn)`
     background: ${darken(0.05, COLOR.PRIMARY)} !important;
   }
 `;
+
+export const DisableBtn = styled(Button)`
+  height: 2rem;
+  font-family: 'PR-Light' !important;
+  font-size: 0.9rem !important;
+  border-radius: 2.5rem !important;
+  padding: 0.5rem 1.2rem !important;
+`;

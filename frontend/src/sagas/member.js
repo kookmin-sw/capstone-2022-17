@@ -3,6 +3,9 @@ import axios from 'axios';
 import camelize from 'camelize';
 
 import {
+  LOAD_CANDIDATE_REQUEST,
+  LOAD_CANDIDATE_SUCCESS,
+  LOAD_CANDIDATE_FAILURE,
   ADD_MEMBER_REQUEST,
   ADD_MEMBER_SUCCESS,
   ADD_MEMBER_FAILURE,
@@ -17,6 +20,29 @@ import {
   REJECT_MEMBER_FAILURE,
 } from 'reducers/member';
 import authHeader from './auth-header';
+
+const candidateLoadAPI = (id) =>
+  axios.get(`/project/join?projectId=${id}`, { headers: authHeader() });
+
+function* candidateLoad(action) {
+  try {
+    const result = yield call(candidateLoadAPI, action.id);
+    yield put({
+      type: LOAD_CANDIDATE_SUCCESS,
+      data: camelize(result.data.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_CANDIDATE_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchcandidateLoad() {
+  yield takeLatest(LOAD_CANDIDATE_REQUEST, candidateLoad);
+}
 
 const memberAddAPI = (data) => axios.post('/member', data, { headers: authHeader() });
 
@@ -112,5 +138,6 @@ export default function* member() {
     fork(watchMemberDestroy),
     fork(watchMemberApprove),
     fork(watchMemberReject),
+    fork(watchcandidateLoad),
   ]);
 }

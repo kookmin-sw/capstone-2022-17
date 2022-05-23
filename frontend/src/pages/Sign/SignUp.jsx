@@ -38,7 +38,7 @@ const Field = styled(Form.Field)`
 const Span = styled.span`
   text-align: center;
   font-family: 'Pr-Light';
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   color: ${COLOR.GRAY};
 `;
 

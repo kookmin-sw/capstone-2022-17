@@ -92,8 +92,8 @@ export const Slider = styled(Checkbox)`
 
 export const Github = styled.div`
   cursor: pointer;
-  font-family: 'NS-R' !important;
-  font-size: 0.8rem;
+  font-family: 'Pr-Regular' !important;
+  font-size: 0.85rem;
   margin-right: 1rem;
   color: ${COLOR.PRIMARY};
 

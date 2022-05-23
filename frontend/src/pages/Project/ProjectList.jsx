@@ -15,6 +15,8 @@ import RightRecoCard from 'components/Projects/ProjectList/RightRecoCard/RightRe
 import Sort from 'components/Projects/ProjectList/Sort';
 
 import * as Ct from 'components/common/Containers';
+import COLOR from 'constant/color';
+import { PrimaryBtn } from 'components/common/Btn';
 import fieldOption from './fieldOption';
 import purposeOption from './purposeOption';
 import positionOption from './postionOption';
@@ -132,9 +134,39 @@ const CardContainer = styled.div`
   margin: 2rem 0;
 `;
 
+const RecommandContainer = styled(Ct.ColumnMiddleContainer)`
+  position: relative;
+  margin-bottom: 2rem;
+`;
+
+const Recommand = styled.div`
+  filter: ${(props) => !props.user && 'blur(10px)'};
+  pointer-events: ${(props) => !props.user && 'none'};
+`;
+
+const RedirectContainer = styled(Ct.ColumnMiddleContainer)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 0.5rem;
+  border: 1px solid #707070;
+  background: white;
+`;
+
+const RecommandText = styled(Text)`
+  font-family: 'Pr-Bold';
+  font-size: 1.5rem;
+  margin: 4rem 5rem 1.5rem 5rem;
+  color: ${COLOR.GRAY};
+  text-align: center;
+  line-height: 2rem;
+`;
+
 const resultRenderer = ({ stack }) => <div>{stack}</div>;
 
 const ProjectList = () => {
+  const { user } = useSelector((state) => state.authentication);
   const [position, setPosition] = useState('전체');
   const [purpose, setPurpose] = useState('전체');
   const [region, setRegion] = useState('전체');
@@ -142,7 +174,6 @@ const ProjectList = () => {
   const [search, onChangeSearch] = useInput('');
   const [order, setOrder] = useState('latest');
 
-  const { user } = useSelector((state) => state.authentication);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { projectList, loadProjectListDone, currentPage, totalPage, totalElements } = useSelector(
@@ -235,23 +266,41 @@ const ProjectList = () => {
 
   return (
     <Container>
-      <TextBox>
-        <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon1.png`} />
-        <Text>&nbsp; {user?.user.nickname}님에게 어울리는 프로젝트</Text>
-      </TextBox>
-      <RecoBox>
-        <LeftRecoBox>
-          <LeftRecoCard />
-        </LeftRecoBox>
-        <RightRecoBox>
-          <RightRecoCard />
-          <RightRecoCard />
-          <RightRecoCard />
-        </RightRecoBox>
-      </RecoBox>
+      <RecommandContainer>
+        <Recommand user={user}>
+          <TextBox>
+            <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon1.png`} />
+            <Text>&nbsp; {user ? `${user.user.nickname}님` : '당신'}에게 어울리는 프로젝트</Text>
+          </TextBox>
+          <RecoBox>
+            <LeftRecoBox>
+              <LeftRecoCard />
+            </LeftRecoBox>
+            <RightRecoBox>
+              <RightRecoCard />
+              <RightRecoCard />
+              <RightRecoCard />
+            </RightRecoBox>
+          </RecoBox>
+        </Recommand>
+        {!user && (
+          <RedirectContainer>
+            <RecommandText>
+              지금 로그인 후 당신을 위한
+              <br /> 추천 프로젝트를 확인하세요!
+            </RecommandText>
+            <PrimaryBtn
+              onClick={() => navigate('/signin')}
+              style={{ width: '10rem', marginBottom: '3rem' }}
+            >
+              로그인
+            </PrimaryBtn>
+          </RedirectContainer>
+        )}
+      </RecommandContainer>
       <TextBox>
         <Img src={`${process.env.PUBLIC_URL}/images/projectList/projectListIcon2.png`} />
-        <Text>&nbsp; {user?.user.nickname}님! 이런 프로젝트는 어떠세요?</Text>
+        <Text>&nbsp; {user && `${user.user.nickname}님!`} 이런 프로젝트는 어떠세요?</Text>
       </TextBox>
       <SearchBox>
         <SelectDiv>
