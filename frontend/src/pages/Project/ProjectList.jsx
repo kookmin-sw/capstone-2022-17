@@ -265,7 +265,7 @@ const ProjectList = () => {
   }, [position, region, purpose, field]);
 
   return (
-    <Container>
+    <Container style={!user ? { marginTop: '0' } : null}>
       <RecommandContainer>
         <Recommand user={user}>
           <TextBox>

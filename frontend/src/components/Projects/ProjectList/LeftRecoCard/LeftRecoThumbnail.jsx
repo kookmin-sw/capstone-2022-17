@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.div``;
+const Container = styled.div`
+  background: white;
+  border-radius: 1rem;
+`;
 
 const Img = styled.img`
   width: 40rem;

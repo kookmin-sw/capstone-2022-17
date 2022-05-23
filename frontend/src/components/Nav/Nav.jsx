@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Logo from 'components/Nav/Logo';
 import NavMenu from 'components/Nav/NavMenu';
-import NotiIcon from 'components/Nav/NotiIcon';
+import NotiIcon from 'components/Nav/Noti/NotiIcon';
 import UserMenu from 'components/Nav/UserMenu/UserMenu';
 import * as Btn from 'components/common/Btn';
 import SignBtn from 'components/Nav/SignBtn';
@@ -14,7 +14,7 @@ const NavContainer = styled.div`
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 10;
   padding: 0.5rem 0;
   box-shadow: 1px 1px 10px -5px black;
   display: flex;
