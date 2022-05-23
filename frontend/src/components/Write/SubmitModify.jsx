@@ -85,6 +85,7 @@ const SubmitModify = ({ data, url, id }) => {
 
   const handleSubmit = () => {
     data.thumbnail = imageUrl;
+    console.log(data);
     dispatch({
       type: UPDATE_PROJECT_REQUEST,
       data,
