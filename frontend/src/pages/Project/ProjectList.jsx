@@ -207,7 +207,7 @@ const ProjectList = () => {
         positions: position === '전체' ? null : [position],
         purpose: purpose === '전체' ? null : [purpose],
         region: region === '전체' ? null : [region],
-        status: 'PROGRESS',
+        status: 'IN_PROGRESS',
         techStacks: techlist,
         title: search,
         order,
@@ -225,7 +225,7 @@ const ProjectList = () => {
         positions: position === '전체' ? null : [position],
         purpose: purpose === '전체' ? null : [purpose],
         region: region === '전체' ? null : [region],
-        status: 'PROGRESS',
+        status: 'IN_PROGRESS',
         techStacks: techlist,
         title: search,
         order,
@@ -246,7 +246,7 @@ const ProjectList = () => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
       data: {
-        status: 'PROGRESS',
+        status: 'IN_PROGRESS',
         order: 'latest',
       },
       page: 1,
