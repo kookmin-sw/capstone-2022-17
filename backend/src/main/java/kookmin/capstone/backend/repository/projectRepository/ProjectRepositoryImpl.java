@@ -258,6 +258,9 @@ public class ProjectRepositoryImpl implements ProjectRepositoryCustom {
     }
 
     private BooleanExpression techContain(List<String> techStacks) {
+        if (techStacks.size() == 0) {
+            return null;
+        }
         return techStacks == null ? null :
                 project.techStack.any().stack.in(techStacks);
     }
