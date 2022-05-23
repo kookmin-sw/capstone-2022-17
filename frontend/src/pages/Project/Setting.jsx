@@ -7,7 +7,7 @@ import { DESTROY_PROJECT_REQUEST, LOAD_PROJECT_REQUEST } from 'reducers/project'
 import * as Container from 'components/common/Containers';
 import COLOR from 'constant/color';
 import Applicant from 'components/Setting/Applicant';
-// import Suggestion from 'components/Setting/Suggestion';
+import Suggestion from 'components/Setting/Suggestion';
 
 import { LOAD_CANDIDATE_REQUEST } from 'reducers/member';
 import { RECOMMEND_USER_REQUEST } from 'reducers/user';
@@ -16,6 +16,7 @@ const SettingContainer = styled(Container.ColumnStartContainer)`
   max-width: 1200px;
   width: 100vw;
   padding: 3rem 2rem;
+  margin-bottom: 10rem;
 `;
 
 const Title = styled.div`
@@ -50,6 +51,7 @@ const Setting = () => {
   const { id } = useParams();
   const { project, loadProjectDone, destroyProjectDone } = useSelector((state) => state.project);
   const { memberList, loadCandidateDone } = useSelector((state) => state.member);
+  const { recommend } = useSelector((state) => state.user);
 
   const [state, setState] = useState('멤버 지원승인');
 
@@ -126,14 +128,21 @@ const Setting = () => {
                 return (
                   <>
                     <Applicant key={member.userId} project={project} user={member} />
-                    {index === memberList.length && <Divider style={{ width: '100%' }} />}
+                    {index !== memberList.length - 1 && <Divider style={{ width: '90%' }} />}
                   </>
                 );
               })
             )}
           </MemberContainer>
           <MemberContainer style={state !== '추천멤버 조회' ? { display: 'none' } : null}>
-            {/* <Suggestion /> */}
+            {recommend?.map((user, index) => {
+              return (
+                <>
+                  <Suggestion project={project} user={user} />
+                  {index !== recommend.length - 1 && <Divider style={{ width: '90%' }} />}
+                </>
+              );
+            })}
           </MemberContainer>
         </>
       )}

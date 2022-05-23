@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Label } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
 import * as Btn from 'components/common/Btn';
 import COLOR from 'constant/color';
-
-import { REJECT_MEMBER_REQUEST, APPROVE_MEMBER_REQUEST } from 'reducers/member';
 
 const ApplicantContainer = styled(Container.RowBetweenContainer)`
   padding: 1rem;
@@ -50,35 +48,14 @@ const Tag = styled(Label)`
 const Position = styled.div`
   font-family: 'Pr-Medium';
   font-size: 1rem;
-  margin-left: 0.5rem;
+  padding: 0 0.5rem;
   color: ${COLOR.PRIMARY};
+  border-right: ${(props) => !props.isLast && `2px solid ${COLOR.PRIMARY}`};
 `;
 
-const Applicant = ({ project, user }) => {
-  const dispatch = useDispatch();
+const Applicant = ({ user }) => {
   const navigate = useNavigate();
   const { rejectMemberDone, approveMemberDone } = useSelector((state) => state.member);
-
-  const handleReject = () => {
-    if (window.confirm('정말 거절하시겠습니까?'))
-      dispatch({
-        type: REJECT_MEMBER_REQUEST,
-        data: {
-          projectId: project.id,
-          userId: user.userId,
-        },
-      });
-  };
-
-  const handleApprove = () => {
-    dispatch({
-      type: APPROVE_MEMBER_REQUEST,
-      data: {
-        projectId: project.id,
-        userId: user.userId,
-      },
-    });
-  };
 
   useEffect(() => {
     if (rejectMemberDone || approveMemberDone) {
@@ -95,27 +72,27 @@ const Applicant = ({ project, user }) => {
         <Container.ColumnStartContainer style={{ marginRight: '2rem' }}>
           <Container.RowEndContainer style={{ marginBottom: '0.5rem' }}>
             <Name onClick={() => navigate(`/profile/${user.userId}`)}>{user.nickname}</Name>
-            <Position>{user.position}</Position>
+            {user.userPositionSet.map((pos, index) => {
+              return (
+                <Position isLast={index === user.userPositionSet.length - 1}>
+                  {pos.positionName}
+                </Position>
+              );
+            })}
           </Container.RowEndContainer>
           <Container.AlignMiddleContainer style={{ flexWrap: 'wrap', maxWidth: '50rem' }}>
             {/* {user.userTechList.map((stack) => {
             return <Tag key={stack}>{stack}</Tag>;
           })} */}
-            <Tag>임시</Tag>
-            <Tag>임asfasd시</Tag>
-            <Tag>임dfs시</Tag>
-            <Tag>임시</Tag>
-            <Tag>임시</Tag>
+            {user.userTechList.map((tech) => {
+              return <Tag key={tech.userTech}>{tech.userTech}</Tag>;
+            })}
           </Container.AlignMiddleContainer>
         </Container.ColumnStartContainer>
       </Container.AlignMiddleContainer>
       <Container.ColumnStartContainer>
-        <Btn.PrimaryBtn onClick={handleApprove} style={{ marginBottom: '0.2rem', width: '5rem' }}>
-          승인
-        </Btn.PrimaryBtn>
-        <Btn.SubBtn onClick={handleReject} style={{ width: '5rem' }}>
-          거절
-        </Btn.SubBtn>
+        <Btn.PrimaryBtn style={{ width: '5rem' }}>초대</Btn.PrimaryBtn>
+        {/* <Btn.SubBtn style={{ width: '5rem' }}>거절</Btn.SubBtn> */}
       </Container.ColumnStartContainer>
     </ApplicantContainer>
   );

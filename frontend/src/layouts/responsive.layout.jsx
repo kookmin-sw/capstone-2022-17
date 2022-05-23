@@ -32,9 +32,9 @@ const ResponsiveLayout = ({ children }) => {
       >
         {children}
       </ContentContainer>
-      {!location.pathname.includes('survey') && !location.pathname.includes('-position') && (
-        <Footer />
-      )}
+      {!location.pathname.includes('sign') &&
+        !location.pathname.includes('survey') &&
+        !location.pathname.includes('-position') && <Footer />}
     </MainContainer>
   );
 };
