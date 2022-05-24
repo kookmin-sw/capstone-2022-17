@@ -232,6 +232,7 @@ const Modify = () => {
 
   const handleSubmit = () => {
     setProjectData({
+      id: project.id,
       title,
       purpose,
       region,

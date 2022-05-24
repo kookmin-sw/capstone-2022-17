@@ -34,7 +34,7 @@ const badgetrigger = (
 );
 
 const NotiView = styled(Container.ColumnStartContainer)`
-  width: 15rem;
+  min-width: 15rem;
   max-height: 15rem;
   overflow-y: auto;
   &::-webkit-scrollbar {
@@ -91,6 +91,9 @@ const NotiIcon = () => {
         id,
       },
     });
+    dispatch({
+      type: NOTIFY_MEMBER_REQUEST,
+    });
   };
 
   return (
@@ -106,7 +109,7 @@ const NotiIcon = () => {
               return (
                 <>
                   <NotiItem onClick={() => navigate(`/project/${noti.projectId}`)}>
-                    <Container.ColumnStartContainer>
+                    <Container.ColumnStartContainer style={{ marginRight: '1rem' }}>
                       <Container.RowStartContainer style={{ marginBottom: '0.2rem' }}>
                         <Title>{noti.projectName}</Title>에서 당신을
                       </Container.RowStartContainer>

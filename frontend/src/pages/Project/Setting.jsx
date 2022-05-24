@@ -53,7 +53,7 @@ const Setting = () => {
   const { memberList, loadCandidateDone } = useSelector((state) => state.member);
   const { recommend } = useSelector((state) => state.user);
 
-  const [state, setState] = useState('멤버 지원승인');
+  const [state, setState] = useState('추천멤버 조회');
 
   useEffect(() => {
     dispatch({
@@ -89,13 +89,6 @@ const Setting = () => {
     }
   }, [destroyProjectDone]);
 
-  useEffect(() => {
-    if (loadProjectDone && !project.leader) {
-      alert('팀장만 접근할 수 있습니다.');
-      window.location.replace('/');
-    }
-  }, []);
-
   return (
     <SettingContainer>
       {loadProjectDone && (
@@ -111,18 +104,18 @@ const Setting = () => {
           <Divider style={{ width: '100%' }} />
 
           <Container.AlignCenterContainer>
-            <Menu isClicked={state === '멤버 지원승인'} onClick={handleState}>
-              멤버 지원승인
-            </Menu>
             <Menu isClicked={state === '추천멤버 조회'} onClick={handleState}>
               추천멤버 조회
+            </Menu>
+            <Menu isClicked={state === '멤버 지원승인'} onClick={handleState}>
+              멤버 지원승인
             </Menu>
             <Menu onClick={() => navigate(`/modify`, { state: { project } })}>글 수정</Menu>
             <Menu onClick={handleDelete}>글 삭제</Menu>
           </Container.AlignCenterContainer>
           <MemberContainer style={state !== '멤버 지원승인' ? { display: 'none' } : null}>
             {loadCandidateDone && memberList?.length === 0 ? (
-              <Title>지원자가 없습니다</Title>
+              <Title style={{ marginTop: '7rem' }}>지원자가 없습니다</Title>
             ) : (
               memberList?.map((member, index) => {
                 return (

@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Label } from 'semantic-ui-react';
 import * as Container from 'components/common/Containers';
-import * as Btn from 'components/common/Btn';
 import COLOR from 'constant/color';
+import InviteBtn from './InviteBtn';
 
 const ApplicantContainer = styled(Container.RowBetweenContainer)`
   padding: 1rem;
@@ -18,6 +18,7 @@ const ApplicantContainer = styled(Container.RowBetweenContainer)`
 
 const ImgContainer = styled.div`
   overflow: hidden;
+  cursor: pointer;
   height: 6rem;
   width: 6rem;
   border-radius: 50%;
@@ -53,10 +54,9 @@ const Position = styled.div`
   border-right: ${(props) => !props.isLast && `2px solid ${COLOR.PRIMARY}`};
 `;
 
-const Applicant = ({ user }) => {
+const Applicant = ({ user, project }) => {
   const navigate = useNavigate();
   const { rejectMemberDone, approveMemberDone } = useSelector((state) => state.member);
-
   useEffect(() => {
     if (rejectMemberDone || approveMemberDone) {
       window.location.reload();
@@ -66,12 +66,12 @@ const Applicant = ({ user }) => {
   return (
     <ApplicantContainer>
       <Container.AlignMiddleContainer>
-        <ImgContainer>
+        <ImgContainer onClick={() => navigate(`/profile/${user.id}`)}>
           <Img src={user.avatar || `${process.env.PUBLIC_URL}/images/missing.png`} />
         </ImgContainer>
         <Container.ColumnStartContainer style={{ marginRight: '2rem' }}>
           <Container.RowEndContainer style={{ marginBottom: '0.5rem' }}>
-            <Name onClick={() => navigate(`/profile/${user.userId}`)}>{user.nickname}</Name>
+            <Name onClick={() => navigate(`/profile/${user.id}`)}>{user.nickname}</Name>
             {user.userPositionSet.map((pos, index) => {
               return (
                 <Position isLast={index === user.userPositionSet.length - 1}>
@@ -91,7 +91,9 @@ const Applicant = ({ user }) => {
         </Container.ColumnStartContainer>
       </Container.AlignMiddleContainer>
       <Container.ColumnStartContainer>
-        <Btn.PrimaryBtn style={{ width: '5rem' }}>초대</Btn.PrimaryBtn>
+        <InviteBtn project={project} user={user}>
+          초대
+        </InviteBtn>
         {/* <Btn.SubBtn style={{ width: '5rem' }}>거절</Btn.SubBtn> */}
       </Container.ColumnStartContainer>
     </ApplicantContainer>

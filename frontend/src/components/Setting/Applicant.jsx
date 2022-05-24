@@ -24,6 +24,7 @@ const ImgContainer = styled.div`
   width: 6rem;
   border-radius: 50%;
   margin-right: 1.5rem;
+  cursor: pointer;
   background: white;
 `;
 
@@ -89,7 +90,7 @@ const Applicant = ({ project, user }) => {
   return (
     <ApplicantContainer>
       <Container.AlignMiddleContainer>
-        <ImgContainer>
+        <ImgContainer onClick={() => navigate(`/profile/${user.userId}`)}>
           <Img src={user.avatar || `${process.env.PUBLIC_URL}/images/missing.png`} />
         </ImgContainer>
         <Container.ColumnStartContainer style={{ marginRight: '2rem' }}>

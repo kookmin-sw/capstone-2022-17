@@ -51,6 +51,12 @@ const ModalTitle = styled.div`
   font-size: 1.1rem;
 `;
 
+const Text = styled.div`
+  font-family: 'Pr-Light';
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+`;
+
 const ApplyBtn = ({ project }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -131,7 +137,7 @@ const ApplyBtn = ({ project }) => {
   useEffect(() => {
     switch (project.memberType) {
       case 'REJECT':
-        setText('프로젝트에 참여하지 못했습니다.');
+        setText('프로젝트에 참여할 수 없습니다.');
         break;
       case 'CANDIDATE':
         setText('지원 취소하기');
@@ -206,22 +212,25 @@ const ApplyBtn = ({ project }) => {
           </ModalHeader>
           <Modal.Content style={{ padding: '2rem' }}>
             <Container.ColumnMiddleContainer style={{ width: '100%' }}>
+              <Text>어떤 포지션으로 지원할까요?</Text>
               <Container.ColumnStartContainer style={{ marginBottom: '1rem' }}>
                 {positions.map((pos) => {
-                  return (
-                    <Container.AlignMiddleContainer style={{ marginBottom: '1rem' }}>
-                      <Radio
-                        key={pos.positionName}
-                        label={pos.positionName}
-                        value={pos.positionName}
-                        checked={selected === pos.positionName}
-                        onChange={(e, { value }) => setSelected(value)}
-                      />
-                      <Label style={{ padding: '0.4rem 0.6rem', marginLeft: '1rem' }}>
-                        {pos.currentCnt} / {pos.total}
-                      </Label>
-                    </Container.AlignMiddleContainer>
-                  );
+                  if (pos.currentCnt < pos.total)
+                    return (
+                      <Container.AlignMiddleContainer style={{ marginBottom: '1rem' }}>
+                        <Radio
+                          key={pos.positionName}
+                          label={pos.positionName}
+                          value={pos.positionName}
+                          checked={selected === pos.positionName}
+                          onChange={(e, { value }) => setSelected(value)}
+                        />
+                        <Label style={{ padding: '0.4rem 0.6rem', marginLeft: '1rem' }}>
+                          {pos.currentCnt} / {pos.total}
+                        </Label>
+                      </Container.AlignMiddleContainer>
+                    );
+                  return <div />;
                 })}
               </Container.ColumnStartContainer>
               <Btn.PrimaryBtn onClick={handleSubmit}>이 포지션으로 지원하기</Btn.PrimaryBtn>
