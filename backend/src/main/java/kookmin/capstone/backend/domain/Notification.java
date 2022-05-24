@@ -22,7 +22,7 @@ public class Notification {
     @Column(name = "notification_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -33,6 +33,10 @@ public class Notification {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public void delete(Member member) {
+        this.member = null;
     }
 
     public void check() {

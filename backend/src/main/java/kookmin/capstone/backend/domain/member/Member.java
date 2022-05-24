@@ -57,6 +57,7 @@ public class Member {
         project.getMembers().add(this);
     }
 
+
     public void updateMember(MemberType memberType) {
         this.memberType = memberType;
     }

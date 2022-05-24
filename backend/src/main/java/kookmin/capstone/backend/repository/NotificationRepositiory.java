@@ -12,4 +12,6 @@ public interface NotificationRepositiory extends JpaRepository<Notification, Lon
     List<Notification> findTop10ByMember_User_IdOrderByCreatedAtDesc(Long id);
 
     Optional<Notification> findById(Long id);
+
+    void deleteByMember_Id(Long id);
 }

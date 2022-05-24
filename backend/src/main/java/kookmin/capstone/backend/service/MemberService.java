@@ -153,6 +153,7 @@ public class MemberService {
             position = member.getPosition();
             if (member.getUser().getId() == userId) {
                 iter.remove();
+                notificationRepositiory.deleteByMember_Id(member.getId());
                 memberRepository.deleteMember(projectId, userId);
                 break;
             }
