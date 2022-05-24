@@ -41,7 +41,6 @@ const ContentsBox = styled.div`
 
 const TitleBox = styled.div`
   ${({ theme }) => theme.common.flexCenter};
-  justify-content: space-between;
   margin: 1rem 0;
 `;
 

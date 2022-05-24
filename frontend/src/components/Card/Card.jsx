@@ -34,12 +34,13 @@ const LikesViews = styled.div`
 `;
 
 const Card = ({ project, onClick, loading, isTwo }) => {
+  // const techList = [project?.techStack.map((tech))];
   return (
     <Container isTwo={isTwo} loading={loading} onClick={onClick}>
       <Thumbnail img={project?.thumbnail} />
       <Content>
         {project?.techStack &&
-          project?.techStack.map((tech) => {
+          project?.techStack.slice(0, 3).map((tech) => {
             return <Tag techName={tech.stack} />;
           })}
         <CardName cardName={project?.title} />
