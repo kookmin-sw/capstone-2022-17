@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { LOAD_TECHSTACK_REQUEST } from 'reducers/techstack';
-import { LOAD_PROJECTLIST_REQUEST, SIZE } from 'reducers/projectList';
+import { LOAD_PROJECTLIST_REQUEST, LOAD_MAINPROJECTLIST_REQUEST, SIZE } from 'reducers/projectList';
 
 import useInput from 'hooks/useInput';
 
@@ -175,9 +175,16 @@ const ProjectList = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projectList, loadProjectListLoading, currentPage, totalPage } = useSelector(
-    (state) => state.projectList,
-  );
+  const [recommend, setRecommend] = useState([]);
+  const {
+    mainProjectList,
+    loadMainProjectListLoading,
+    loadMainProjectListDone,
+    projectList,
+    loadProjectListLoading,
+    currentPage,
+    totalPage,
+  } = useSelector((state) => state.projectList);
 
   const { techstacks, loadTechstacksLoading } = useSelector((state) => state.techstack);
   const [tech, onChangeTech, setTech] = useInput('');
@@ -243,15 +250,15 @@ const ProjectList = () => {
 
   useEffect(() => {
     dispatch({
-      type: LOAD_PROJECTLIST_REQUEST,
-      data: {
-        status: 'IN_PROGRESS',
-        order: 'latest',
-      },
-      page: 1,
-      size: SIZE,
+      type: LOAD_MAINPROJECTLIST_REQUEST,
     });
   }, []);
+
+  useEffect(() => {
+    if (loadMainProjectListDone) {
+      setRecommend(mainProjectList.recommend);
+    }
+  }, [loadMainProjectListDone]);
 
   return (
     <Container style={!user ? { marginTop: '0' } : null}>
@@ -263,7 +270,11 @@ const ProjectList = () => {
           </TextBox>
           <RecoBox>
             <LeftRecoBox>
-              <LeftRecoCard />
+              <LeftRecoCard
+                done={loadMainProjectListDone}
+                loading={loadMainProjectListLoading}
+                project={recommend[0]}
+              />
             </LeftRecoBox>
             <RightRecoBox>
               <RightRecoCard />

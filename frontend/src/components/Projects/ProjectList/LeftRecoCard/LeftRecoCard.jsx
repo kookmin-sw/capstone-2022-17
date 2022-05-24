@@ -1,6 +1,7 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Likes from 'components/common/Likes';
 import Tag from 'components/Tag/Tag';
-import React from 'react';
 import styled from 'styled-components';
 import RecoCardName from './LeftRecoCardName';
 import RecoContent from './LeftRecoContent';
@@ -33,27 +34,20 @@ const TagDiv = styled.div`
   padding: 0 1rem 0.5rem 1rem;
 `;
 
-const tempProject = {
-  thumbnail: 'https://minjj0905.github.io/img.jpg',
-  title: '테스트 프로젝트',
-  likes: '3',
-  description: 'kdkdkdk',
-  techStack: [{ stack: '11111' }, { stack: '22222222' }],
-};
-
-const LeftRecoCard = () => {
+const LeftRecoCard = ({ project, loading }) => {
+  const navigate = useNavigate();
   return (
-    <Container>
-      <LeftRecoThumbnail img={tempProject.thumbnail} />
+    <Container className={loading && 'loading'} onClick={() => navigate(`/project/${project?.id}`)}>
+      <LeftRecoThumbnail img={project?.thumbnail} />
       <Title>
-        <RecoCardName cardName={tempProject.title} />
-        <Likes project={tempProject} />
+        <RecoCardName cardName={project?.title} />
+        <Likes project={project} />
       </Title>
-      <RecoContent content={tempProject.description} />
+      <RecoContent content={project?.description} />
       <TagDiv>
-        {tempProject.techStack &&
-          tempProject.techStack.map((tech) => {
-            return <Tag techName={tech.stack} />;
+        {project?.techStack &&
+          project?.techStack.map((tech) => {
+            return <Tag techName={tech?.stack} />;
           })}
       </TagDiv>
     </Container>

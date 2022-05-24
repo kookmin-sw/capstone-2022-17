@@ -117,7 +117,7 @@ function* watchProjectUpdate() {
 }
 
 // 프로젝트 좋아요
-const projectLikeAPI = (id) => axios.post(`/project/like?id=${id}`, { headers: authHeader() });
+const projectLikeAPI = (data) => axios.post('/project/like', data, { headers: authHeader() });
 
 function* projectLike(action) {
   try {
@@ -140,8 +140,8 @@ function* watchProjectLike() {
 }
 
 // 프로젝트 좋아요 취소
-const projectLikeDestroyAPI = (id) =>
-  axios.delete(`/project/like?id=${id}`, { headers: authHeader() });
+const projectLikeDestroyAPI = (data) =>
+  axios.delete('/project/like', data, { headers: authHeader() });
 
 function* projectLikeDestroy(action) {
   try {
