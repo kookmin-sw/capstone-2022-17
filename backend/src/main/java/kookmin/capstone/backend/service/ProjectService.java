@@ -106,20 +106,25 @@ public class ProjectService {
             ProjectPosition projectPosition = iter.next();
             if (!position.contains(projectPosition.getPosition().getPositionName())) {
                 projectPosition.deleteTech(iter);
-//                positionRepository.deleteById(positionDTO.getId());
                 projectPositionRepository.deleteById(projectPosition.getId());
             } else {
                 position.remove(projectPosition.getPosition());
             }
+
+            for (ProjectPositionDTO dtoProjectPosition : dto.getProjectPositions()) {
+                if (projectPosition.getPosition().
+                        getPositionName().equals(dtoProjectPosition.getPositionName())
+                && projectPosition.getTotal() != dtoProjectPosition.getTotal()) {
+                    projectPosition.updateTotal(dtoProjectPosition.getTotal());
+                }
+            }
+
         }
 
         dto.getTechStack().stream().forEach(stack -> project.addTechStack(new ProjectTech(stack)));
-//        dto.getProjectPositions().stream().forEach(positions -> if() {
-//
-//        });
+
         List<String> savedPositions = project.getPositions().stream().map(e -> e.getPosition().getPositionName()).collect(Collectors.toCollection(ArrayList::new));
         for (ProjectPositionDTO projectPosition : dto.getProjectPositions()) {
-            System.out.println("projectPosition.getPositionName() = " + projectPosition.getPositionName());
             if (!savedPositions.contains(projectPosition.getPositionName())) {
                 project.addPosition(
                         ProjectPosition.builder().
@@ -133,19 +138,6 @@ public class ProjectService {
             }
         }
 
-//        for (ProjectPosition projectPosition : project.getPositions()) {
-//            if (!position.contains(projectPosition.getPosition().getPositionName())) {
-//                project.addPosition(
-//                        ProjectPosition.builder().
-//                                currentCnt(projectPosition.getCurrentCnt()).
-//                                total(projectPosition.getTotal()).
-//                                position(Position.builder().
-//                                        positionName(projectPosition.getPosition().getPositionName()).
-//                                        build()).
-//                                build()
-//                );
-//            }
-//        }
         if(dto.getStatus() == null) {
             dto.setStatus(project.getStatus());
         }

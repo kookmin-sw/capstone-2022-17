@@ -52,4 +52,8 @@ public class ProjectPosition {
         this.position = position;
         position.registProjectPosition(this);
     }
+
+    public void updateTotal(int num) {
+        this.total = num;
+    }
 }
