@@ -117,8 +117,10 @@ public class ProjectService {
 //        dto.getProjectPositions().stream().forEach(positions -> if() {
 //
 //        });
+        List<String> savedPositions = project.getPositions().stream().map(e -> e.getPosition().getPositionName()).collect(Collectors.toCollection(ArrayList::new));
         for (ProjectPositionDTO projectPosition : dto.getProjectPositions()) {
-            if (!position.contains(projectPosition.getPositionName())) {
+            System.out.println("projectPosition.getPositionName() = " + projectPosition.getPositionName());
+            if (!savedPositions.contains(projectPosition.getPositionName())) {
                 project.addPosition(
                         ProjectPosition.builder().
                                 currentCnt(projectPosition.getCurrentCnt()).
@@ -130,6 +132,20 @@ public class ProjectService {
                 );
             }
         }
+
+//        for (ProjectPosition projectPosition : project.getPositions()) {
+//            if (!position.contains(projectPosition.getPosition().getPositionName())) {
+//                project.addPosition(
+//                        ProjectPosition.builder().
+//                                currentCnt(projectPosition.getCurrentCnt()).
+//                                total(projectPosition.getTotal()).
+//                                position(Position.builder().
+//                                        positionName(projectPosition.getPosition().getPositionName()).
+//                                        build()).
+//                                build()
+//                );
+//            }
+//        }
         if(dto.getStatus() == null) {
             dto.setStatus(project.getStatus());
         }
