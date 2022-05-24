@@ -10,17 +10,17 @@ const Container = styled.div`
   font-family: 'Pr-Regular';
   color: #888888;
 
-  background-color: #f8f9fa;
+  background-color: ${(props) => (props.isTwo ? '#fff' : '#f8f9fa')};
 
   width: 14rem;
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
-  cursor: pointer;
+  cursor: ${(props) => !props.loading && 'pointer'};
   transition: transform 300ms ease-in-out;
 
   &:hover {
-    transform: translateY(-0.5rem);
-    box-shadow: 0px 3px 7px 1px #aeadad;
+    transform: translateY(${(props) => !props.loading && '-0.3rem'});
+    box-shadow: ${(props) => !props.loading && '0px 3px 7px 1px #aeadad'};
   }
 `;
 
@@ -33,9 +33,9 @@ const LikesViews = styled.div`
   padding: 0.5rem 0;
 `;
 
-const Card = ({ project, onClick }) => {
+const Card = ({ project, onClick, loading, isTwo }) => {
   return (
-    <Container onClick={onClick}>
+    <Container isTwo={isTwo} loading={loading} onClick={onClick}>
       <Thumbnail img={project?.thumbnail} />
       <Content>
         {project?.techStack &&

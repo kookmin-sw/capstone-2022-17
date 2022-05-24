@@ -17,7 +17,7 @@ const Container = styled.div`
   transition: transform 300ms ease-in-out;
 
   &:hover {
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.2rem);
     box-shadow: 0px 3px 7px 1px #aeadad;
   }
 `;

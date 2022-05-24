@@ -397,7 +397,7 @@ const Write = () => {
         </InputContainer>
         <Container.RowBetweenContainer>
           <Field>
-            <InputLabel>기술스택 입력</InputLabel>
+            <Requiredlabel>기술스택 입력</Requiredlabel>
             <Container.AlignMiddleContainer>
               <AutoComplete
                 placeholder="기술스택 검색"

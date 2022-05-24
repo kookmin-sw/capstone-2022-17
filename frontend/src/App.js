@@ -23,6 +23,7 @@ import {
   Setting,
   Modify,
   Account,
+  Error,
 } from 'pages';
 
 const App = () => {
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/survey/select-position" element={<SelectPosition />} />
             <Route path="/survey/rate-position" element={<RatePosition />} />
             <Route path="/survey/techstack" element={<TechStack />} />
+            <Route path="*" element={<Error />} />
           </Routes>
         </ResponsiveLayout>
       </BrowserRouter>

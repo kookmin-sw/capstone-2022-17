@@ -36,18 +36,36 @@ const GlobalStyles = createGlobalStyle`
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
+  }
 
-.ui.secondary.menu .active.item {
-  font-family: 'Pr-Regular';
-  background: none;
-  color: ${COLOR.PRIMARY};
-}
+  .ui.secondary.menu .active.item {
+    font-family: 'Pr-Regular';
+    background: none;
+    color: ${COLOR.PRIMARY};
+  }
 
-.ui.pagination.menu .item {
-  min-width: 0;
-}
-  
+  .ui.pagination.menu .item {
+    min-width: 0;
+  }
+
+  .loading > .column > div > div > *  {
+  background-color: #d8dde1!important;
+  color: transparent!important;
+  border: transparent!important;
+  border-radius: 0!important;
+  }
+  .loading > .column > div > div > div > *  {
+  background-color: #d8dde1!important;
+  color: transparent!important;
+  border: transparent!important;
+  border-radius: 0!important;
+  }
+  .loading > .column > div > div > img {
+    content: url("/images/transparent.png");
+    background-color: #d8dde1!important;
+    border-radius: 0!important;
+  }
+    
 `;
 
 export default GlobalStyles;

@@ -17,6 +17,13 @@ export const initialState = {
   rejectMemberLoading: false,
   rejectMemberDone: false,
   rejectMemberError: false,
+  notify: [],
+  notifyMemberLoading: false,
+  notifyMemberDone: false,
+  notifyMemberError: null,
+  checkotifyMemberLoading: false,
+  checkNotifyMemberDone: false,
+  checkNotifyMemberError: null,
 };
 
 export const LOAD_CANDIDATE_REQUEST = 'LOAD_CANDIDATE_REQUEST';
@@ -39,6 +46,14 @@ export const REJECT_MEMBER_REQUEST = 'REJECT_MEMBER_REQUEST';
 export const REJECT_MEMBER_SUCCESS = 'REJECT_MEMBER_SUCCESS';
 export const REJECT_MEMBER_FAILURE = 'REJECT_MEMBER_FAILURE';
 
+export const NOTIFY_MEMBER_REQUEST = 'NOTIFY_MEMBER_REQUEST';
+export const NOTIFY_MEMBER_SUCCESS = 'NOTIFY_MEMBER_SUCCESS';
+export const NOTIFY_MEMBER_FAILURE = 'NOTIFY_MEMBER_FAILURE';
+
+export const CHECK_NOTIFY_MEMBER_REQUEST = 'CHECK_NOTIFY_MEMBER_REQUEST';
+export const CHECK_NOTIFY_MEMBER_SUCCESS = 'CHECK_NOTIFY_MEMBER_SUCCESS';
+export const CHECK_NOTIFY_MEMBER_FAILURE = 'CHECK_NOTIFY_MEMBER_FAILURE';
+
 export const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
@@ -48,7 +63,6 @@ export const reducer = (state = initialState, action) =>
         draft.loadCandidateError = null;
         break;
       case LOAD_CANDIDATE_SUCCESS:
-        console.log(action.data);
         draft.memberList = action.data;
         draft.loadCandidateLoading = false;
         draft.loadCandidateDone = true;
@@ -108,6 +122,34 @@ export const reducer = (state = initialState, action) =>
       case REJECT_MEMBER_FAILURE:
         draft.rejectMemberLoading = false;
         draft.rejectMemberError = action.error;
+        break;
+      case NOTIFY_MEMBER_REQUEST:
+        draft.notifyMemberLoading = true;
+        draft.notifyMemberDone = false;
+        draft.notifyMemberError = null;
+        break;
+      case NOTIFY_MEMBER_SUCCESS:
+        draft.notify = action.data;
+        draft.notifyMemberLoading = false;
+        draft.notifyMemberDone = true;
+        break;
+      case NOTIFY_MEMBER_FAILURE:
+        draft.notifyMemberLoading = false;
+        draft.notifyMemberError = action.error;
+        break;
+      case CHECK_NOTIFY_MEMBER_REQUEST:
+        draft.checkNotifyMemberLoading = true;
+        draft.checkNotifyMemberDone = false;
+        draft.checkNotifyMemberError = null;
+        break;
+      case CHECK_NOTIFY_MEMBER_SUCCESS:
+        draft.checkNotify = action.data;
+        draft.checkNotifyMemberLoading = false;
+        draft.checkNotifyMemberDone = true;
+        break;
+      case CHECK_NOTIFY_MEMBER_FAILURE:
+        draft.checkNotifyMemberLoading = false;
+        draft.checkNotifyMemberError = action.error;
         break;
       default:
         break;

@@ -18,6 +18,12 @@ import {
   REJECT_MEMBER_REQUEST,
   REJECT_MEMBER_SUCCESS,
   REJECT_MEMBER_FAILURE,
+  NOTIFY_MEMBER_REQUEST,
+  NOTIFY_MEMBER_SUCCESS,
+  NOTIFY_MEMBER_FAILURE,
+  CHECK_NOTIFY_MEMBER_REQUEST,
+  CHECK_NOTIFY_MEMBER_SUCCESS,
+  CHECK_NOTIFY_MEMBER_FAILURE,
 } from 'reducers/member';
 import authHeader from './auth-header';
 
@@ -132,6 +138,51 @@ function* watchMemberReject() {
   yield takeLatest(REJECT_MEMBER_REQUEST, memberReject);
 }
 
+const memberNotifyAPI = () => axios.get('/member/notify', { headers: authHeader() });
+
+function* memberNotify() {
+  try {
+    const result = yield call(memberNotifyAPI);
+    yield put({
+      type: NOTIFY_MEMBER_SUCCESS,
+      data: camelize(result.data.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: NOTIFY_MEMBER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMemberNotify() {
+  yield takeLatest(NOTIFY_MEMBER_REQUEST, memberNotify);
+}
+
+const memberNotifyCheckAPI = (data) =>
+  axios.patch('/member/notify', data, { headers: authHeader() });
+
+function* memberNotifyCheck(action) {
+  try {
+    const result = yield call(memberNotifyCheckAPI, action.data);
+    yield put({
+      type: CHECK_NOTIFY_MEMBER_SUCCESS,
+      data: camelize(result.data.data),
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: CHECK_NOTIFY_MEMBER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function* watchMemberNotifyCheck() {
+  yield takeLatest(CHECK_NOTIFY_MEMBER_REQUEST, memberNotifyCheck);
+}
+
 export default function* member() {
   yield all([
     fork(watchMemberAdd),
@@ -139,5 +190,7 @@ export default function* member() {
     fork(watchMemberApprove),
     fork(watchMemberReject),
     fork(watchcandidateLoad),
+    fork(watchMemberNotify),
+    fork(watchMemberNotifyCheck),
   ]);
 }

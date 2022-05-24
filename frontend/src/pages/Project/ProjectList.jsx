@@ -25,7 +25,7 @@ import regionOption from './regionOption';
 const Container = styled.div`
   min-width: 600px;
   max-width: 1200px;
-  margin: 2rem auto 5rem auto;
+  margin: 2rem auto 10rem auto;
 `;
 
 const TextBox = styled.div`
@@ -53,7 +53,6 @@ const RecoBox = styled.div`
 const LeftRecoBox = styled.div`
   display: flex;
   margin: 0 1rem 1rem auto;
-  border-bottom: 1px solid #d5d5d5;
 `;
 
 const RightRecoBox = styled.div`
@@ -176,7 +175,7 @@ const ProjectList = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { projectList, loadProjectListDone, currentPage, totalPage, totalElements } = useSelector(
+  const { projectList, loadProjectListLoading, currentPage, totalPage } = useSelector(
     (state) => state.projectList,
   );
 
@@ -218,7 +217,7 @@ const ProjectList = () => {
   useEffect(() => {
     dispatch({
       type: LOAD_PROJECTLIST_REQUEST,
-      page: currentPage,
+      page: 1,
       size: SIZE,
       data: {
         field: field === '전체' ? null : [field],
@@ -231,7 +230,7 @@ const ProjectList = () => {
         order,
       },
     });
-  }, [currentPage, field, position, purpose, region, techlist, search, order]);
+  }, [field, position, purpose, region, techlist, search, order]);
 
   useEffect(() => {
     if (tech !== '') {
@@ -253,16 +252,6 @@ const ProjectList = () => {
       size: SIZE,
     });
   }, []);
-
-  useEffect(() => {
-    if (loadProjectListDone) {
-      console.log(projectList);
-    }
-  }, [loadProjectListDone]);
-
-  useEffect(() => {
-    console.log(position, region, purpose, field);
-  }, [position, region, purpose, field]);
 
   return (
     <Container style={!user ? { marginTop: '0' } : null}>
@@ -394,24 +383,23 @@ const ProjectList = () => {
         })}
       </Ct.RowStartContainer>
       {/* 태그 끝 */}
-
-      {loadProjectListDone && (
-        <Grid>
-          {projectList?.map((project) => {
-            return (
-              <GridDiv.Column mobile={8} tablet={6} computer={4}>
-                <Card
-                  project={project}
-                  key={project.id}
-                  onClick={() => navigate(`/project/${project.id}`)}
-                />
-              </GridDiv.Column>
-            );
-          })}
-        </Grid>
-      )}
-      {totalElements > SIZE && (
-        <CardContainer>
+      <Grid className={loadProjectListLoading ? 'loading' : null} style={{ width: '1200px' }}>
+        {projectList?.map((project) => {
+          return (
+            <GridDiv.Column mobile={8} tablet={6} computer={4}>
+              <Card
+                loading={loadProjectListLoading}
+                project={project}
+                key={project.id}
+                onClick={() => navigate(`/project/${project.id}`)}
+              />
+            </GridDiv.Column>
+          );
+        })}
+        {projectList?.length === 0 && <Text style={{ margin: '3rem' }}>검색 결과가 없습니다.</Text>}
+      </Grid>
+      <CardContainer>
+        {projectList?.length !== 0 && (
           <Pagination
             activePage={currentPage}
             onPageChange={handlePaginationChange}
@@ -420,8 +408,8 @@ const ProjectList = () => {
             totalPages={totalPage}
             secondary
           />
-        </CardContainer>
-      )}
+        )}
+      </CardContainer>
     </Container>
   );
 };

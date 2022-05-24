@@ -28,8 +28,8 @@ const UserMenu = () => {
   return (
     <Dropdown direction="left" trigger={trigger} icon={null} style={{ margin: '0 2rem' }}>
       <Dropdown.Menu style={{ marginTop: '1rem' }}>
-        <DropItem onClick={() => navigate(`/profile/${user.user.id}`)}>프로필</DropItem>
-        <DropItem onClick={() => navigate('/account')}>계정관리</DropItem>
+        <DropItem onClick={() => navigate(`/profile/${user.user.id}`)}>내 프로필</DropItem>
+        {/* <DropItem onClick={() => navigate('/account')}>계정관리</DropItem> */}
         <DropItem onClick={handleSignout}>로그아웃</DropItem>
       </Dropdown.Menu>
     </Dropdown>

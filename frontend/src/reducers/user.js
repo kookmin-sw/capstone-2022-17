@@ -14,6 +14,10 @@ export const initialState = {
   updateUserTechLoading: false,
   updateUserTechDone: false,
   updateUserTechError: false,
+  recommend: [],
+  recommendUserLoading: false,
+  recommendUserDone: false,
+  recommendUserError: null,
 };
 
 export const LOAD_USER_REQUEST = 'LOAD_USER_REQUEST';
@@ -31,6 +35,10 @@ export const UPDATE_USERPOSITION_FAILURE = 'UPDATE_USERPOSITION_FAILURE';
 export const UPDATE_USERTECH_REQUEST = 'UPDATE_USERTECH_REQUEST';
 export const UPDATE_USERTECH_SUCCESS = 'UPDATE_USERTECH_SUCCESS';
 export const UPDATE_USERTECH_FAILURE = 'UPDATE_USERTECH_FAILURE';
+
+export const RECOMMEND_USER_REQUEST = 'RECOMMEND_USER_REQUEST';
+export const RECOMMEND_USER_SUCCESS = 'RECOMMEND_USER_SUCCESS';
+export const RECOMMEND_USER_FAILURE = 'RECOMMEND_USER_FAILURE';
 
 let tempuser = {};
 
@@ -94,6 +102,20 @@ export const reducer = (state = initialState, action) =>
       case UPDATE_USERTECH_FAILURE:
         draft.updateUserTechLoading = false;
         draft.updateUserTechError = action.error;
+        break;
+      case RECOMMEND_USER_REQUEST:
+        draft.recommendUserLoading = true;
+        draft.recommendUserDone = false;
+        draft.recommendUserError = null;
+        break;
+      case RECOMMEND_USER_SUCCESS:
+        draft.recommend = action.data;
+        draft.recommendUserLoading = false;
+        draft.recommendUserDone = true;
+        break;
+      case RECOMMEND_USER_FAILURE:
+        draft.recommendUserLoading = false;
+        draft.recommendUserError = action.error;
         break;
       default:
         break;

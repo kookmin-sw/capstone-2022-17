@@ -52,7 +52,7 @@ const Container = styled.div`
   transition: transform 300ms ease-in-out;
 
   &:hover {
-    transform: translateY(-0.5rem);
+    transform: translateY(-0.3rem);
     box-shadow: 0px 3px 7px 1px #aeadad;
   }
 `;
@@ -67,7 +67,8 @@ const MyProjCard = ({ project }) => {
   const { destroyMemberDone } = useSelector((state) => state.member);
   const { user } = useSelector((state) => state.authentication);
 
-  const handleOut = () => {
+  const handleOut = (e) => {
+    e.stopPropagation();
     if (window.confirm('정말 나가시겠습니까?')) {
       dispatch({
         type: DESTROY_MEMBER_REQUEST,
@@ -83,14 +84,21 @@ const MyProjCard = ({ project }) => {
   }, [destroyMemberDone]);
 
   return (
-    <Container>
+    <Container onClick={() => navigate(`/project/${project.id}`)}>
       <Thumbnail img={project.thumbnail} />
       <Text>
         <CardName cardName={project.title} />
         <CardPeriod startDate={project.startDate} endDate={project.endDate} />
         <MyPosition myPosition={project.myPosition}>프론트엔드</MyPosition>
         {project.status === 'IN_PROGRESS' && project.userId === user.user.id ? (
-          <ManageBtn onClick={() => navigate(`/project/setting/${project.id}`)}>관리하기</ManageBtn>
+          <ManageBtn
+            onClick={(e) => {
+              e.stopPropagation();
+              navigate(`/project/setting/${project.id}`);
+            }}
+          >
+            관리하기
+          </ManageBtn>
         ) : null}
         {project.status === 'IN_PROGRESS' && project.userId !== user.user.id ? (
           <OutBtn onClick={handleOut}>프로젝트 나가기</OutBtn>

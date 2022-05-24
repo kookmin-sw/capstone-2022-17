@@ -12,7 +12,7 @@ const Container = styled.div`
   display: flex;
   width: 100vw;
   max-width: 1200px;
-  margin: 2rem auto 5rem auto;
+  margin: 2rem auto 10rem auto;
 `;
 
 const CardContainer = styled.div`
@@ -47,15 +47,9 @@ const GridDiv = styled(Grid.Column)`
 
 const MyProject = () => {
   const dispatch = useDispatch();
-  const { myCurrentPage, myTotalPage, myProjectList, myTotalElements, loadMyProjectListDone } =
+  const { myCurrentPage, myTotalPage, myProjectList, myTotalElements, loadMyProjectListLoading } =
     useSelector((state) => state.projectList);
   const [status, setStatus] = useState('PROGRESS');
-
-  useEffect(() => {
-    if (loadMyProjectListDone) {
-      console.log(myCurrentPage, myTotalPage, myProjectList);
-    }
-  }, [loadMyProjectListDone]);
 
   // 최초 1회
   useEffect(() => {
@@ -95,7 +89,7 @@ const MyProject = () => {
         </TextContainer>
       ) : (
         <Ct.ColumnMiddleContainer>
-          <GridContainer>
+          <GridContainer className={loadMyProjectListLoading ? 'loading' : null}>
             {myProjectList.map((project) => {
               return (
                 <GridDiv tablet={6} computer={4}>
