@@ -18,8 +18,8 @@ const LikesNum = styled.div`
 const Likes = ({ project }) => {
   const dispatch = useDispatch();
   const { likeProjectDone, destroyLikeProjectDone } = useSelector((state) => state.project);
-  const [likes, setLikes] = useState(project?.likes);
-  const [likeStatus, setLikeStatus] = useState(project?.like);
+  const [likes, setLikes] = useState(0);
+  const [likeStatus, setLikeStatus] = useState(false);
 
   const handleLike = () => {
     dispatch({
@@ -29,6 +29,11 @@ const Likes = ({ project }) => {
       },
     });
   };
+
+  useEffect(() => {
+    setLikes(project?.likes);
+    setLikeStatus(project?.like);
+  }, [project]);
 
   useEffect(() => {
     if (likeProjectDone) {

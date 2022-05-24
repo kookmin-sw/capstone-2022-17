@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Label } from 'semantic-ui-react';
 
-const TagDiv = styled.div`
-  font-size: 0.8rem;
-  font-family: 'Pr-Light';
-  color: #999999;
-  background-color: #f5f5f5;
-  border-radius: 1rem;
-  padding: 0.3rem 0.5rem;
-  margin: 0 0.2rem 0.5rem 0;
-  display: inline-block;
+const TagDiv = styled(Label)`
+  font-size: 0.8rem !important;
+  font-family: 'Pr-Light' !important;
+  border-radius: 1rem !important;
+  padding: 0.3rem 0.5rem !important;
+  margin: 0 0.2rem 0.5rem 0 !important;
 `;
 
 const Tag = ({ techName }) => {

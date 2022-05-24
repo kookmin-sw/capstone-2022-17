@@ -13,8 +13,8 @@ export const initialState = {
   loadProjectListDone: false,
   loadProjectListError: false,
   currentPage: 1,
-  totalPage: null,
-  totalElements: null,
+  totalPage: 1,
+  totalElements: 1,
 
   // 내 프로젝트 페이지 - 프로젝트 불러오기
   myProjectList: [],
