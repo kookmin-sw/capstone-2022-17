@@ -10,7 +10,11 @@ const ProjectName = styled.div`
 `;
 
 const CardName = ({ cardName }) => {
-  return <ProjectName> {cardName} </ProjectName>;
+  return (
+    <ProjectName>
+      {cardName.length > 11 ? cardName.substr(0, 11).concat('...') : cardName}
+    </ProjectName>
+  );
 };
 
 export default CardName;
