@@ -12,16 +12,16 @@ import MyPosition from './MyPosition';
 
 const OutBtn = styled(Btn.PrimaryBtn)`
   font-size: 0.9rem !important;
-  border-radius: 0.3rem !important;
+  border-radius: 2rem !important;
   height: 2.2rem !important;
-  margin: 0.5rem 0 !important;
+  margin-top: 1.5rem !important;
   width: 100%;
   cursor: pointer;
 
   background: #ff0707 !important;
 
   &:hover {
-    background: #d12525 !important;
+    background: #fe3f3f !important;
   }
 `;
 
