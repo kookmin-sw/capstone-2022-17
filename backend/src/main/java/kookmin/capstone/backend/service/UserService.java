@@ -10,6 +10,7 @@ import kookmin.capstone.backend.dto.userDTO.UserDTO;
 import kookmin.capstone.backend.dto.authDTO.SignupDTO;
 import kookmin.capstone.backend.dto.userDTO.UserPositionDTO;
 import kookmin.capstone.backend.dto.userDTO.UserTechDTO;
+import kookmin.capstone.backend.repository.MemberRepository;
 import kookmin.capstone.backend.repository.UserPositionRepository;
 import kookmin.capstone.backend.repository.UserRepository;
 import kookmin.capstone.backend.repository.UserTechRepository;
@@ -34,6 +35,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserTechRepository userTechRepository;
     private final UserPositionRepository userPositionRepository;
+    private final MemberRepository memberRepository;
     private final JwtTokenService jwtTokenService;
 
     private final FastApiUserService fastApiUserService;
@@ -145,7 +147,10 @@ public class UserService {
     }
 
     public List<UserDTO> findRecommendUser(Long projectId) {
-        List<Long> userIds = fastApiProjectService.getRecommendUser(projectId, 4);
+        List<Long> allMemberType = memberRepository.findAllMemberType(projectId);
+        List<Long> userIds = fastApiProjectService.getRecommendUser(projectId, 10)
+                .stream().filter(e -> !allMemberType.contains(e)).collect(Collectors.toCollection(ArrayList::new));
+
         return userRepository.findRecommend(userIds).stream().map(e -> UserDTO.entityToDto(e))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
