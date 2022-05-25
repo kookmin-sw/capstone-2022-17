@@ -22,14 +22,14 @@ const Likes = ({ project }) => {
   const handleLike = (e) => {
     e.stopPropagation();
     dispatch({
-      type: project?.likes ? DESTROY_LIKE_PROJECT_REQUEST : LIKE_PROJECT_REQUEST,
+      type: project?.like ? DESTROY_LIKE_PROJECT_REQUEST : LIKE_PROJECT_REQUEST,
       id: project.id,
     });
   };
 
   return (
     <LikesNum onClick={handleLike}>
-      <Icon name={project?.likes ? 'heart' : 'heart outline'} />
+      <Icon name={project?.like ? 'heart' : 'heart outline'} style={{ cursor: 'pointer' }} />
       {project?.likes || '0'}
     </LikesNum>
   );
