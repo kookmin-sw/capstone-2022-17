@@ -76,6 +76,7 @@ public class UserService {
         }
 
         userStack.stream().forEach(stack -> findUser.addTechStack(new UserTech(stack)));
+        fastApiUserService.updateUserTech(userId, findUser.getTechStack().stream().map(e -> e.getStack()).collect(Collectors.toCollection(ArrayList::new)));
 
         findUser.update(userDTO.getNickname(), userDTO.getAvatar(), userDTO.getInstaId(),
                 userDTO.getBlog(), userDTO.getGithub(), userDTO.getIntroduce());
