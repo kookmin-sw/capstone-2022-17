@@ -18,7 +18,7 @@ const Img = styled.img`
 const LeftRecoThumbnail = ({ img }) => {
   return (
     <Container>
-      <Img src={img} />
+      <Img src={img || `${process.env.PUBLIC_URL}/images/card/cardImg5.png`} />
     </Container>
   );
 };

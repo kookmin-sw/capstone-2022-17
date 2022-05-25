@@ -18,7 +18,7 @@ const positionOption = [
   { key: 17, text: '데브옵스', value: '데브옵스' },
   { key: 18, text: '인터넷 보안', value: '인터넷 보안' },
   { key: 19, text: '임베디드 소프트웨어', value: '임베디드 소프트웨어' },
-  { key: 20, text: '로보틱스 미들웨어', value: '로보틱스 미들웨어' },
+  { key: 20, text: '컴퓨터 비전', value: '컴퓨터 비전' },
   { key: 21, text: 'QA', value: 'QA' },
   { key: 22, text: '사물인터넷(IoT)', value: '사물인터넷(IoT)' },
   { key: 23, text: '응용 프로그램', value: '응용 프로그램' },

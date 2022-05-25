@@ -8,7 +8,7 @@ const Container = styled.div`
 
 const Img = styled.img`
   width: 13rem;
-  height: 100%;
+  height: 8rem;
   overflow: hidden;
   object-fit: cover;
   border-radius: 1rem;
@@ -17,7 +17,7 @@ const Img = styled.img`
 const RightRecoThumbnail = ({ img }) => {
   return (
     <Container>
-      <Img src={img} />
+      <Img src={img || `${process.env.PUBLIC_URL}/images/card/cardImg2.png`} />
     </Container>
   );
 };

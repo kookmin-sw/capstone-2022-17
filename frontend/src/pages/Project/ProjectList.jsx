@@ -277,15 +277,26 @@ const ProjectList = () => {
               />
             </LeftRecoBox>
             <RightRecoBox>
-              {recommend.slice(1, 4).map((recoproject) => {
-                return (
-                  <RightRecoCard
-                    done={loadMainProjectListDone}
-                    loading={loadMainProjectListLoading}
-                    project={recoproject}
-                  />
-                );
-              })}
+              {recommend.length > 0 &&
+                recommend.slice(1, 4).map((recoproject) => {
+                  return (
+                    <RightRecoCard
+                      done={loadMainProjectListDone}
+                      loading={loadMainProjectListLoading}
+                      project={recoproject}
+                    />
+                  );
+                })}
+              {recommend.length < 1 &&
+                [...Array(3)].map((recoproject) => {
+                  return (
+                    <RightRecoCard
+                      done={loadMainProjectListDone}
+                      loading={loadMainProjectListLoading}
+                      project={recoproject}
+                    />
+                  );
+                })}
             </RightRecoBox>
           </RecoBox>
         </Recommand>

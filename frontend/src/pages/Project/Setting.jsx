@@ -51,7 +51,7 @@ const Setting = () => {
   const { id } = useParams();
   const { project, loadProjectDone, destroyProjectDone } = useSelector((state) => state.project);
   const { memberList, loadCandidateDone } = useSelector((state) => state.member);
-  const { recommend } = useSelector((state) => state.user);
+  const { recommend, recommendUserDone } = useSelector((state) => state.user);
 
   const [state, setState] = useState('추천멤버 조회');
 
@@ -128,14 +128,18 @@ const Setting = () => {
             )}
           </MemberContainer>
           <MemberContainer style={state !== '추천멤버 조회' ? { display: 'none' } : null}>
-            {recommend?.map((user, index) => {
-              return (
-                <>
-                  <Suggestion project={project} user={user} />
-                  {index !== recommend.length - 1 && <Divider style={{ width: '90%' }} />}
-                </>
-              );
-            })}
+            {recommendUserDone && recommend?.length === 0 ? (
+              <Title style={{ marginTop: '7rem' }}>지원자가 없습니다</Title>
+            ) : (
+              recommend?.map((user, index) => {
+                return (
+                  <>
+                    <Suggestion project={project} user={user} />
+                    {index !== recommend.length - 1 && <Divider style={{ width: '90%' }} />}
+                  </>
+                );
+              })
+            )}
           </MemberContainer>
         </>
       )}

@@ -13,6 +13,7 @@ const Container = styled.div`
   background-color: ${(props) => (props.isTwo ? '#fff' : '#f8f9fa')};
 
   width: 14rem;
+  height: 17.5rem;
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
   cursor: ${(props) => !props.loading && 'pointer'};

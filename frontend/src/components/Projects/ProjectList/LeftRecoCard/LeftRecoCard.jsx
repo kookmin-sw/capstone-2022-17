@@ -44,11 +44,15 @@ const LeftRecoCard = ({ project, loading }) => {
         <LeftRecoCardName cardName={project?.title} />
         <Likes project={project} />
       </Title>
-      <RecoContent content={project?.description} />
+      <RecoContent>{project?.description || '같이 프로젝트 하실 분 구합니다!'}</RecoContent>
       <TagDiv>
         {project?.techStack &&
           project?.techStack.slice(0, 3).map((tech) => {
             return <Tag techName={tech?.stack} />;
+          })}
+        {!project &&
+          ['C++', 'Python', 'Java', 'Node.js', 'React.js'].map((tech) => {
+            return <Tag techName={tech} />;
           })}
       </TagDiv>
     </Container>
