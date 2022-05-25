@@ -21,7 +21,7 @@ const SideMenu = ({ setStatus }) => {
       </Menu>
       <hr />
       <Menu status="LIKES" setStatus={setStatus}>
-        찜한 프로젝트
+        좋아요 한 프로젝트
       </Menu>
     </Container>
   );
