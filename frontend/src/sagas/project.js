@@ -121,7 +121,7 @@ const projectLikeAPI = (data) => axios.post(`/project/like`, data, { headers: au
 
 function* projectLike(action) {
   try {
-    const result = yield call(projectLikeAPI, action.data);
+    const result = yield call(projectLikeAPI, action.datak);
     yield put({
       type: LIKE_PROJECT_SUCCESS,
       data: camelize(result.data),

@@ -13,7 +13,7 @@ import MyPosition from './MyPosition';
 const OutBtn = styled(Btn.PrimaryBtn)`
   font-size: 0.9rem !important;
   border-radius: 2rem !important;
-  height: 2.2rem !important;
+  height: '2.2rem' !important;
   margin-top: 1.5rem !important;
   width: 100%;
   cursor: pointer;
@@ -44,7 +44,7 @@ const Container = styled.div`
   background-color: #f8f9fa;
 
   width: 14rem;
-  min-height: 18rem;
+  min-height: ${(props) => (props.isProgress ? '18rem' : '14rem')};
   border-radius: 1rem;
   margin: 1.4rem 0.6rem;
   padding-bottom: 0.3rem;
@@ -84,12 +84,19 @@ const MyProjCard = ({ project }) => {
   }, [destroyMemberDone]);
 
   return (
-    <Container onClick={() => navigate(`/project/${project.id}`)}>
+    <Container
+      isProgress={project.myPosition && project.status === 'IN_PROGRESS'}
+      onClick={() => navigate(`/project/${project.id}`)}
+    >
       <Thumbnail img={project.thumbnail} />
       <Text>
         <CardName cardName={project.title} />
         <CardPeriod startDate={project.startDate} endDate={project.endDate} />
-        <MyPosition myPosition={project.myPosition}>프론트엔드</MyPosition>
+        {project.myPosition && <MyPosition myPosition={project.myPosition} />}
+        {!project.myPosition &&
+          project.techStack.slice(0, 3).map((tech) => {
+            return <MyPosition myPosition={tech.stack} />;
+          })}
         {project.status === 'IN_PROGRESS' && project.userId === user.user.id ? (
           <ManageBtn
             onClick={(e) => {
@@ -100,9 +107,9 @@ const MyProjCard = ({ project }) => {
             관리하기
           </ManageBtn>
         ) : null}
-        {project.status === 'IN_PROGRESS' && project.userId !== user.user.id ? (
-          <OutBtn onClick={handleOut}>프로젝트 나가기</OutBtn>
-        ) : null}
+        {project.status === 'IN_PROGRESS' && project.userId !== user.user.id
+          ? project.myPosition && <OutBtn onClick={handleOut}>프로젝트 나가기</OutBtn>
+          : null}
       </Text>
     </Container>
   );
