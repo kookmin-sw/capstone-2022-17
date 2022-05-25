@@ -17,7 +17,7 @@ const positions = [
   { id: 15, name: '데브옵스' },
   { id: 16, name: '인터넷 보안' },
   { id: 17, name: '임베디드 소프트웨어' },
-  { id: 18, name: '로보틱스 미들웨어' },
+  { id: 18, name: '컴퓨터 비전' },
   { id: 19, name: 'QA' },
   { id: 20, name: '사물인터넷(IoT)' },
   { id: 21, name: '응용 프로그램' },

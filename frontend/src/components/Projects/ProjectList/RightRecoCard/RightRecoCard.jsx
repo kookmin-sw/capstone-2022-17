@@ -49,14 +49,18 @@ const RightRecoCard = ({ project, loading }) => {
       <RightRecoThumbnail img={project?.thumbnail} />
       <Content>
         <Title>
-          <RightRecoCardName cardName={project?.title} />
+          <RightRecoCardName cardName={project?.title || '추천 프로젝트'} />
           <Likes project={project} />
         </Title>
-        <RightRecoContent content={project?.description} />
+        <RightRecoContent content={project?.description || '같이 프로젝트 하실 분 구합니다!'} />
         <TagDiv>
           {project?.techStack &&
             project?.techStack.slice(0, 3).map((tech) => {
               return <Tag techName={tech?.stack} />;
+            })}
+          {!project &&
+            ['C++', 'Python', 'Java', 'Node.js'].map((tech) => {
+              return <Tag techName={tech} />;
             })}
         </TagDiv>
       </Content>

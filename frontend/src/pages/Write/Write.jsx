@@ -44,6 +44,7 @@ const TitleIcon = styled.img`
 const Title = styled.input`
   font-family: 'Pr-SemiBold';
   font-size: 2.3rem;
+  width: 59vw;
 `;
 
 const InputContainer = styled(Container.RowStartContainer)`
@@ -354,7 +355,6 @@ const Write = () => {
                         setStartDate(date);
                         if (date > endDate) {
                           setEndDate(date);
-                          alert('123');
                         }
                       }}
                       customInput={<Input />}

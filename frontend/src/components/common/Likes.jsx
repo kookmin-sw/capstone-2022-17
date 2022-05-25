@@ -31,7 +31,7 @@ const Likes = ({ project }) => {
   return (
     <LikesNum onClick={handleLike}>
       <Icon name={project?.likes ? 'heart' : 'heart outline'} />
-      {project?.likes}
+      {project?.likes || '0'}
     </LikesNum>
   );
 };
