@@ -9,7 +9,7 @@ const ProjectName = styled.div`
 const LeftRecoCardName = ({ cardName }) => {
   return (
     <ProjectName>
-      {cardName.length > 30 ? cardName.substr(0, 30).concat('..') : cardName}
+      {cardName?.length > 30 ? cardName.substr(0, 30).concat('..') : cardName}
     </ProjectName>
   );
 };
