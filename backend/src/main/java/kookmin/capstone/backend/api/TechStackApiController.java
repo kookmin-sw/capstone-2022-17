@@ -28,7 +28,7 @@ public class TechStackApiController {
     @GetMapping("/v1/techStack/list")
     @ApiOperation(value = "테크 스택 조회")
     public ResponseEntity searchTech(HttpServletRequest request) {
-        List<TechStackDTO> stackDTOList = techStackService.getTechStack(request.getQueryString().split("=")[1]);
+        List<TechStackDTO> stackDTOList = techStackService.getTechStack(request.getQueryString().split("=")[1].replaceAll("%20", " "));
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.TECHSTACK_GET_SUCCESS, stackDTOList));
     }
