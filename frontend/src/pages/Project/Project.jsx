@@ -83,7 +83,7 @@ const Project = () => {
             <TagBox>
               {project.techStack &&
                 project.techStack.map((tech) => {
-                  return <Tag techName={tech.stack} />;
+                  return <Tag techName={tech} />;
                 })}
             </TagBox>
             <InfoBox>

@@ -106,7 +106,7 @@ const Home = () => {
     <Container isSign={user}>
       <Banner src={`${process.env.PUBLIC_URL}/images/home/bannerImg.png`} />
       <ContentContainer>
-        {user && (
+        {user && recommend.length > 0 && (
           <Content1>
             <Title>
               <TextBox>
@@ -132,7 +132,7 @@ const Home = () => {
             </CardList>
           </Content1>
         )}
-        <Content2Bg isSign={user}>
+        <Content2Bg isSign={user && recommend.length > 0}>
           <Content2>
             <Title>
               <TextBox>
@@ -148,14 +148,14 @@ const Home = () => {
                     project={project}
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
-                    isTwo={user}
+                    isTwo={user && recommend.length > 0}
                   />
                 );
               })}
             </CardList>
           </Content2>
         </Content2Bg>
-        <Content2Bg isSign={!user}>
+        <Content2Bg isSign={!(user && recommend.length > 0)}>
           <Content1>
             <Title>
               <TextBox>
@@ -171,7 +171,7 @@ const Home = () => {
                     project={project}
                     key={project.id}
                     onClick={() => navigate(`/project/${project.id}`)}
-                    isTwo={!user}
+                    isTwo={!(user && recommend.length > 0)}
                   />
                 );
               })}
