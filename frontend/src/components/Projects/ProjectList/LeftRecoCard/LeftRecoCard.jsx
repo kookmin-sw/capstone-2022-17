@@ -36,6 +36,7 @@ const TagDiv = styled.div`
 
 const LeftRecoCard = ({ project, loading }) => {
   const navigate = useNavigate();
+
   return (
     <Container className={loading && 'loading'} onClick={() => navigate(`/project/${project?.id}`)}>
       <LeftRecoThumbnail img={project?.thumbnail} />

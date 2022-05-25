@@ -1,7 +1,9 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import styled from 'styled-components';
 import Likes from 'components/common/Likes';
 import Tag from 'components/Tag/Tag';
-import React from 'react';
-import styled from 'styled-components';
 import RightRecoContent from './RightRecoContent';
 import RightRecoThumbnail from './RightRecoThumbnail';
 import RightRecoCardName from './RightRecoCardName';
@@ -39,24 +41,23 @@ const TagDiv = styled.div`
   padding: 0rem 0 0rem 1rem;
 `;
 
-const project = null;
+const RightRecoCard = ({ project, loading }) => {
+  const navigate = useNavigate();
 
-const RightRecoCard = () => {
   return (
-    <Container>
-      <RightRecoThumbnail />
+    <Container className={loading && 'loading'} onClick={() => navigate(`/project/${project?.id}`)}>
+      <RightRecoThumbnail img={project?.thumbnail} />
       <Content>
         <Title>
-          <RightRecoCardName>프로젝트 제목</RightRecoCardName>
+          <RightRecoCardName cardName={project?.title} />
           <Likes project={project} />
         </Title>
-        <RightRecoContent>
-          {' '}
-          1. 모집 - 프론트엔드 (앱개발) 개발자 모집- 전기차 충전 인프라 효율성 극대화
-        </RightRecoContent>
+        <RightRecoContent content={project?.description} />
         <TagDiv>
-          <Tag>프론트엔드</Tag>
-          <Tag>프론트엔드</Tag>
+          {project?.techStack &&
+            project?.techStack.map((tech) => {
+              return <Tag techName={tech?.stack} />;
+            })}
         </TagDiv>
       </Content>
     </Container>

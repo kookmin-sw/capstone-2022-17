@@ -8,8 +8,8 @@ const Container = styled.div`
   padding: 0rem 1rem 1rem 1rem;
 `;
 
-const RecoContent = ({ children }) => {
-  return <Container>{children}</Container>;
+const RecoContent = ({ content }) => {
+  return <Container>{content}</Container>;
 };
 
 export default RecoContent;
