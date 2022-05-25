@@ -126,10 +126,9 @@ public class ProjectApiController {
 
     @PostMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 API")
-    public ResponseEntity addLike(@RequestBody ProjectRequestId projectRequestId, HttpServletRequest request) {
+    public ResponseEntity addLike(@RequestParam("id") Long id, HttpServletRequest request) {
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        Long projectId = projectRequestId.getProjectId();
-        if (!projectService.addLike(projectId, userId)) {
+        if (!projectService.addLike(id, userId)) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_ADD_FAIL));
         }
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.CREATED, ResponseMessage.PROJECT_LIKE_ADD_SUCCESS));
@@ -138,10 +137,9 @@ public class ProjectApiController {
 
     @DeleteMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 취소 API")
-    public ResponseEntity unLike(@RequestBody ProjectRequestId projectRequestId, HttpServletRequest request) {
+    public ResponseEntity unLike(@RequestParam("id") Long id, HttpServletRequest request) {
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        Long projectId = projectRequestId.getProjectId();
-        if (!projectService.removeLike(projectId, userId)) {
+        if (!projectService.removeLike(id, userId)) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL));
         }
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS));
@@ -163,10 +161,5 @@ public class ProjectApiController {
     @Data @AllArgsConstructor
     static class CreateUserResponse {
         private Long id;
-    }
-
-    @Data
-    static class ProjectRequestId {
-        private Long projectId;
     }
 }
