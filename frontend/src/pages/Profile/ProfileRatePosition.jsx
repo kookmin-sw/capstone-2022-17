@@ -41,6 +41,10 @@ const ProfileRatePosition = () => {
     }
   }, [updateUserPositionDone]);
 
+  useEffect(() => {
+    console.log(selected, positionScore);
+  }, []);
+
   return (
     <FadeIn delay={800} transitionDuration={600} wrapperTag={SurveyLayout}>
       <SubTitle>각 분야에 대한 자신의 실력을 점수로 매겨주세요.</SubTitle>
@@ -50,7 +54,7 @@ const ProfileRatePosition = () => {
       <RateContainer>
         {selected.map((check, index) => {
           return (
-            { check } && (
+            check && (
               <RatingCard
                 key={positions[index].id}
                 position={positions[index]}

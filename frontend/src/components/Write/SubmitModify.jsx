@@ -113,11 +113,11 @@ const SubmitModify = ({ data, url, id }) => {
       onClose={() => setOpen(false)}
       onOpen={() => setOpen(true)}
       open={open}
-      trigger={<SubmitBtn>작성완료</SubmitBtn>}
+      trigger={<SubmitBtn>수정완료</SubmitBtn>}
     >
       <ModalHeader>
         <BtnText onClick={handleClose}>취소</BtnText>
-        <ModalTitle>대표 이미지 등록</ModalTitle>
+        <ModalTitle>대표 이미지 수정</ModalTitle>
         <BtnText onClick={handleSubmit} style={{ color: COLOR.PRIMARY }}>
           완료
         </BtnText>

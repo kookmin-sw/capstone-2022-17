@@ -45,6 +45,7 @@ const TitleIcon = styled.img`
 const Title = styled.input`
   font-family: 'Pr-SemiBold';
   font-size: 1.6rem;
+  width: 59vw;
 `;
 
 const InputContainer = styled(Container.RowStartContainer)`
