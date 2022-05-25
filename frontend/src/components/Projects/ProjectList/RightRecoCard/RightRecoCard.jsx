@@ -55,7 +55,7 @@ const RightRecoCard = ({ project, loading }) => {
         <RightRecoContent content={project?.description} />
         <TagDiv>
           {project?.techStack &&
-            project?.techStack.map((tech) => {
+            project?.techStack.slice(0, 3).map((tech) => {
               return <Tag techName={tech?.stack} />;
             })}
         </TagDiv>
