@@ -117,11 +117,11 @@ function* watchProjectUpdate() {
 }
 
 // 프로젝트 좋아요
-const projectLikeAPI = (data) => axios.post('/project/like', data, { headers: authHeader() });
+const projectLikeAPI = (id) => axios.post(`/project/like?id=${id}`, { headers: authHeader() });
 
 function* projectLike(action) {
   try {
-    const result = yield call(projectLikeAPI, action.data);
+    const result = yield call(projectLikeAPI, action.id);
     yield put({
       type: LIKE_PROJECT_SUCCESS,
       data: camelize(result.data),
@@ -140,12 +140,12 @@ function* watchProjectLike() {
 }
 
 // 프로젝트 좋아요 취소
-const projectLikeDestroyAPI = (data) =>
-  axios.delete('/project/like', { data }, { headers: authHeader() });
+const projectLikeDestroyAPI = (id) =>
+  axios.delete(`/project/like?id=${id}`, { headers: authHeader() });
 
 function* projectLikeDestroy(action) {
   try {
-    const result = yield call(projectLikeDestroyAPI, action.data);
+    const result = yield call(projectLikeDestroyAPI, action.id);
     yield put({
       type: DESTROY_LIKE_PROJECT_SUCCESS,
       data: camelize(result.data),

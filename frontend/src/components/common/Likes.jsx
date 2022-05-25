@@ -22,9 +22,7 @@ const Likes = ({ project }) => {
     e.stopPropagation();
     dispatch({
       type: project?.likes ? DESTROY_LIKE_PROJECT_REQUEST : LIKE_PROJECT_REQUEST,
-      data: {
-        projectId: project.id,
-      },
+      id: project.id,
     });
   };
 
