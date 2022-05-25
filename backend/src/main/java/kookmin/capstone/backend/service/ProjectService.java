@@ -11,14 +11,12 @@ import kookmin.capstone.backend.domain.project.ProjectStatus;
 import kookmin.capstone.backend.domain.user.User;
 import kookmin.capstone.backend.domain.user.UserTech;
 import kookmin.capstone.backend.dto.memberDTO.RequestMemberDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.projectDTO.*;
 import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.exception.memberException.MemberAddException;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
+import kookmin.capstone.backend.exception.projectException.LikeException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.repository.MemberRepository;
 import kookmin.capstone.backend.repository.PositionRepository;
@@ -225,31 +223,38 @@ public class ProjectService {
     }
 
     @Transactional
-    public boolean addLike(Long projectId, Long userId) {
+    public LikeDTO addLike(Long projectId, Long userId) {
         Project findProject = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
         User findUser = userService.findUserById(userId);
+        LikeDTO likeDTO = new LikeDTO();
         if (projectLikeRepository.existsUserLike(projectId, userId)) {
-            return false;
+            likeDTO.setLike(false);
         } else {
             findProject.like();
             findProject.updateScore();
             projectLikeRepository.save(new ProjectLike(findUser, findProject));
-            return true;
+            likeDTO.setLike(true);
         }
+        likeDTO.setLikes(findProject.getLikes());
+        return likeDTO;
     }
 
     @Transactional
-    public boolean removeLike(Long projectId, Long userId) {
+    public LikeDTO removeLike(Long projectId, Long userId) throws LikeException {
         Project findProject = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
+        LikeDTO likeDTO = new LikeDTO();
 
         if (projectLikeRepository.existsUserLike(projectId, userId)) {
             findProject.unlike();
             findProject.updateScore();
             projectLikeRepository.deleteLike(projectId, userId);
-            return true;
+            likeDTO.setLike(false);
         } else {
-            return false;
+            throw new LikeException("좋아요 하지 않은 프로젝트");
         }
+
+        likeDTO.setLikes(findProject.getLikes());
+        return likeDTO;
     }
 
     public Page<ProjectDTO> getSearchProject(ProjectSearchCond projectSearchCond, Pageable pageable, Long userId) {
