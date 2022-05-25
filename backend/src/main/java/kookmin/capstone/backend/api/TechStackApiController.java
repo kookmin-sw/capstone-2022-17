@@ -9,13 +9,16 @@ import kookmin.capstone.backend.response.ResponseMessage;
 import kookmin.capstone.backend.response.StatusCode;
 import kookmin.capstone.backend.service.TechStackService;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/api")
 @Api(tags = {"테크 스택 API"})
 public class TechStackApiController {
@@ -24,8 +27,8 @@ public class TechStackApiController {
 
     @GetMapping("/v1/techStack/list")
     @ApiOperation(value = "테크 스택 조회")
-    public ResponseEntity searchTech(@RequestParam String name) {
-        List<TechStackDTO> stackDTOList = techStackService.getTechStack(name);
+    public ResponseEntity searchTech(HttpServletRequest request) {
+        List<TechStackDTO> stackDTOList = techStackService.getTechStack(request.getQueryString().split("=")[1]);
 
         return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.TECHSTACK_GET_SUCCESS, stackDTOList));
     }
