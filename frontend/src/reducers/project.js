@@ -14,6 +14,7 @@ export const initialState = {
   updateProjectLoading: false,
   updateProjectDone: false,
   updateProjectError: null,
+  likeResult: null,
   likeProjectLoading: false,
   likeProjectDone: false,
   likeProjectError: null,
@@ -109,6 +110,7 @@ export const reducer = (state = initialState, action) =>
         draft.likeProjectError = null;
         break;
       case LIKE_PROJECT_SUCCESS:
+        draft.likeResult = action.data.data;
         draft.likeProjectLoading = false;
         draft.likeProjectDone = true;
         break;
@@ -122,6 +124,7 @@ export const reducer = (state = initialState, action) =>
         draft.destroyLikeProjectError = null;
         break;
       case DESTROY_LIKE_PROJECT_SUCCESS:
+        draft.likeResult = action.data.data;
         draft.destroyLikeProjectLoading = false;
         draft.destroyLikeProjectDone = true;
         break;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { LIKE_PROJECT_REQUEST, DESTROY_LIKE_PROJECT_REQUEST } from 'reducers/project';
 
@@ -17,7 +17,8 @@ const LikesNum = styled.div`
 // 좋아요
 const Likes = ({ project }) => {
   const dispatch = useDispatch();
-
+  const { likeResult } = useSelector((state) => state.project);
+  console.log(likeResult);
   const handleLike = (e) => {
     e.stopPropagation();
     dispatch({
