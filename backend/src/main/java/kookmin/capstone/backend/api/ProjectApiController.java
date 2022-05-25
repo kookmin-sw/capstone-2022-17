@@ -137,13 +137,12 @@ public class ProjectApiController {
 
     @DeleteMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 취소 API")
-    public ResponseEntity unLike(@RequestBody Map<String, Long> project, HttpServletRequest request) throws LikeException {
+    public ResponseEntity unLike(@RequestParam Long id, HttpServletRequest request) throws LikeException {
         Long userId = jwtTokenService.get(request, "id", Long.class);
         LikeDTO likeDTO = null;
-        Long projectId = project.get("projectId");
 
         try {
-            likeDTO = projectService.removeLike(projectId, userId);
+            likeDTO = projectService.removeLike(id, userId);
         } catch (LikeException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL, likeDTO));
         }
