@@ -49,7 +49,7 @@ const RatePosition = () => {
       <RateContainer>
         {selected.map((check, index) => {
           return (
-            { check } && (
+            check && (
               <RatingCard
                 key={positions[index].id}
                 position={positions[index]}
