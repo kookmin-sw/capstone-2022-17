@@ -117,11 +117,11 @@ function* watchProjectUpdate() {
 }
 
 // 프로젝트 좋아요
-const projectLikeAPI = (id) => axios.post(`/project/like?id=${id}`, { headers: authHeader() });
+const projectLikeAPI = (data) => axios.post(`/project/like`, data, { headers: authHeader() });
 
 function* projectLike(action) {
   try {
-    const result = yield call(projectLikeAPI, action.id);
+    const result = yield call(projectLikeAPI, action.data);
     yield put({
       type: LIKE_PROJECT_SUCCESS,
       data: camelize(result.data),
