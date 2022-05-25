@@ -6,8 +6,10 @@ const ProjectName = styled.div`
   padding: 0.3rem 0.3rem 0 0;
 `;
 
-const RecoCardName = ({ cardName }) => {
-  return <ProjectName> {cardName} </ProjectName>;
+const RightRecoCardName = ({ cardName }) => {
+  return (
+    <ProjectName>{cardName.length > 7 ? cardName.substr(0, 7).concat('..') : cardName}</ProjectName>
+  );
 };
 
-export default RecoCardName;
+export default RightRecoCardName;

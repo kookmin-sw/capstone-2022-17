@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Likes from 'components/common/Likes';
 import Tag from 'components/Tag/Tag';
 import styled from 'styled-components';
-import RecoCardName from './LeftRecoCardName';
+import LeftRecoCardName from './LeftRecoCardName';
 import RecoContent from './LeftRecoContent';
 import LeftRecoThumbnail from './LeftRecoThumbnail';
 
@@ -41,7 +41,7 @@ const LeftRecoCard = ({ project, loading }) => {
     <Container className={loading && 'loading'} onClick={() => navigate(`/project/${project?.id}`)}>
       <LeftRecoThumbnail img={project?.thumbnail} />
       <Title>
-        <RecoCardName cardName={project?.title} />
+        <LeftRecoCardName cardName={project?.title} />
         <Likes project={project} />
       </Title>
       <RecoContent content={project?.description} />
