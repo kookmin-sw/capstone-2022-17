@@ -2,13 +2,11 @@ package kookmin.capstone.backend.api;
 
 import io.swagger.annotations.*;
 import kookmin.capstone.backend.domain.project.Project;
-import kookmin.capstone.backend.dto.projectDTO.ProjectDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectPositionDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectRequestDTO;
-import kookmin.capstone.backend.dto.projectDTO.ProjectSearchCond;
+import kookmin.capstone.backend.dto.projectDTO.*;
 import kookmin.capstone.backend.dto.userDTO.UserResDTO;
 import kookmin.capstone.backend.exception.memberException.MemberException;
 import kookmin.capstone.backend.exception.projectException.DuplicateProjectException;
+import kookmin.capstone.backend.exception.projectException.LikeException;
 import kookmin.capstone.backend.exception.projectException.ProjectException;
 import kookmin.capstone.backend.response.DefalutResponse;
 import kookmin.capstone.backend.response.ResponseMessage;
@@ -128,21 +126,27 @@ public class ProjectApiController {
     @ApiOperation(value = "프로젝트 좋아요 API")
     public ResponseEntity addLike(@RequestParam("id") Long id, HttpServletRequest request) {
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        if (!projectService.addLike(id, userId)) {
-            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_ADD_FAIL));
+        LikeDTO likeDTO = projectService.addLike(id, userId);
+        if (!likeDTO.isLike()) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_ADD_FAIL, likeDTO));
         }
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.CREATED, ResponseMessage.PROJECT_LIKE_ADD_SUCCESS));
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.CREATED, ResponseMessage.PROJECT_LIKE_ADD_SUCCESS, likeDTO));
     }
 
 
     @DeleteMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 취소 API")
-    public ResponseEntity unLike(@RequestParam("id") Long id, HttpServletRequest request) {
+    public ResponseEntity unLike(@RequestParam("id") Long id, HttpServletRequest request) throws LikeException {
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        if (!projectService.removeLike(id, userId)) {
-            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL));
+        LikeDTO likeDTO = null;
+
+        try {
+            likeDTO = projectService.removeLike(id, userId);
+        } catch (LikeException e) {
+            return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL, likeDTO));
         }
-        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS));
+
+        return ResponseEntity.ok(DefalutResponse.res(StatusCode.OK, ResponseMessage.PROJECT_LIKE_REMOVE_SUCCESS, likeDTO));
     }
 
     @GetMapping("/v1/project/join")
