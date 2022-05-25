@@ -99,14 +99,9 @@ const Applicant = ({ project, user }) => {
             <Position>{user.position}</Position>
           </Container.RowEndContainer>
           <Container.AlignMiddleContainer style={{ flexWrap: 'wrap', maxWidth: '50rem' }}>
-            {/* {user.userTechList.map((stack) => {
-            return <Tag key={stack}>{stack}</Tag>;
-          })} */}
-            <Tag>임시</Tag>
-            <Tag>임asfasd시</Tag>
-            <Tag>임dfs시</Tag>
-            <Tag>임시</Tag>
-            <Tag>임시</Tag>
+            {user?.userTechStack?.map((stack) => {
+              return <Tag key={stack}>{stack}</Tag>;
+            })}
           </Container.AlignMiddleContainer>
         </Container.ColumnStartContainer>
       </Container.AlignMiddleContainer>
