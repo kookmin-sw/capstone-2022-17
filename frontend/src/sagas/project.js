@@ -141,7 +141,7 @@ function* watchProjectLike() {
 
 // 프로젝트 좋아요 취소
 const projectLikeDestroyAPI = (data) =>
-  axios.delete('/project/like', data, { headers: authHeader() });
+  axios.delete('/project/like', { data }, { headers: authHeader() });
 
 function* projectLikeDestroy(action) {
   try {
