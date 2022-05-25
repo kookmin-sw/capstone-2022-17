@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Icon } from 'semantic-ui-react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { LIKE_PROJECT_REQUEST, DESTROY_LIKE_PROJECT_REQUEST } from 'reducers/project';
 
@@ -17,42 +17,21 @@ const LikesNum = styled.div`
 // 좋아요
 const Likes = ({ project }) => {
   const dispatch = useDispatch();
-  const { likeProjectDone, destroyLikeProjectDone } = useSelector((state) => state.project);
-  const [likes, setLikes] = useState(0);
-  const [likeStatus, setLikeStatus] = useState(false);
 
-  const handleLike = () => {
+  const handleLike = (e) => {
+    e.stopPropagation();
     dispatch({
-      type: likeStatus ? DESTROY_LIKE_PROJECT_REQUEST : LIKE_PROJECT_REQUEST,
+      type: project?.likes ? DESTROY_LIKE_PROJECT_REQUEST : LIKE_PROJECT_REQUEST,
       data: {
         projectId: project.id,
       },
     });
   };
 
-  useEffect(() => {
-    setLikes(project?.likes);
-    setLikeStatus(project?.like);
-  }, [project]);
-
-  useEffect(() => {
-    if (likeProjectDone) {
-      setLikes(likes + 1);
-      setLikeStatus(true);
-    }
-  }, [likeProjectDone]);
-
-  useEffect(() => {
-    if (destroyLikeProjectDone) {
-      setLikes(likes - 1);
-      setLikeStatus(false);
-    }
-  }, [destroyLikeProjectDone]);
-
   return (
     <LikesNum onClick={handleLike}>
-      <Icon name={likeStatus ? 'heart' : 'heart outline'} />
-      {likes}
+      <Icon name={project?.likes ? 'heart' : 'heart outline'} />
+      {project?.likes}
     </LikesNum>
   );
 };
