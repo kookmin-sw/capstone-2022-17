@@ -277,9 +277,15 @@ const ProjectList = () => {
               />
             </LeftRecoBox>
             <RightRecoBox>
-              <RightRecoCard />
-              <RightRecoCard />
-              <RightRecoCard />
+              {recommend.slice(1, 4).map((recoproject) => {
+                return (
+                  <RightRecoCard
+                    done={loadMainProjectListDone}
+                    loading={loadMainProjectListLoading}
+                    project={recoproject}
+                  />
+                );
+              })}
             </RightRecoBox>
           </RecoBox>
         </Recommand>
