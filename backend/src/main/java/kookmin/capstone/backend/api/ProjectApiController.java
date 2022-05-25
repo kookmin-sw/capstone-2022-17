@@ -124,9 +124,10 @@ public class ProjectApiController {
 
     @PostMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 API")
-    public ResponseEntity addLike(@RequestParam("id") Long id, HttpServletRequest request) {
+    public ResponseEntity addLike(@RequestBody Map<String, Long> project, HttpServletRequest request) {
+        Long projectId = project.get("projectId");
         Long userId = jwtTokenService.get(request, "id", Long.class);
-        LikeDTO likeDTO = projectService.addLike(id, userId);
+        LikeDTO likeDTO = projectService.addLike(projectId, userId);
         if (!likeDTO.isLike()) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_ADD_FAIL, likeDTO));
         }
@@ -136,12 +137,13 @@ public class ProjectApiController {
 
     @DeleteMapping("/v1/project/like")
     @ApiOperation(value = "프로젝트 좋아요 취소 API")
-    public ResponseEntity unLike(@RequestParam("id") Long id, HttpServletRequest request) throws LikeException {
+    public ResponseEntity unLike(@RequestBody Map<String, Long> project, HttpServletRequest request) throws LikeException {
         Long userId = jwtTokenService.get(request, "id", Long.class);
         LikeDTO likeDTO = null;
+        Long projectId = project.get("projectId");
 
         try {
-            likeDTO = projectService.removeLike(id, userId);
+            likeDTO = projectService.removeLike(projectId, userId);
         } catch (LikeException e) {
             return ResponseEntity.badRequest().body(DefalutResponse.res(StatusCode.BAD_REQUEST, ResponseMessage.PROJECT_LIKE_REMOVE_FAIL, likeDTO));
         }
