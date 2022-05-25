@@ -22,7 +22,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class FastApiUserService {
 
-    private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(1);
+    private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(3);
 
     private final WebClient fastApiClient = WebClient.create("http://54.87.37.39/user");
 
