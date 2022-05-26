@@ -1,0 +1,21 @@
+const regionOption = [
+  { key: 1, text: '지역 미지정', value: '지역 미지정' },
+  { key: 2, text: '서울특별시', value: '서울특별시' },
+  { key: 3, text: '경기도', value: '경기도' },
+  { key: 4, text: '부산광역시', value: '부산광역시' },
+  { key: 5, text: '인천광역시', value: '인천광역시' },
+  { key: 6, text: '대구광역시', value: '대구광역시' },
+  { key: 7, text: '경상남도', value: '경상남도' },
+  { key: 8, text: '경상북도', value: '경상북도' },
+  { key: 9, text: '대전광역시', value: '대전광역시' },
+  { key: 10, text: '충청남도', value: '충청남도' },
+  { key: 11, text: '충청북도', value: '충청북도' },
+  { key: 12, text: '전라남도', value: '전라남도' },
+  { key: 13, text: '전라북도', value: '전라북도' },
+  { key: 14, text: '광주광역시', value: '광주광역시' },
+  { key: 15, text: '강원도', value: '강원도' },
+  { key: 16, text: '울산광역시', value: '울산광역시' },
+  { key: 17, text: '제주도', value: '제주도' },
+  { key: 18, text: '세종시', value: '세종시' },
+];
+export default regionOption;
