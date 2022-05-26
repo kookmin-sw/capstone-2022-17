@@ -1,8 +1,14 @@
-# Default ignored files
-/shelf/
-/.idea/
-# Editor-based HTTP Client requests
-/httpRequests/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+*.env
+
+/__pycache__
+
+/routes/__pycache__
+
+/database/__pycache__
+
+/models/__pycache__
+
+/capstone-2022-17
+
+
+
