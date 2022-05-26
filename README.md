@@ -9,7 +9,7 @@
 
 <br/>
 
-## 1. 프로젝트 소개
+## 💬 프로젝트 소개
 >"프로젝트 해야 되는데.. 좋은 팀원을 어디서 구하지?”
 
 개발자에 대한 수요가 늘어나면서, 개발자가 되고자 하는 사람들이 많아졌다. 포트폴리오를 채우고, 개발 실력을 향상시키기 위해 자연스레 팀 프로젝트는 필수 요소가 되었다.
@@ -21,7 +21,7 @@
 
 <br/>
 
-### 2. Abstract
+### Abstract
 
 Increasing needs for developer, many people want to become a developer.
 To fill their resume and enhance development skills, the experience worked for team projects is necessary today.
@@ -41,7 +41,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 ### 💻 시스템 구성도
 <img src="https://user-images.githubusercontent.com/71240296/170535469-2c0709b5-1bd0-4377-9678-c70ac85c366f.png" width="600"/>
 
-### 🎯 기대효과
+### 🚢 기대효과
 1️⃣ 자신에게 맞는 프로젝트 추천
 
 2️⃣ 신뢰할 수 있는 팀원 추천
@@ -49,13 +49,14 @@ We wish that developers can have efficient matchings and satisfying project expe
 3️⃣ 프로젝트와 팀원을 찾는 시간 단축
 
 
-## 3. 소개 영상
+## 📹 소개 영상 
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/JqZ5rZ_jD8M" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![티밍 시연 영상](http://img.youtube.com/vi/JqZ5rZ_jD8M/0.jpg)](https://www.youtube.com/watch?v=JqZ5rZ_jD8M?t=0s)
 
+(시연 영상 유튜브 링크 입니다.)
 <br/>
 
-## 4. 팀 소개
+## 👋 팀 소개 
 
 > 팀장 송경석
 
@@ -95,7 +96,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 <br/>
 
-## 5. 사용법 ✏️
+## ✏️ 사용법 ️
 ### 1. 프론트엔드
 1. Git repository를 clone 하여 받아온다. 
 <br />
@@ -170,4 +171,3 @@ vi key.env
 ```
 uvicorn main:app --reload --env-file=".env"
 ```
-## 5. 기타
