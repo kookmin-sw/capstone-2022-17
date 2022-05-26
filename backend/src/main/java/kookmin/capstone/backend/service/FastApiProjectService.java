@@ -4,6 +4,7 @@ import kookmin.capstone.backend.domain.project.Project;
 import kookmin.capstone.backend.domain.project.ProjectPosition;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -89,6 +90,7 @@ public class FastApiProjectService {
     }
 
     public List<Long> getRecommendUser(Long projectId, int num) {
+        
         String[] block = fastApiClient.get()
                 .uri(uriBuilder ->
                         uriBuilder.path("/recommend")
@@ -100,6 +102,19 @@ public class FastApiProjectService {
                 .bodyToMono(String[].class).block(REQUEST_TIMEOUT);
 
         return Stream.of(block).map(e -> Long.parseLong(e)).collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public void deleteProject(Long projectId) {
+        ProjectRes projectRes = ProjectRes.builder().
+                project_id(projectId.toString()).
+                build();
+
+        fastApiClient.method(HttpMethod.DELETE)
+                .uri("/delete")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(projectRes), ProjectRes.class)
+                .retrieve()
+                .bodyToMono(ProjectRes.class).block(REQUEST_TIMEOUT);
     }
 
 
