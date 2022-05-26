@@ -51,7 +51,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 
 ## 📹 소개 영상 
 
-[![티밍 시연 영상](http://img.youtube.com/vi/JqZ5rZ_jD8M/0.jpg){:target="_blank"}](https://www.youtube.com/watch?v=JqZ5rZ_jD8M?t=0s)
+[![티밍 시연 영상](http://img.youtube.com/vi/JqZ5rZ_jD8M/0.jpg)](https://www.youtube.com/watch?v=JqZ5rZ_jD8M?t=0s)
 
 (시연 영상 유튜브 링크 입니다.)
 <br/>
