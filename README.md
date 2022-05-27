@@ -99,10 +99,7 @@ We wish that developers can have efficient matchings and satisfying project expe
 ## ✏️ 사용법 ️
 ### 1. 프론트엔드
 1. Git repository를 clone 하여 받아온다. 
-<br />
-```
-git clone https://github.com/kookmin-sw/capstone-2022-17.git
-```
+
 2. frontend 브렌치로 checkout 하고 yarn을 이용하여 패키지를 다운로드한다.
 ```
 git checkout front/develop
