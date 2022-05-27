@@ -6,6 +6,8 @@
 > 2022년 17조 https://github.com/kookmin-sw/capstone-2022-17
 
 > Github page : https://kookmin-sw.github.io/capstone-2022-17/
+> 최종 발표자료: https://github.com/kookmin-sw/capstone-2022-17/blob/master/docs/%ED%8C%8017-%EC%B5%9C%EC%A2%85%EB%B0%9C%ED%91%9C%EC%9E%90%EB%A3%8C.pdf
+> 수행결과 보고서: https://github.com/kookmin-sw/capstone-2022-17/blob/master/docs/%ED%8C%8017-%EC%88%98%ED%96%89%EA%B2%B0%EA%B3%BC%EB%B3%B4%EA%B3%A0%EC%84%9C.pdf
 
 <br/>
 
